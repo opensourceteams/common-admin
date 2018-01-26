@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <properties resource="config/mybatis/generator/config.properties"></properties>
+
+    <context id="Mysql" targetRuntime="MyBatis3Simple" defaultModelType="flat">
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <plugin type="${mapper.plugin}">
+            <property name="mappers" value="${mapper.Mapper}"/>
+        </plugin>
+
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="${jdbc.url}"
+                        userId="${jdbc.user}"
+                        password="${jdbc.password}">
+        </jdbcConnection>
+
+        <!--生成 po -->
+        <javaModelGenerator targetPackage="com.opensourceteam.modules.po.admin" targetProject="src\main\java"/>
+        <!--生成mapper.xml文件 -->
+        <sqlMapGenerator targetPackage="com.opensourceteam.modules.mapper.admin" targetProject="src\main\resources"/>
+        <!--生成dao -->
+        <javaClientGenerator targetPackage="com.opensourceteam.modules.dao.admin" targetProject="src\main\java" type="XMLMAPPER" />
+
+
+        <table tableName="t_business_show" >
+            <!-- mysql 主键自增长-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+    <!--    <table tableName="t_test_uuid" >
+            &lt;!&ndash; uuid&ndash;&gt;
+            <generatedKey column="id" sqlStatement="select replace(uuid(), ''-'', '''')" identity="false" type="pre"/>
+        </table>-->
+
+
+
+    </context>
+</generatorConfiguration>
