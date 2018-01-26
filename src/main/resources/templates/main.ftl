@@ -15,6 +15,7 @@
 
     <!-- Custom styles for this template -->
     <link href="static/bootstrap/bootstrap-4.0.0/examples/starter-template.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -37,10 +38,10 @@
                 <a class="nav-link disabled" href="#">业务三</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#">机构管理</a>
-                    <a class="dropdown-item" href="#">用户管理</a>
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/index">机构管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >用户管理</a>
                     <a class="dropdown-item" href="#">菜单管理</a>
                 </div>
             </li>
@@ -54,7 +55,7 @@
     </div>
 </nav>
 
-<main role="main" class="container">
+<main role="main" class="container frame_main_container">
 
     <div class="starter-template">
         <h1>Bootstrap starter template</h1>
@@ -66,8 +67,22 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<#--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/static/common/admin/main/main.js" ></script>
+
+
+<script type="text/javascript">
+
+    $(document).ready(function(){
+         console.log('log2');
+         menu_binding_event();
+    });
+
+
+
+</script>
 </body>
 </html>

@@ -4,6 +4,8 @@
 - spring-boot 集成mybatis,通用mapper
 - spring-boot 集成freemarker
 - 有两个页面，一个登录，一个主页
+- 可点击机构管理，跳到机构管理页面
+- 可点击用户管理，跳到用户管理页面
 - git:https://github.com/opensourceteams/common-admin
 
 
