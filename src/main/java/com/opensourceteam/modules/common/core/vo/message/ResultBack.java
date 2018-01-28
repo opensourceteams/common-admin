@@ -22,6 +22,11 @@ public class ResultBack {
         this.success = success;
     }
 
+    public ResultBack(Boolean success, Object object) {
+        this.success = success;
+        this.object = object;
+    }
+
     public Boolean getSuccess() {
         return success;
     }

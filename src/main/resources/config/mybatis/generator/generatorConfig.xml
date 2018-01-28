@@ -33,6 +33,11 @@
             <!-- mysql 主键自增长-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+        <table tableName="t_system_organization" >
+            <!-- mysql 主键自增长-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
+
     <!--    <table tableName="t_test_uuid" >
             &lt;!&ndash; uuid&ndash;&gt;
             <generatedKey column="id" sqlStatement="select replace(uuid(), ''-'', '''')" identity="false" type="pre"/>

@@ -20,7 +20,7 @@ import java.util.List;
  */
 @SpringBootApplication
 @Configuration
-//@ComponentScan("com.opensourceteam")
+@ComponentScan("com.opensourceteam")
 public class CustomMVCConfiguration extends WebMvcConfigurerAdapter {
 
     @Bean

@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="static/project/favicon.ico">
+    <link rel="icon" href="/static/project/favicon.ico">
 
     <title>台管理平台</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/modules/bootstrap/bootstrap-4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="static/bootstrap/bootstrap-4.0.0/examples/starter-template.css" rel="stylesheet">
+    <link href="/static/modules/bootstrap/bootstrap-4.0.0/examples/starter-template.css" rel="stylesheet">
 
 </head>
 
@@ -40,7 +40,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/index">机构管理</a>
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/list">机构管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >用户管理</a>
                     <a class="dropdown-item" href="#">菜单管理</a>
                 </div>
@@ -68,9 +68,9 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <#--<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>-->
-<script src="https://code.jquery.com/jquery-3.2.1.min.js" ></script>
-<script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="/static/modules/jquery/v3.2.1/jquery-3.2.1.min.js" ></script>
+<script src="/static/modules/bootstrap/bootstrap-4.0.0/vendor/js/popper.min.js" ></script>
+<script src="/static/modules/bootstrap/bootstrap-4.0.0/js/bootstrap.min.js" ></script>
 <script src="/static/common/admin/main/main.js" ></script>
 
 
