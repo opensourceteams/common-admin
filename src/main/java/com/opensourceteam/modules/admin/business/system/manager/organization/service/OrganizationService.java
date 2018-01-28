@@ -42,15 +42,40 @@ public class OrganizationService {
         return jsonArray;
     }
 
-    public ResultBack addJSONOrganization(TSystemOrganization vo){
+    public ResultBack editViewJSONOrganization(TSystemOrganization vo){
+        if( vo !=null && vo.getId() !=null){
+            TSystemOrganization po = tSystemOrganizationMapper.selectByPrimaryKey(vo.getId());
+            return new ResultBack(true,po);
+        }
+        return new ResultBack(false,"");
+    }
+    public ResultBack editJSONOrganization(TSystemOrganization vo){
 
         TSystemOrganization po = new TSystemOrganization();
+        if(vo !=null ){
+            if(vo.getId() == null){
+                //插入
+                BeanUtils.copyProperties(vo,po);
+                po.setCreateDate(new Date());
+                po.setIsDel(false);
+                po.setCreator(0);
+                tSystemOrganizationMapper.insert(po);
+            }else{
+                //更新
+                po = tSystemOrganizationMapper.selectByPrimaryKey(vo.getId());
+                if(po != null){
+                    po.setName(vo.getName());
+                    po.setOrgType(vo.getOrgType());
+                    po.setRemark(vo.getRemark());
+                    tSystemOrganizationMapper.updateByPrimaryKey(po);
+                }
 
-        BeanUtils.copyProperties(vo,po);
-        po.setCreateDate(new Date());
-        po.setIsDel(false);
-        po.setCreator(0);
-        tSystemOrganizationMapper.insert(po);
+
+            }
+
+        }
+
+
         return new ResultBack(true,po);
     }
 

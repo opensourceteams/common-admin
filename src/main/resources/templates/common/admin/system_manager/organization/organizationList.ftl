@@ -88,8 +88,16 @@
         console.log("[addHoverDom log]");
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
-            console.log("[addHoverDom click log] 修改 " + treeNode.tId);
+             console.log('[edit]' + treeNode.editNameFlag);
+             console.log('[edit true]' + (treeNode.editNameFlag == true));
+             console.log('[treeNode.length]' + ($("#addBtn_"+treeNode.tId).length));
+             if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
+                 //修改
+                 editForm(treeNode.id);
+                 return ;
+             }
             return;
+
         }
         var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
                 + "' title='新增' onfocus='this.blur();' data-toggle='modal'  ></span>";
@@ -98,12 +106,11 @@
 
         if (btn) btn.bind("click", function(){
 
-
             console.log("[addHoverDom click 增加] " + newCount);
-
 
             $('#exampleModal').modal('show');
             $("input:hidden[name='parentId']")[0].value = treeNode.id;
+            $("input:hidden[name='id']")[0].value = '';
 
 
             return false;
@@ -118,13 +125,43 @@
      * 提交表单事件
      */
     function submitForm() {
+        console.log('[submitForm]' + $("input:hidden[name='parentId']")[0].value );
+
         var basicFormData = $('.submit-form').serialize();
-        $.post( "/common/admin/system_manager/organization/addJSONOrganization", basicFormData, function( data ) {
+        $.post( "/common/admin/system_manager/organization/editJSONOrganization", basicFormData, function( data ) {
             console.log( data ); // John
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-                zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name});
+
+                if( $("input:hidden[name='id']")[0].value == ''){
+                    //增加
+                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name});
+                }else{
+                    //修改
+                    treeNodeGlobal.name = data.object.name ;
+                    zTree.updateNode(treeNodeGlobal) ;
+                }
+
                 $('#exampleModal').modal('hide');
+            }
+
+        }, "json" );
+    }
+
+    /**
+     * 修改
+     */
+    function editForm(id) {
+        $.post( "/common/admin/system_manager/organization/editViewJSONOrganization", {id:id}, function( data ) {
+            if(data && data.success){
+
+                $("input:hidden[name='id']")[0].value = id;
+                $("input:hidden[name='parentId']")[0].value = data.object.parentId;
+                $("input[name='name']")[0].value = data.object.name;
+                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("#id_remark").text( data.object.remark) ;
+                $('#exampleModal').modal('show');
+
             }
 
         }, "json" );
@@ -152,6 +189,7 @@
             <div class="modal-body">
                 <form method="post"  class="submit-form">
                     <input type="hidden" name="parentId" />
+                    <input type="hidden" name="id" />
                     <div class="form-group">
                         <label for="recipient-name" class="col-form-label">名称:</label>
                         <input type="text" class="form-control" id="recipient-name" name="name">
@@ -167,7 +205,7 @@
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">备注:</label>
-                        <textarea class="form-control" id="message-text" name="remark"></textarea>
+                        <textarea class="form-control" id="id_remark" name="remark"></textarea>
                     </div>
                 </form>
             </div>

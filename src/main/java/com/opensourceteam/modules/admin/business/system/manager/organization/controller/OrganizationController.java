@@ -52,12 +52,19 @@ public class OrganizationController {
         return JSONArray.toJSONString(resultBack);
     }
 
-    @RequestMapping("/addJSONOrganization")
+    @RequestMapping("/editJSONOrganization")
     @ResponseBody
-    Object addJSONOrganization(TSystemOrganization vo) {
-        ResultBack resultBack = organizationService.addJSONOrganization(vo);
+    Object editJSONOrganization(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.editJSONOrganization(vo);
 
         logger.info("[OrganizationController jsonList]");
+        return resultBack;
+    }
+
+    @RequestMapping("/editViewJSONOrganization")
+    @ResponseBody
+    Object editViewJSONOrganization(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.editViewJSONOrganization(vo);
         return resultBack;
     }
 }
