@@ -1,13 +1,12 @@
 
 <link rel="stylesheet" href="static/modules/ztree/v3.5.32/css/metroStyle/metroStyle.css" type="text/css">
-<#--<script type="text/javascript" src="static/modules/jquery/v3.2.1/jquery-3.2.1.min.js"></script>-->
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.core.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.excheck.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.exedit.min.js"></script>
 
 
 <SCRIPT type="text/javascript">
-    <!--
+    <#-- 定义树 -->
     var setting = {
         view: {
             addHoverDom: addHoverDom,
@@ -26,7 +25,7 @@
             enable: true
         },
         callback: {
-            onRemove: zTreeOnRemove
+            onRemove: zTreeOnRemove //删除事件
         }
     };
 
@@ -36,32 +35,10 @@
         { id:111, pId:11, name:"叶子节点111"},
         { id:112, pId:11, name:"叶子节点112"},
         { id:113, pId:11, name:"叶子节点113"},
-        { id:114, pId:11, name:"叶子节点114"},
-        { id:12, pId:1, name:"父节点12"},
-        { id:121, pId:12, name:"叶子节点121"},
-        { id:122, pId:12, name:"叶子节点122"},
-        { id:123, pId:12, name:"叶子节点123"},
-        { id:124, pId:12, name:"叶子节点124"},
-        { id:13, pId:1, name:"父节点13", isParent:true},
-        { id:2, pId:0, name:"父节点2"},
-        { id:21, pId:2, name:"父节点21", open:true},
-        { id:211, pId:21, name:"叶子节点211"},
-        { id:212, pId:21, name:"叶子节点212"},
-        { id:213, pId:21, name:"叶子节点213"},
-        { id:214, pId:21, name:"叶子节点214"},
-        { id:22, pId:2, name:"父节点22"},
-        { id:221, pId:22, name:"叶子节点221"},
-        { id:222, pId:22, name:"叶子节点222"},
-        { id:223, pId:22, name:"叶子节点223"},
-        { id:224, pId:22, name:"叶子节点224"},
-        { id:23, pId:2, name:"父节点23"},
-        { id:231, pId:23, name:"叶子节点231"},
-        { id:232, pId:23, name:"叶子节点232"},
-        { id:233, pId:23, name:"叶子节点233"},
-        { id:234, pId:23, name:"叶子节点234"},
         { id:3, pId:0, name:"父节点3", isParent:true}
     ];
 
+    <#-- 初使化事件-->
     $(document).ready(function(){
 
         $.ajax({
@@ -71,7 +48,6 @@
             success: function(result){
                 if(result.success){
                     $.fn.zTree.init($("#treeDemo"), setting, result.object);
-
                 }
 
             }
@@ -81,11 +57,9 @@
         $(".button-form-submit").bind("click", function(){
             submitForm();
         });
-       // $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
 
-    var newCount = 1;
-    var treeNodeGlobal ;
+    var treeNodeGlobal ; //选中的节点
     function addHoverDom(treeId, treeNode) {
         treeNodeGlobal = treeNode;
         var sObj = $("#" + treeNode.tId + "_span");
@@ -105,20 +79,15 @@
         var btn = $("#addBtn_"+treeNode.tId);
 
         if (btn) btn.bind("click", function(){
-
-           // console.log("[addHoverDom click 增加] " + newCount);
-
             $('#exampleModal').modal('show');
             $("input:hidden[name='parentId']")[0].value = treeNode.id;
             $("input:hidden[name='id']")[0].value = '';
-
+            $("#id_org_type option[value=1]").attr("selected", true) ;
 
             return false;
         });
     };
     function removeHoverDom(treeId, treeNode) {
-        console.log('removeHoverDom' + treeNode);
-        console.log("#addBtn_"+treeNode.tId);
         $("#addBtn_"+treeNode.tId).unbind().remove();
     };
 
@@ -127,11 +96,9 @@
      * 提交表单事件
      */
     function submitForm() {
-        console.log('[submitForm]' + $("input:hidden[name='parentId']")[0].value );
 
         var basicFormData = $('.submit-form').serialize();
         $.post( "/common/admin/system_manager/organization/editJSONOrganization", basicFormData, function( data ) {
-            console.log( data ); // John
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
@@ -151,7 +118,7 @@
     }
 
     /**
-     * 修改
+     * 修改(节点)
      */
     function editForm(id) {
         $.post( "/common/admin/system_manager/organization/editViewJSONOrganization", {id:id}, function( data ) {
@@ -170,13 +137,9 @@
     }
 
     /**
-     * 删除
+     * 删除(节点)
      */
     function zTreeOnRemove(event,treeId, treeNode) {
-
-        console.log("[delete treeId]" + treeId)
-        console.log("[delete treeNode]" + outputObj(treeNode))
-
         $.post( "/common/admin/system_manager/organization/deleteJSONOrganization", {id:treeNode.id}, function( data ) {
             if(data && data.success){
 
@@ -191,6 +154,8 @@
 
         }, "json" );
     }
+
+    <#-- 打印输出对象-->
     function outputObj(obj) {
         var description = "";
         for (var i in obj) {
