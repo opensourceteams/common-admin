@@ -67,4 +67,11 @@ public class OrganizationController {
         ResultBack resultBack = organizationService.editViewJSONOrganization(vo);
         return resultBack;
     }
+
+    @RequestMapping("/deleteJSONOrganization")
+    @ResponseBody
+    Object deleteJSONOrganization(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.deleteJSONOrganization(vo);
+        return resultBack;
+    }
 }

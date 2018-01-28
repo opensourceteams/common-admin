@@ -24,6 +24,9 @@
         },
         edit: {
             enable: true
+        },
+        callback: {
+            onRemove: zTreeOnRemove
         }
     };
 
@@ -85,12 +88,9 @@
     var treeNodeGlobal ;
     function addHoverDom(treeId, treeNode) {
         treeNodeGlobal = treeNode;
-        console.log("[addHoverDom log]");
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
-             console.log('[edit]' + treeNode.editNameFlag);
-             console.log('[edit true]' + (treeNode.editNameFlag == true));
-             console.log('[treeNode.length]' + ($("#addBtn_"+treeNode.tId).length));
+
              if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
                  //修改
                  editForm(treeNode.id);
@@ -106,7 +106,7 @@
 
         if (btn) btn.bind("click", function(){
 
-            console.log("[addHoverDom click 增加] " + newCount);
+           // console.log("[addHoverDom click 增加] " + newCount);
 
             $('#exampleModal').modal('show');
             $("input:hidden[name='parentId']")[0].value = treeNode.id;
@@ -117,6 +117,8 @@
         });
     };
     function removeHoverDom(treeId, treeNode) {
+        console.log('removeHoverDom' + treeNode);
+        console.log("#addBtn_"+treeNode.tId);
         $("#addBtn_"+treeNode.tId).unbind().remove();
     };
 
@@ -167,6 +169,35 @@
         }, "json" );
     }
 
+    /**
+     * 删除
+     */
+    function zTreeOnRemove(event,treeId, treeNode) {
+
+        console.log("[delete treeId]" + treeId)
+        console.log("[delete treeNode]" + outputObj(treeNode))
+
+        $.post( "/common/admin/system_manager/organization/deleteJSONOrganization", {id:treeNode.id}, function( data ) {
+            if(data && data.success){
+
+                $("input:hidden[name='id']")[0].value = id;
+                $("input:hidden[name='parentId']")[0].value = data.object.parentId;
+                $("input[name='name']")[0].value = data.object.name;
+                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("#id_remark").text( data.object.remark) ;
+                $('#exampleModal').modal('show');
+
+            }
+
+        }, "json" );
+    }
+    function outputObj(obj) {
+        var description = "";
+        for (var i in obj) {
+            description += i + " = " + obj[i] + "\n";
+        }
+        console.log("["+ obj +"] " + description);
+    }
 </SCRIPT>
 
 <div class="content_wrap">

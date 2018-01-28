@@ -49,6 +49,14 @@ public class OrganizationService {
         }
         return new ResultBack(false,"");
     }
+
+    public ResultBack deleteJSONOrganization(TSystemOrganization vo){
+        if( vo !=null && vo.getId() !=null){
+            tSystemOrganizationMapper.deleteByPrimaryKey(vo);
+            return new ResultBack(true,"");
+        }
+        return new ResultBack(false,"");
+    }
     public ResultBack editJSONOrganization(TSystemOrganization vo){
 
         TSystemOrganization po = new TSystemOrganization();
