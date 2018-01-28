@@ -1,6 +1,6 @@
 
 <link rel="stylesheet" href="static/modules/ztree/v3.5.32/css/metroStyle/metroStyle.css" type="text/css">
-<script type="text/javascript" src="static/modules/jquery/v3.2.1/jquery-3.2.1.min.js"></script>
+<#--<script type="text/javascript" src="static/modules/jquery/v3.2.1/jquery-3.2.1.min.js"></script>-->
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.core.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.excheck.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.exedit.min.js"></script>
@@ -74,12 +74,17 @@
             }
         });
 
+        //绑定提交事件 button-form-submit
+        $(".button-form-submit").bind("click", function(){
+            submitForm();
+        });
        // $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     });
 
     var newCount = 1;
+    var treeNodeGlobal ;
     function addHoverDom(treeId, treeNode) {
-
+        treeNodeGlobal = treeNode;
         console.log("[addHoverDom log]");
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
@@ -87,21 +92,44 @@
             return;
         }
         var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-                + "' title='新增' onfocus='this.blur();'></span>";
+                + "' title='新增' onfocus='this.blur();' data-toggle='modal'  ></span>";
         sObj.after(addStr);
         var btn = $("#addBtn_"+treeNode.tId);
+
         if (btn) btn.bind("click", function(){
 
+
             console.log("[addHoverDom click 增加] " + newCount);
-            var zTree = $.fn.zTree.getZTreeObj("treeDemo");
-            zTree.addNodes(treeNode, {id:(100 + newCount), pId:treeNode.id, name:"新节点" + (newCount++)});
+
+
+            $('#exampleModal').modal('show');
+            $("input:hidden[name='parentId']")[0].value = treeNode.id;
+
+
             return false;
         });
     };
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_"+treeNode.tId).unbind().remove();
     };
-    //-->
+
+
+    /**
+     * 提交表单事件
+     */
+    function submitForm() {
+        var basicFormData = $('.submit-form').serialize();
+        $.post( "/common/admin/system_manager/organization/addJSONOrganization", basicFormData, function( data ) {
+            console.log( data ); // John
+            if(data && data.success){
+                var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name});
+                $('#exampleModal').modal('hide');
+            }
+
+        }, "json" );
+    }
+
 </SCRIPT>
 
 <div class="content_wrap">
@@ -109,4 +137,44 @@
         <ul id="treeDemo" class="ztree"></ul>
     </div>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">机构编辑</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post"  class="submit-form">
+                    <input type="hidden" name="parentId" />
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">名称:</label>
+                        <input type="text" class="form-control" id="recipient-name" name="name">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleSelect2">类型</label>
+                        <select  class="form-control" id="exampleSelect2" name="orgType">
+                            <option value="1">机构</option>
+                            <option value="2">部门</option>
+                            <option value="3">组</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message-text" class="col-form-label">备注:</label>
+                        <textarea class="form-control" id="message-text" name="remark"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary button-form-submit">提交</button>
+            </div>
+        </div>
+    </div>
 </div>

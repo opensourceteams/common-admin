@@ -45,10 +45,11 @@ public class OrganizationService {
     public ResultBack addJSONOrganization(TSystemOrganization vo){
 
         TSystemOrganization po = new TSystemOrganization();
+
+        BeanUtils.copyProperties(vo,po);
         po.setCreateDate(new Date());
         po.setIsDel(false);
         po.setCreator(0);
-        BeanUtils.copyProperties(vo,po);
         tSystemOrganizationMapper.insert(po);
         return new ResultBack(true,po);
     }

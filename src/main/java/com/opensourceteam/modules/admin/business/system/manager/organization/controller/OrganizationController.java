@@ -3,6 +3,7 @@ package com.opensourceteam.modules.admin.business.system.manager.organization.co
 import com.alibaba.fastjson.JSONArray;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.OrganizationService;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
+import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,9 +54,10 @@ public class OrganizationController {
 
     @RequestMapping("/addJSONOrganization")
     @ResponseBody
-    String addJSONOrganization() {
-        ResultBack resultBack = new ResultBack(true,organizationService.getList());
+    Object addJSONOrganization(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.addJSONOrganization(vo);
+
         logger.info("[OrganizationController jsonList]");
-        return JSONArray.toJSONString(resultBack);
+        return resultBack;
     }
 }
