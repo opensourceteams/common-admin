@@ -30,7 +30,7 @@
             renameTitle:"修改"
         },
         callback: {
-            onRemove: zTreeOnRemove ,//删除事件
+            //onRemove: zTreeOnRemove ,//删除事件
             beforeEditName: zTreeBeforeEditName
         }
     };
@@ -59,20 +59,24 @@
 
     var treeNodeGlobal ; //选中的节点
     function addHoverDom(treeId, treeNode) {
-        console.log('addHoverDom');
+
         treeNodeGlobal = treeNode;
-
-
-
         var sObj = $("#" + treeNode.tId + "_span");//当前的节点
-        console.log('addHoverDom sObj ' + "#" + treeNode.tId + "_span");
-        console.log('icon: ' + treeNode.icon);
 
         if (treeNode.editNameFlag || $("#editBtn_"+ treeNode.tId).length>0) return;
+        if (treeNode.editNameFlag || $("#removeBtn_"+ treeNode.tId).length>0) return;
 
         if(treeNode && treeNode.icon) {
             if (treeNode.icon.indexOf("13_") > 0) {
                 //员工
+                var removeStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
+                        + "' title='删除' onfocus='this.blur();'   ></span>";
+                sObj.after(removeStr);
+                var removeBtn = $("#removeBtn_"+treeNode.tId);
+                if (removeBtn) removeBtn.bind("click", function(){
+                    deleteForm(treeNode.id);
+                });
+
                 var editStr = "<span class='button edit' id='editBtn_" + treeNode.tId
                         + "' title='修改' onfocus='this.blur();'   ></span>";
                 sObj.after(editStr);
@@ -86,7 +90,6 @@
                 var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
                         + "' title='新增' onfocus='this.blur();'   ></span>";
                 sObj.after(addStr);
-
 
                 var btn = $("#addBtn_"+treeNode.tId);
 
@@ -110,6 +113,7 @@
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_"+treeNode.tId).unbind().remove();
         $("#editBtn_"+treeNode.tId).unbind().remove();
+        $("#removeBtn_"+treeNode.tId).unbind().remove();
     };
 
 
@@ -161,16 +165,15 @@
     /**
      * 删除(节点)
      */
-    function zTreeOnRemove(event,treeId, treeNode) {
-        $.post( "/common/admin/system_manager/user/deleteJSON", {id:treeNode.id}, function( data ) {
+    function deleteForm(id) {
+        $.post( "/common/admin/system_manager/user/deleteJSON", {id:id}, function( data ) {
             if(data && data.success){
 
-                $("input:hidden[name='id']")[0].value = id;
-                $("input:hidden[name='parentId']")[0].value = data.object.parentId;
-                $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
-                $("#id_remark").text( data.object.remark) ;
-                $('#exampleModal').modal('show');
+                if(data && data.success){
+
+                    var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+                    zTree.removeNode(treeNodeGlobal);
+                }
 
             }
 
@@ -183,7 +186,7 @@
         for (var i in obj) {
             description += i + " = " + obj[i] + "\n";
         }
-        console.log("["+ obj +"] " + description);
+
     }
 
     function zTreeBeforeEditName(treeId, treeNode) {
