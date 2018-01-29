@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.opensourceteam.modules.dao.admin.TBusinessCheckMapper">
+  <resultMap id="BaseResultMap" type="com.opensourceteam.modules.po.admin.TBusinessCheck">
+    <!--
+      WARNING - @mbg.generated
+    -->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="depart_name" jdbcType="VARCHAR" property="departName" />
+    <result column="employee_name" jdbcType="VARCHAR" property="employeeName" />
+    <result column="check_should" jdbcType="DECIMAL" property="checkShould" />
+    <result column="check_actual" jdbcType="DECIMAL" property="checkActual" />
+    <result column="overtime_meal_days" jdbcType="DECIMAL" property="overtimeMealDays" />
+    <result column="check_absenteeism_days" jdbcType="DECIMAL" property="checkAbsenteeismDays" />
+    <result column="check_sick_leave_days" jdbcType="DECIMAL" property="checkSickLeaveDays" />
+    <result column="check_absence_leave_days" jdbcType="DECIMAL" property="checkAbsenceLeaveDays" />
+    <result column="check_funeral_leave_days" jdbcType="DECIMAL" property="checkFuneralLeaveDays" />
+    <result column="check_year_leave_days" jdbcType="DECIMAL" property="checkYearLeaveDays" />
+    <result column="check_marry_leave_days" jdbcType="DECIMAL" property="checkMarryLeaveDays" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="is_del" jdbcType="BIT" property="isDel" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+</mapper>

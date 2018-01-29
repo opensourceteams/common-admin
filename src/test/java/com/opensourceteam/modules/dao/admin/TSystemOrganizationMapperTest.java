@@ -35,7 +35,7 @@ public class TSystemOrganizationMapperTest {
 
         TSystemOrganization po = new TSystemOrganization();
 
-        po.setName("北京分公司");
+        po.setName("总公司");
         po.setOrgType(OrgTypeEnume.Organization.getValue()+"");
         po.setParentId(0);
         po.setCreateDate(new Date());

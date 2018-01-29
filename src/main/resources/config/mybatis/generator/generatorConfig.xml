@@ -37,6 +37,10 @@
             <!-- mysql 主键自增长-->
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+        <table tableName="t_business_check" >
+            <!-- mysql 主键自增长-->
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
     <!--    <table tableName="t_test_uuid" >
             &lt;!&ndash; uuid&ndash;&gt;

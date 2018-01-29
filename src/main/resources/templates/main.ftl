@@ -11,7 +11,7 @@
     <title>台管理平台</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="/static/modules/bootstrap/bootstrap-4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/modules/bootstrap/bootstrap-4.0.0/css/bootstrap.min.css" >
 
     <!-- Custom styles for this template -->
     <link href="/static/modules/bootstrap/bootstrap-4.0.0/examples/starter-template.css" rel="stylesheet">
@@ -38,8 +38,16 @@
                 <a class="nav-link disabled" href="#">业务三</a>
             </li>
             <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown02"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">财务</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/finance/check/index">考勤</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >工资</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
+
                     <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/list">机构管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >用户管理</a>
                     <a class="dropdown-item" href="#">菜单管理</a>
