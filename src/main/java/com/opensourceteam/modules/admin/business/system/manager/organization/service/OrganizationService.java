@@ -2,6 +2,7 @@ package com.opensourceteam.modules.admin.business.system.manager.organization.se
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.opensourceteam.modules.admin.business.system.manager.organization.vo.OrganizationVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.TSystemOrganizationMapper;
 import com.opensourceteam.modules.enume.OrgTypeEnume;
@@ -36,15 +37,15 @@ public class OrganizationService {
                 jsonObject.put("pId",po.getParentId());
                 jsonObject.put("name",po.getName());
                 if((OrgTypeEnume.Organization.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Organization.getOpenUrl() );
+                    jsonObject.put("icon",OrgTypeEnume.Organization.getCloseUrl() );
                     jsonObject.put("iconOpen",OrgTypeEnume.Organization.getOpenUrl() );
                     jsonObject.put("iconClose",OrgTypeEnume.Organization.getCloseUrl());
                 }else if((OrgTypeEnume.Department.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Department.getOpenUrl() );
+                    jsonObject.put("icon",OrgTypeEnume.Department.getCloseUrl() );
                     jsonObject.put("iconOpen",OrgTypeEnume.Department.getOpenUrl() );
                     jsonObject.put("iconClose",OrgTypeEnume.Department.getCloseUrl());
                 }else if((OrgTypeEnume.Group.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Group.getOpenUrl() );
+                    jsonObject.put("icon",OrgTypeEnume.Group.getCloseUrl() );
                     jsonObject.put("iconOpen",OrgTypeEnume.Group.getOpenUrl() );
                     jsonObject.put("iconClose",OrgTypeEnume.Group.getCloseUrl());
                 }
@@ -82,7 +83,15 @@ public class OrganizationService {
                 po.setCreateDate(new Date());
                 po.setIsDel(false);
                 po.setCreator(0);
+
                 tSystemOrganizationMapper.insert(po);
+
+                TSystemOrganization parentPo = tSystemOrganizationMapper.selectByPrimaryKey(vo.getParentId());
+                if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
+                    String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                    po.setParentIds(parentIds);
+                    tSystemOrganizationMapper.updateByPrimaryKey(po);
+                }
             }else{
                 //更新
                 po = tSystemOrganizationMapper.selectByPrimaryKey(vo.getId());
@@ -100,6 +109,32 @@ public class OrganizationService {
 
 
         return new ResultBack(true,po);
+    }
+
+    public ResultBack editJSONOrganizationDealIcon(TSystemOrganization vo){
+        ResultBack resultBack = editJSONOrganization(vo);
+        if(resultBack.getSuccess() && resultBack.getObject() !=null){
+                if(resultBack.getObject() instanceof TSystemOrganization ){
+                    TSystemOrganization voNew = (TSystemOrganization)resultBack.getObject();
+                    OrganizationVo organizationVo = new OrganizationVo();
+                    BeanUtils.copyProperties(voNew,organizationVo);
+                    if((OrgTypeEnume.Organization.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(OrgTypeEnume.Organization.getCloseUrl() );
+                        organizationVo.setIconOpen(OrgTypeEnume.Organization.getOpenUrl() );
+                        organizationVo.setIconClose(OrgTypeEnume.Organization.getCloseUrl());
+                    }else if((OrgTypeEnume.Department.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(OrgTypeEnume.Department.getCloseUrl() );
+                        organizationVo.setIconOpen(OrgTypeEnume.Department.getOpenUrl() );
+                        organizationVo.setIconClose(OrgTypeEnume.Department.getCloseUrl());
+                    }else if((OrgTypeEnume.Group.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(OrgTypeEnume.Group.getCloseUrl() );
+                        organizationVo.setIconOpen(OrgTypeEnume.Group.getOpenUrl() );
+                        organizationVo.setIconClose(OrgTypeEnume.Group.getCloseUrl());
+                    }
+                    return new ResultBack(true,organizationVo);
+                }
+        }
+        return new ResultBack(false,"");
     }
 
     public List<TSystemOrganization> getAllOrganization(Integer userId){

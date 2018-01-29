@@ -22,6 +22,12 @@ CREATE TABLE t_system_organization (
 	remark varchar(100) NULL COMMENT '备注'
 );
 
+/**
+初使数据
+ */
+INSERT INTO t_system_organization
+(id, name, parent_id, parent_ids, org_type, create_date, creator, is_del, remark)
+VALUES(1, '总公司', 0, '/0/1/', '1', '2018-01-28 21:26:14.000', 0, 0, '1');
 
 /**
  * 考勤

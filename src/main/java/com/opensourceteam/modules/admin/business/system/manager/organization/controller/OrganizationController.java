@@ -61,7 +61,7 @@ public class OrganizationController {
     @RequestMapping("/editJSONOrganization")
     @ResponseBody
     Object editJSONOrganization(TSystemOrganization vo) {
-        ResultBack resultBack = organizationService.editJSONOrganization(vo);
+        ResultBack resultBack = organizationService.editJSONOrganizationDealIcon(vo);
 
         logger.info("[OrganizationController jsonList]");
         return resultBack;

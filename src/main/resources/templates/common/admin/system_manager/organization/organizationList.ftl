@@ -108,7 +108,7 @@
 
                 if( $("input:hidden[name='id']")[0].value == ''){
                     //增加
-                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name});
+                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
                 }else{
                     //修改
                     treeNodeGlobal.name = data.object.name ;
@@ -119,6 +119,26 @@
             }
 
         }, "json" );
+    }
+
+    function getIconOpen(orgType) {
+        if( orgType == '1'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_open.png';
+        }else if( orgType == '2'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_open.png';
+        }else if( orgType == '3'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_open.png';
+        }
+    }
+
+    function getIconClose(orgType) {
+        if( orgType == '1'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_close.png';
+        }else if( orgType == '2'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_close.png';
+        }else if( orgType == '3'){
+            return '/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_close.png';
+        }
     }
 
     /**
