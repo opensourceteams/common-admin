@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
  * 开发人:刘文
  * QQ: 372065525
  * 日期:  2018/1/26.
- * 功能描述:
+ * 功能描述: 机构
  */
 @Controller
 @RequestMapping("/common/admin/system_manager/organization")
@@ -29,21 +29,22 @@ public class OrganizationController {
     @Autowired
     OrganizationService organizationService;
 
-    @RequestMapping("/index")
-    ModelAndView index(String message) {
-        ModelAndView modelAndView = new ModelAndView("common/admin/system_manager/organization/organizationIndex");
-        logger.info("[OrganizationController index]");
-        return modelAndView;
-    }
 
-    @RequestMapping("/list")
-    ModelAndView list() {
+
+    /**
+     * 视图页
+     * @return
+     */
+    @RequestMapping("/listView")
+    ModelAndView listView() {
         ModelAndView modelAndView = new ModelAndView("common/admin/system_manager/organization/organizationList");
-
-        logger.info("[OrganizationController index]");
         return modelAndView;
     }
 
+    /**
+     * 列表JSON
+     * @return
+     */
     @RequestMapping("/jsonList")
     @ResponseBody
     String jsonList() {
@@ -52,6 +53,11 @@ public class OrganizationController {
         return JSONArray.toJSONString(resultBack);
     }
 
+    /**
+     * 编辑操作
+     * @param vo
+     * @return
+     */
     @RequestMapping("/editJSONOrganization")
     @ResponseBody
     Object editJSONOrganization(TSystemOrganization vo) {
@@ -61,6 +67,11 @@ public class OrganizationController {
         return resultBack;
     }
 
+    /**
+     * 编辑页面
+     * @param vo
+     * @return
+     */
     @RequestMapping("/editViewJSONOrganization")
     @ResponseBody
     Object editViewJSONOrganization(TSystemOrganization vo) {
@@ -68,6 +79,11 @@ public class OrganizationController {
         return resultBack;
     }
 
+    /**
+     * 删除操作
+     * @param vo
+     * @return
+     */
     @RequestMapping("/deleteJSONOrganization")
     @ResponseBody
     Object deleteJSONOrganization(TSystemOrganization vo) {

@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.TSystemOrganizationMapper;
+import com.opensourceteam.modules.enume.OrgTypeEnume;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,20 @@ public class OrganizationService {
                 jsonObject.put("id",po.getId());
                 jsonObject.put("pId",po.getParentId());
                 jsonObject.put("name",po.getName());
+                if((OrgTypeEnume.Organization.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon",OrgTypeEnume.Organization.getOpenUrl() );
+                    jsonObject.put("iconOpen",OrgTypeEnume.Organization.getOpenUrl() );
+                    jsonObject.put("iconClose",OrgTypeEnume.Organization.getCloseUrl());
+                }else if((OrgTypeEnume.Department.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon",OrgTypeEnume.Department.getOpenUrl() );
+                    jsonObject.put("iconOpen",OrgTypeEnume.Department.getOpenUrl() );
+                    jsonObject.put("iconClose",OrgTypeEnume.Department.getCloseUrl());
+                }else if((OrgTypeEnume.Group.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon",OrgTypeEnume.Group.getOpenUrl() );
+                    jsonObject.put("iconOpen",OrgTypeEnume.Group.getOpenUrl() );
+                    jsonObject.put("iconClose",OrgTypeEnume.Group.getCloseUrl());
+                }
+
                 jsonArray.add(jsonObject);
             }
         }

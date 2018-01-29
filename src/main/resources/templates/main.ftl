@@ -48,7 +48,7 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/list">机构管理</a>
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView">机构管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >用户管理</a>
                     <a class="dropdown-item" href="#">菜单管理</a>
                 </div>

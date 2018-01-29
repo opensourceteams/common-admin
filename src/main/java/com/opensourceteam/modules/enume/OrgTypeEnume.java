@@ -7,17 +7,21 @@ package com.opensourceteam.modules.enume;
  * 功能描述:
  */
 public enum  OrgTypeEnume {
-    Organization('1',"机构"),
-    Department('2',"部门"),
-    group('3',"组"),
+    Organization('1',"机构","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_close.png"),
+    Department('2',"部门","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/8.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/8.png"),
+    Group('3',"组","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/9.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/9.png"),
     ;
 
     private char value;
     private String name;
+    private String openUrl;
+    private String closeUrl;
 
-    OrgTypeEnume(char value, String name) {
+    OrgTypeEnume(char value, String name,String openUrl,String closeUrl) {
         this.value = value;
         this.name = name;
+        this.openUrl = openUrl;
+        this.closeUrl = closeUrl;
     }
 
     public char getValue() {
@@ -34,5 +38,21 @@ public enum  OrgTypeEnume {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getOpenUrl() {
+        return openUrl;
+    }
+
+    public void setOpenUrl(String openUrl) {
+        this.openUrl = openUrl;
+    }
+
+    public String getCloseUrl() {
+        return closeUrl;
+    }
+
+    public void setCloseUrl(String closeUrl) {
+        this.closeUrl = closeUrl;
     }
 }

@@ -1,5 +1,6 @@
 
 <link rel="stylesheet" href="static/modules/ztree/v3.5.32/css/metroStyle/metroStyle.css" type="text/css">
+
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.core.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.excheck.min.js"></script>
 <script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.exedit.min.js"></script>
@@ -82,7 +83,10 @@
             $('#exampleModal').modal('show');
             $("input:hidden[name='parentId']")[0].value = treeNode.id;
             $("input:hidden[name='id']")[0].value = '';
-            $("#id_org_type option[value=1]").attr("selected", true) ;
+            $("input:hidden[name='name']")[0].value = '';
+            $("#id_remark").text( '') ;
+            $("#id_remark").val( '') ;
+            $("#id_org_type option[value='1']").attr("selected", true) ;
 
             return false;
         });
