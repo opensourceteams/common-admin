@@ -49,7 +49,7 @@
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
 
                     <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView">机构管理</a>
-                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >用户管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/listView" >用户管理</a>
                     <a class="dropdown-item" href="#">菜单管理</a>
                 </div>
             </li>

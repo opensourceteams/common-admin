@@ -1,14 +1,13 @@
 package com.opensourceteam.modules.admin.business.system.manager.organization.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.opensourceteam.modules.admin.business.system.manager.organization.service.OrganizationService;
+import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,13 +20,13 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping("/common/admin/system_manager/organization")
-public class OrganizationController {
+public class SystemOrganizationController {
 
-    Logger logger = LoggerFactory.getLogger(OrganizationController.class);
+    Logger logger = LoggerFactory.getLogger(SystemOrganizationController.class);
 
 
     @Autowired
-    OrganizationService organizationService;
+    SystemOrganizationService organizationService;
 
 
 

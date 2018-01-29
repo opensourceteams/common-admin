@@ -1,9 +1,9 @@
 
-<link rel="stylesheet" href="static/modules/ztree/v3.5.32/css/metroStyle/metroStyle.css" type="text/css">
+<link rel="stylesheet" href="/static/modules/ztree/v3.5.32/css/metroStyle/metroStyle.css" type="text/css">
 
-<script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.core.min.js"></script>
-<script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.excheck.min.js"></script>
-<script type="text/javascript" src="static/modules/ztree/v3.5.32/js/jquery.ztree.exedit.min.js"></script>
+<script type="text/javascript" src="/static/modules/ztree/v3.5.32/js/jquery.ztree.core.min.js"></script>
+<script type="text/javascript" src="/static/modules/ztree/v3.5.32/js/jquery.ztree.excheck.min.js"></script>
+<script type="text/javascript" src="/static/modules/ztree/v3.5.32/js/jquery.ztree.exedit.min.js"></script>
 
 
 <SCRIPT type="text/javascript">
@@ -23,27 +23,22 @@
             }
         },
         edit: {
-            enable: true
+            enable: true,
+            removeTitle:"删除",
+            renameTitle:"修改"
         },
         callback: {
-            onRemove: zTreeOnRemove //删除事件
+            onRemove: zTreeOnRemove ,//删除事件
+            beforeEditName: zTreeBeforeEditName
         }
     };
 
-    var zNodes =[
-        { id:1, pId:0, name:"父节点1", open:true},
-        { id:11, pId:1, name:"父节点11"},
-        { id:111, pId:11, name:"叶子节点111"},
-        { id:112, pId:11, name:"叶子节点112"},
-        { id:113, pId:11, name:"叶子节点113"},
-        { id:3, pId:0, name:"父节点3", isParent:true}
-    ];
 
     <#-- 初使化事件-->
     $(document).ready(function(){
 
         $.ajax({
-            url: "/common/admin/system_manager/organization/jsonList",
+            url: "/common/admin/system_manager/user/jsonList",
             data:{},
             dataType:"json",
             success: function(result){
@@ -63,12 +58,24 @@
     var treeNodeGlobal ; //选中的节点
     function addHoverDom(treeId, treeNode) {
         treeNodeGlobal = treeNode;
+
+
+
         var sObj = $("#" + treeNode.tId + "_span");
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
 
              if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
-                 //修改
-                 editForm(treeNode.id);
+
+                 if(treeNode && treeNode.icon) {
+                     if (treeNode.icon.indexOf("13_") > 0) {
+                         //个人客户
+                         //修改
+                         editForm(treeNode.id);
+                     }else{
+                         return;
+                     }
+                 }
+
                  return ;
              }
             return;
@@ -81,12 +88,13 @@
 
         if (btn) btn.bind("click", function(){
             $('#exampleModal').modal('show');
-            $("input:hidden[name='parentId']")[0].value = treeNode.id;
+            $("input:hidden[name='orgId']")[0].value = treeNode.id;
             $("input:hidden[name='id']")[0].value = '';
             $("input:hidden[name='name']")[0].value = '';
+            $("input:hidden[name='loginId']")[0].value = '';
             $("#id_remark").text( '') ;
             $("#id_remark").val( '') ;
-            $("#id_org_type option[value='1']").attr("selected", true) ;
+            $("#parentId option[value='1']").attr("selected", true) ;
 
             return false;
         });
@@ -102,7 +110,7 @@
     function submitForm() {
 
         var basicFormData = $('.submit-form').serialize();
-        $.post( "/common/admin/system_manager/organization/editJSONOrganization", basicFormData, function( data ) {
+        $.post( "/common/admin/system_manager/user/editJSON", basicFormData, function( data ) {
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
@@ -126,13 +134,16 @@
      * 修改(节点)
      */
     function editForm(id) {
-        $.post( "/common/admin/system_manager/organization/editViewJSONOrganization", {id:id}, function( data ) {
+        $.post( "/common/admin/system_manager/user/editViewJSON", {id:id}, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
-                $("input:hidden[name='parentId']")[0].value = data.object.parentId;
                 $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("input[name='loginId']")[0].value = data.object.loginId;
+
+                //$("#parentId option[value=" + data.object.parentId + "]").attr("selected", true) ;
+                //$("#parentId option[value=2]").attr("selected", true) ;
+                $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
@@ -145,7 +156,7 @@
      * 删除(节点)
      */
     function zTreeOnRemove(event,treeId, treeNode) {
-        $.post( "/common/admin/system_manager/organization/deleteJSONOrganization", {id:treeNode.id}, function( data ) {
+        $.post( "/common/admin/system_manager/user/deleteJSON", {id:treeNode.id}, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
@@ -168,6 +179,17 @@
         }
         console.log("["+ obj +"] " + description);
     }
+
+    function zTreeBeforeEditName(treeId, treeNode) {
+
+        if(treeNode && treeNode.icon) {
+            if (treeNode.icon.indexOf("13_") > 0) {
+                //人员
+                return true;
+            }
+        }
+        return false;
+    }
 </SCRIPT>
 
 <div class="content_wrap">
@@ -182,25 +204,36 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">机构编辑</h5>
+                <h5 class="modal-title" id="exampleModalLabel">用户编辑</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form method="post"  class="submit-form">
-                    <input type="hidden" name="parentId" />
+                    <input type="hidden" name="orgId" />
                     <input type="hidden" name="id" />
                     <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">名称:</label>
+                        <label for="loginId" class="col-form-label">登录名:</label>
+                        <input type="text" class="form-control" id="loginId" name="loginId">
+                    </div>
+                    <div class="form-group">
+                        <label for="loginPwd" class="col-form-label">登录密码:</label>
+                        <input type="password" class="form-control" id="loginPwd" name="loginPwd">
+                    </div>
+                    <div class="form-group">
+                        <label for="recipient-name" class="col-form-label">姓名:</label>
                         <input type="text" class="form-control" id="recipient-name" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="exampleSelect2">类型</label>
-                        <select  class="form-control" id="exampleSelect2" name="orgType">
-                            <option value="1">机构</option>
-                            <option value="2">部门</option>
-                            <option value="3">组</option>
+                        <label for="exampleSelect2">上级</label>
+                        <select  class="form-control selector_parentId" id="exampleSelect2" id="parentId"  name="parentId" >
+
+                            <#if (superiors?? && superiors?size gt  0) >
+                                <#list superiors as vo>
+                                    <option value="${vo.id}">${vo.name}</option>
+                                </#list>
+                            </#if>
 
                         </select>
                     </div>

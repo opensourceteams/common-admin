@@ -22,7 +22,7 @@ import java.util.List;
  * 功能描述:
  */
 @Service
-public class OrganizationService {
+public class SystemOrganizationService {
 
     @Autowired
     TSystemOrganizationMapper tSystemOrganizationMapper;
@@ -49,7 +49,7 @@ public class OrganizationService {
                     jsonObject.put("iconOpen",OrgTypeEnume.Group.getOpenUrl() );
                     jsonObject.put("iconClose",OrgTypeEnume.Group.getCloseUrl());
                 }
-
+                jsonObject.put("nocheck",true);
                 jsonArray.add(jsonObject);
             }
         }

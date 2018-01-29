@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "t_system_organization")
 public class TSystemOrganization {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select _nextval('t_system_organization')")
     private Integer id;
 
     /**
