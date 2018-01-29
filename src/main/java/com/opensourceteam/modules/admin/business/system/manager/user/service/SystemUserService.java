@@ -81,6 +81,19 @@ public class SystemUserService {
                 if(po != null){
                     po.setName(vo.getName());
                     po.setRemark(vo.getRemark());
+                    po.setLoginId(vo.getLoginId());
+                    if(StringUtils.isNotEmpty(vo.getLoginPwd())){
+                        po.setLoginPwd(vo.getLoginPwd());
+                    }
+
+                    if(po.getParentId() !=null && vo.getParentId() !=null && vo.getParentId().intValue() != po.getParentId().intValue()){
+                        SystemUser parentPo = systemUserMapper.selectByPrimaryKey(vo.getParentId());
+                        String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                        po.setParentIds(parentIds);
+                        if(parentPo.getLevelNum() != null){
+                            po.setLevelNum(parentPo.getLevelNum() + 1);
+                        }
+                    }
                     systemUserMapper.updateByPrimaryKey(po);
                 }
 

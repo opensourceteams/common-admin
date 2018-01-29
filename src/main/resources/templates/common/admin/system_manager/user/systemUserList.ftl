@@ -24,6 +24,8 @@
         },
         edit: {
             enable: true,
+            showRemoveBtn:false,
+            showRenameBtn:false,
             removeTitle:"删除",
             renameTitle:"修改"
         },
@@ -57,50 +59,57 @@
 
     var treeNodeGlobal ; //选中的节点
     function addHoverDom(treeId, treeNode) {
+        console.log('addHoverDom');
         treeNodeGlobal = treeNode;
 
 
 
-        var sObj = $("#" + treeNode.tId + "_span");
-        if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
+        var sObj = $("#" + treeNode.tId + "_span");//当前的节点
+        console.log('addHoverDom sObj ' + "#" + treeNode.tId + "_span");
+        console.log('icon: ' + treeNode.icon);
 
-             if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
+        if (treeNode.editNameFlag || $("#editBtn_"+ treeNode.tId).length>0) return;
 
-                 if(treeNode && treeNode.icon) {
-                     if (treeNode.icon.indexOf("13_") > 0) {
-                         //个人客户
-                         //修改
-                         editForm(treeNode.id);
-                     }else{
-                         return;
-                     }
-                 }
+        if(treeNode && treeNode.icon) {
+            if (treeNode.icon.indexOf("13_") > 0) {
+                //员工
+                var editStr = "<span class='button edit' id='editBtn_" + treeNode.tId
+                        + "' title='修改' onfocus='this.blur();'   ></span>";
+                sObj.after(editStr);
+                var editBtn = $("#editBtn_"+treeNode.tId);
+                if (editBtn) editBtn.bind("click", function(){
+                    editForm(treeNode.id);
+                });
+            }else{
+                //机构，部门，组
+                if (treeNode.editNameFlag || $("#addBtn_"+ treeNode.tId).length>0) return;
+                var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+                        + "' title='新增' onfocus='this.blur();'   ></span>";
+                sObj.after(addStr);
 
-                 return ;
-             }
-            return;
 
+                var btn = $("#addBtn_"+treeNode.tId);
+
+                if (btn) btn.bind("click", function(){
+                    $('#exampleModal').modal('show');
+                    $("input:hidden[name='orgId']")[0].value = treeNode.id;
+                    $("input:hidden[name='id']")[0].value = '';
+                    $("input:hidden[name='name']")[0].value = '';
+                    $("input:hidden[name='loginId']")[0].value = '';
+                    $("#id_remark").text( '') ;
+                    $("#id_remark").val( '') ;
+                    $("#parentId option[value='1']").attr("selected", true) ;
+
+                    return false;
+                });
+            }
         }
-        var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
-                + "' title='新增' onfocus='this.blur();' data-toggle='modal'  ></span>";
-        sObj.after(addStr);
-        var btn = $("#addBtn_"+treeNode.tId);
 
-        if (btn) btn.bind("click", function(){
-            $('#exampleModal').modal('show');
-            $("input:hidden[name='orgId']")[0].value = treeNode.id;
-            $("input:hidden[name='id']")[0].value = '';
-            $("input:hidden[name='name']")[0].value = '';
-            $("input:hidden[name='loginId']")[0].value = '';
-            $("#id_remark").text( '') ;
-            $("#id_remark").val( '') ;
-            $("#parentId option[value='1']").attr("selected", true) ;
 
-            return false;
-        });
     };
     function removeHoverDom(treeId, treeNode) {
         $("#addBtn_"+treeNode.tId).unbind().remove();
+        $("#editBtn_"+treeNode.tId).unbind().remove();
     };
 
 
@@ -140,9 +149,6 @@
                 $("input:hidden[name='id']")[0].value = id;
                 $("input[name='name']")[0].value = data.object.name;
                 $("input[name='loginId']")[0].value = data.object.loginId;
-
-                //$("#parentId option[value=" + data.object.parentId + "]").attr("selected", true) ;
-                //$("#parentId option[value=2]").attr("selected", true) ;
                 $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
