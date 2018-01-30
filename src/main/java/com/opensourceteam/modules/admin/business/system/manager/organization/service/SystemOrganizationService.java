@@ -49,7 +49,7 @@ public class SystemOrganizationService {
                     jsonObject.put("iconOpen",OrgTypeEnume.Group.getOpenUrl() );
                     jsonObject.put("iconClose",OrgTypeEnume.Group.getCloseUrl());
                 }
-                jsonObject.put("nocheck",true);
+                jsonObject.put("open",true);
                 jsonArray.add(jsonObject);
             }
         }

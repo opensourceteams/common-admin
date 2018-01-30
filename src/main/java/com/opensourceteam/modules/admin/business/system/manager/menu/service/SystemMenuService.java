@@ -49,6 +49,7 @@ public class SystemMenuService extends BaseService{
                 jsonObject.put("icon",OrgTypeEnume.Menu.getCloseUrl() );
                 jsonObject.put("iconOpen",OrgTypeEnume.Menu.getOpenUrl() );
                 jsonObject.put("iconClose",OrgTypeEnume.Menu.getCloseUrl());
+                jsonObject.put("open",true);
                 jsonArray.add(jsonObject);
             }
         }
@@ -133,7 +134,7 @@ public class SystemMenuService extends BaseService{
         Condition condition = new Condition(SystemMenu.class);
         condition.createCriteria().andEqualTo("isDel",false)
         ;
-        condition.setOrderByClause("id asc");
+        condition.setOrderByClause("menu_name asc");
         List<SystemMenu> list = systemMenuMapper.selectByExample(condition);
         return list;
     }

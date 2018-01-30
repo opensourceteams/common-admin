@@ -11,7 +11,7 @@ public enum  OrgTypeEnume {
     Department('2',"部门","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_close.png"),
     Group('3',"组","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_close.png"),
     Employee('4',"人员","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_close.png"),
-    Menu('5',"人员","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_close.png"),
+    Menu('5',"人员","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/menu_red.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/menu_blue.png"),
     ;
 
     private char value;

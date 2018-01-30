@@ -31,7 +31,6 @@
     };
 
 
-
     <#-- 初使化事件-->
     $(document).ready(function(){
 
