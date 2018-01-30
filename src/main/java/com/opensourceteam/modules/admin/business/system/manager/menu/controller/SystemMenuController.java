@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.opensourceteam.modules.admin.business.system.manager.menu.service.SystemMenuService;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.po.admin.SystemMenu;
+import com.opensourceteam.modules.po.admin.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +51,17 @@ public class SystemMenuController {
     }
 
 
-
+    /**
+     * 编辑页面
+     * @param vo
+     * @return
+     */
+    @RequestMapping("/editViewJSON")
+    @ResponseBody
+    Object editViewJSON(SystemMenu vo) {
+        ResultBack resultBack = systemMenuService.editViewJSON(vo);
+        return resultBack;
+    }
     /**
      * 编辑操作
      * @param vo

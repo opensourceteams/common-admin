@@ -10,6 +10,7 @@ import com.opensourceteam.modules.dao.admin.SystemMenuMapper;
 import com.opensourceteam.modules.enume.OrgTypeEnume;
 import com.opensourceteam.modules.enume.RootNodeEnume;
 import com.opensourceteam.modules.po.admin.SystemMenu;
+import com.opensourceteam.modules.po.admin.SystemUser;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -126,6 +127,14 @@ public class SystemMenuService extends BaseService{
                 resultVo.setIconClose(OrgTypeEnume.Menu.getCloseUrl());
                 return new ResultBack(true,resultVo);
             }
+        }
+        return new ResultBack(false,"");
+    }
+
+    public ResultBack editViewJSON(SystemMenu vo){
+        if( vo !=null && vo.getId() !=null){
+            SystemMenu po = systemMenuMapper.selectByPrimaryKey(vo.getId());
+            return new ResultBack(true,po);
         }
         return new ResultBack(false,"");
     }

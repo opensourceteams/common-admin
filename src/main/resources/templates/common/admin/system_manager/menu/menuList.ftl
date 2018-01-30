@@ -65,9 +65,14 @@
     function addHoverDom(treeId, treeNode) {
         treeNodeGlobal = treeNode;
         var sObj = $("#" + treeNode.tId + "_span");
+        console.log('treeNode.editNameFlag :' + treeNode.editNameFlag  +'  length:' + $("#addBtn_"+ treeNode.tId).length);
+        console.log('');
+
+
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
 
-             if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
+            if(treeNode.editNameFlag == true && $("#addBtn_"+treeNode.tId).length == 0){
+                console.log('修改');
                  //修改
                  editForm(treeNode.id);
                  return ;
@@ -149,8 +154,8 @@
                 $("input:hidden[name='operationType']")[0].value = 'edit-operation';
                 $("input:hidden[name='id']")[0].value = id;
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
-                $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("input[name='menuName']")[0].value = data.object.menuName;
+                $("#id_org_type option[value=" + data.object.typeCode + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
@@ -169,7 +174,7 @@
                 $("input:hidden[name='id']")[0].value = id;
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
                 $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("#typeCode option[value=" + data.object.orgType + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
