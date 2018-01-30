@@ -7,6 +7,7 @@ create table
 		);
 insert into tb_sequence values('t_system_organization',9,2);
 insert into tb_sequence values('t_system_user',10,2);
+insert into tb_sequence values('t_system_menu',1,1);
 DELIMITER //
 create function _nextval(n varchar(50)) returns integer
 begin

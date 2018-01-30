@@ -40,7 +40,6 @@ public class TBusinessShowMapperTest {
     public void tearDown() throws Exception {
     }
 
-
     /**
      * 插入一条数据
      */

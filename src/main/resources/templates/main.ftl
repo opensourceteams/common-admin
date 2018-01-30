@@ -48,9 +48,9 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView">机构管理</a>
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView" >机构管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/listView" >用户管理</a>
-                    <a class="dropdown-item" href="#">菜单管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/menu/listView">菜单管理</a>
                 </div>
             </li>
         </ul>
@@ -80,6 +80,8 @@
 <script src="/static/modules/bootstrap/bootstrap-4.0.0/vendor/js/popper.min.js" ></script>
 <script src="/static/modules/bootstrap/bootstrap-4.0.0/js/bootstrap.min.js" ></script>
 <script src="/static/common/admin/main/main.js" ></script>
+<script src="/static/common/core/common.core.string.js" ></script>
+<script src="/static/common/core/common.core.ztree.js" ></script>
 
 
 <script type="text/javascript">
