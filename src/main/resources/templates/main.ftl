@@ -62,7 +62,20 @@
 
     </div>
 </nav>
-
+<nav class="navbar navbar-expand-sm bg-light">
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" href="#">主页</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">系统设置</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">菜单管理</a>
+        </li>
+    </ul>
+</nav>
+​
 <main role="main" class="container frame_main_container">
 
     <div class="starter-template">
