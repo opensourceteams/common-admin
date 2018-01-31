@@ -122,13 +122,23 @@ public class SystemOrganizationService extends BaseService{
                     if( vo.getParentId() !=null){
                         po.setParentId(vo.getParentId());
                         TSystemOrganization parentPo = tSystemOrganizationMapper.selectByPrimaryKey(vo.getParentId());
-                        if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
-                            String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                        if(parentPo == null){
+                            String parentIds = "/" + RootNodeEnume.RootNodeParent.getValue() +"/"  + po.getId()  +"/";
                             po.setParentIds(parentIds);
-                            if(parentPo.getLevelNum() !=null ){
-                                po.setLevelNum( parentPo.getLevelNum() + 1);
+                            po.setLevelNum(  1);
+                        }else{
+                            if( org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
+
+                                String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                                po.setParentIds(parentIds);
+                                if(parentPo.getLevelNum() !=null ){
+                                    po.setLevelNum( parentPo.getLevelNum() + 1);
+                                }
                             }
+
                         }
+
+
                     }
                     tSystemOrganizationMapper.updateByPrimaryKey(po);
                 }
