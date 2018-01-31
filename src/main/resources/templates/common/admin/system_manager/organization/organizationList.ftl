@@ -58,6 +58,16 @@
         $(".button-form-submit").bind("click", function(){
             submitForm();
         });
+
+    <#-- 删除选中的节点 按钮 -->
+        $(".btn-delete-selected-node").bind("click", function(){
+            deleteTreeSelected("treeDemo");
+        });
+
+    <#-- 增加根节点 按钮 -->
+        $(".btn-add-root-node").bind("click", function(){
+            addRootNode();
+        });
     });
 
     var treeNodeGlobal ; //选中的节点
@@ -82,6 +92,7 @@
         if (btn) btn.bind("click", function(){
             $('#exampleModal').modal('show');
             $("input:hidden[name='parentId']")[0].value = treeNode.id;
+            $("input:hidden[name='operationType']")[0].value = 'add-operation';
             $("input:hidden[name='id']")[0].value = '';
             $("input:hidden[name='name']")[0].value = '';
             $("#id_remark").text( '') ;
@@ -102,14 +113,18 @@
     function submitForm() {
 
         var basicFormData = $('.submit-form').serialize();
-        $.post( "/common/admin/system_manager/organization/editJSONOrganization", basicFormData, function( data ) {
+        $.post( "/common/admin/system_manager/organization/editJSON", basicFormData, function( data ) {
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
-                if( $("input:hidden[name='id']")[0].value == ''){
+                var operationType=  $("input:hidden[name='operationType']")[0].value;
+                if( operationType== 'add-root-node-operation'){
+                    //增加 root 节点
+                    zTree.addNodes(null, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
+                }if(operationType == 'add-operation'){
                     //增加
                     zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }else{
+                }if( operationType == 'edit-operation'){
                     //修改
                     treeNodeGlobal.name = data.object.name ;
                     zTree.updateNode(treeNodeGlobal) ;
@@ -126,11 +141,12 @@
      * 修改(节点)
      */
     function editForm(id) {
-        $.post( "/common/admin/system_manager/organization/editViewJSONOrganization", {id:id}, function( data ) {
+        $.post( "/common/admin/system_manager/organization/editViewJSON", {id:id}, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
+                $("input:hidden[name='operationType']")[0].value = 'edit-operation';
                 $("input[name='name']")[0].value = data.object.name;
                 $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
@@ -145,7 +161,7 @@
      * 删除(节点)
      */
     function zTreeOnRemove(event,treeId, treeNode) {
-        $.post( "/common/admin/system_manager/organization/deleteJSONOrganization", {id:treeNode.id}, function( data ) {
+        $.post( "/common/admin/system_manager/organization/deleteJSON", {id:treeNode.id}, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
@@ -168,7 +184,54 @@
         }
         console.log("["+ obj +"] " + description);
     }
+
+    <#-- 增加根节点 -->
+    function addRootNode() {
+        $('#exampleModal').modal('show');
+        $("input:hidden[name='operationType']")[0].value = 'add-root-node-operation';
+        $("input:hidden[name='parentId']")[0].value = '';
+        $("input:hidden[name='id']")[0].value = '';
+        $("input:hidden[name='name']")[0].value = '';
+        $("#id_remark").text( '') ;
+        $("#id_remark").val( '') ;
+        $("#orgType option[value='1']").attr("selected", true) ;
+
+    }
+
+    /**
+     * 删除选中的所有树
+     * @param treeId
+     */
+    function deleteTreeSelected(treeId) {
+        var zTree = $.fn.zTree.getZTreeObj(treeId);
+        var nodes = zTree.getCheckedNodes();
+        var selectedIds = '';
+        for (var i=0, l=nodes.length; i<l; i++) {
+            var checked = nodes[i].checked;
+            if(checked){
+                selectedIds += nodes[i].id +",";
+            }
+
+        }
+        selectedIds = selectedIds.removeEndWith(",") ;
+        if(selectedIds ==''){
+            alert('请先选择需要删除的节点');
+            return;
+        }
+
+        $.post( "/common/admin/system_manager/organization/deleteIdsJSON", {ids:selectedIds}, function( data ) {
+            if(data && data.success){
+                removeCheckedNodes(zTree,nodes);
+            }
+
+        }, "json" );
+
+    }
+
 </SCRIPT>
+
+<button type="button" class="btn btn-success btn-add-root-node">增加根节点</button>
+<button type="button" class="btn btn-success btn-delete-selected-node">批量删除</button>
 
 <div class="content_wrap">
     <div class="zTreeDemoBackground left">
@@ -189,6 +252,7 @@
             </div>
             <div class="modal-body">
                 <form method="post"  class="submit-form">
+                    <input type="hidden" name="operationType" />
                     <input type="hidden" name="parentId" />
                     <input type="hidden" name="id" />
                     <div class="form-group">

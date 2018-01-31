@@ -77,7 +77,7 @@ public class SystemMenuController {
 
     /**
      * 删除操作
-     * @param vo
+     * @param id
      * @return
      */
     @RequestMapping("/deleteJSON")
@@ -89,7 +89,7 @@ public class SystemMenuController {
 
     /**
      * 删除操作
-     * @param vo
+     * @param ids
      * @return
      */
     @RequestMapping("/deleteIdsJSON")

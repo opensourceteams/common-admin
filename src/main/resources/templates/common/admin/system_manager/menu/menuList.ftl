@@ -65,9 +65,6 @@
     function addHoverDom(treeId, treeNode) {
         treeNodeGlobal = treeNode;
         var sObj = $("#" + treeNode.tId + "_span");
-        console.log('treeNode.editNameFlag :' + treeNode.editNameFlag  +'  length:' + $("#addBtn_"+ treeNode.tId).length);
-        console.log('');
-
 
         if (treeNode.editNameFlag || $("#addBtn_"+treeNode.tId).length>0){
 
@@ -126,13 +123,14 @@
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
-                if( $("input:hidden[name='operationType']")[0].value == 'add-root-node-operation'){
+                var operationType=  $("input:hidden[name='operationType']")[0].value;
+                if( operationType== 'add-root-node-operation'){
                     //增加 root 节点
                     zTree.addNodes(null, {id:data.object.id, pId:data.object.parentId, name:data.object.menuName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }if( $("input:hidden[name='operationType']")[0].value == 'add-operation'){
+                }if(operationType == 'add-operation'){
                     //增加
                     zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.menuName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }if( $("input:hidden[name='operationType']")[0].value == 'edit-operation'){
+                }if( operationTypee == 'edit-operation'){
                     //修改
                     treeNodeGlobal.name = data.object.menuName ;
                     zTree.updateNode(treeNodeGlobal) ;
@@ -223,11 +221,11 @@
 
     }
 </SCRIPT>
-<p>
+
 
     <button type="button" class="btn btn-success btn-add-root-node">增加根节点</button>
     <button type="button" class="btn btn-success btn-delete-selected-node">批量删除</button>
-</p>
+
 <div class="content_wrap">
     <div class="zTreeDemoBackground left">
         <ul id="treeDemo" class="ztree"></ul>

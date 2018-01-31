@@ -2,16 +2,21 @@ package com.opensourceteam.modules.admin.business.system.manager.organization.se
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.organization.vo.OrganizationVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.TSystemOrganizationMapper;
 import com.opensourceteam.modules.enume.OrgTypeEnume;
+import com.opensourceteam.modules.enume.RootNodeEnume;
+import com.opensourceteam.modules.po.admin.SystemMenu;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -22,14 +27,14 @@ import java.util.List;
  * 功能描述:
  */
 @Service
-public class SystemOrganizationService {
+public class SystemOrganizationService extends BaseService{
 
     @Autowired
     TSystemOrganizationMapper tSystemOrganizationMapper;
 
     public JSONArray getList(){
         JSONArray jsonArray = new JSONArray();
-        List<TSystemOrganization> list = getAllOrganization(0);
+        List<TSystemOrganization> list = getAllOrganization();
         if(list !=null && list.size() >0){
             for(TSystemOrganization po : list){
                 JSONObject jsonObject = new JSONObject();
@@ -58,7 +63,7 @@ public class SystemOrganizationService {
         return jsonArray;
     }
 
-    public ResultBack editViewJSONOrganization(TSystemOrganization vo){
+    public ResultBack editViewJSON(TSystemOrganization vo){
         if( vo !=null && vo.getId() !=null){
             TSystemOrganization po = tSystemOrganizationMapper.selectByPrimaryKey(vo.getId());
             return new ResultBack(true,po);
@@ -66,7 +71,7 @@ public class SystemOrganizationService {
         return new ResultBack(false,"");
     }
 
-    public ResultBack deleteJSONOrganization(TSystemOrganization vo){
+    public ResultBack deleteJSON(TSystemOrganization vo){
         if( vo !=null && vo.getId() !=null){
             tSystemOrganizationMapper.deleteByPrimaryKey(vo);
             return new ResultBack(true,"");
@@ -82,16 +87,26 @@ public class SystemOrganizationService {
                 BeanUtils.copyProperties(vo,po);
                 po.setCreateDate(new Date());
                 po.setIsDel(false);
-                po.setCreator(0);
-
+                po.setCreator(getCurrentUserId());
+                if(vo.getParentId() == null){
+                    po.setParentId(RootNodeEnume.RootNodeParent.getValue());
+                }
                 tSystemOrganizationMapper.insert(po);
-
-                TSystemOrganization parentPo = tSystemOrganizationMapper.selectByPrimaryKey(vo.getParentId());
-                if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
-                    String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                if(vo.getParentId() == null){
+                    String parentIds = "/" +RootNodeEnume.RootNodeParent.getValue() +"/"  + po.getId()  +"/";
                     po.setParentIds(parentIds);
                     tSystemOrganizationMapper.updateByPrimaryKey(po);
+                }else{
+                    TSystemOrganization parentPo = tSystemOrganizationMapper.selectByPrimaryKey(vo.getParentId());
+                    if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
+                        String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
+                        po.setParentIds(parentIds);
+                        tSystemOrganizationMapper.updateByPrimaryKey(po);
+                    }
                 }
+
+
+
             }else{
                 //更新
                 po = tSystemOrganizationMapper.selectByPrimaryKey(vo.getId());
@@ -111,7 +126,7 @@ public class SystemOrganizationService {
         return new ResultBack(true,po);
     }
 
-    public ResultBack editJSONOrganizationDealIcon(TSystemOrganization vo){
+    public ResultBack editJSON(TSystemOrganization vo){
         ResultBack resultBack = editJSONOrganization(vo);
         if(resultBack.getSuccess() && resultBack.getObject() !=null){
                 if(resultBack.getObject() instanceof TSystemOrganization ){
@@ -137,13 +152,41 @@ public class SystemOrganizationService {
         return new ResultBack(false,"");
     }
 
-    public List<TSystemOrganization> getAllOrganization(Integer userId){
+    public List<TSystemOrganization> getAllOrganization(){
         Condition condition = new Condition(TSystemOrganization.class);
         condition.createCriteria().andEqualTo("isDel",false)
-                .andEqualTo("creator",userId)
+
         ;
         condition.setOrderByClause("id asc");
         List<TSystemOrganization> list = tSystemOrganizationMapper.selectByExample(condition);
         return list;
+    }
+
+    public ResultBack deleteJSON(Integer key){
+        if(key !=null ){
+            tSystemOrganizationMapper.deleteByPrimaryKey(key);
+            return new ResultBack(true,"");
+        }
+
+        return new ResultBack(false,"");
+    }
+
+    public ResultBack deleteIdsJSON(String ids){
+        if(StringUtils.isNotEmpty(ids) ){
+            String[] idArray = ids.split(",");
+            List<Integer> idList = new ArrayList<>();
+            for(String id : idArray){
+                if(StringUtils.isNotEmpty(id) ){
+                    idList.add(Integer.parseInt(id));
+                }
+
+            }
+            Condition condition = new Condition(TSystemOrganization.class);
+            condition.createCriteria().andIn("id",idList);
+            tSystemOrganizationMapper.deleteByExample(condition);
+            return new ResultBack(true,"");
+        }
+
+        return new ResultBack(false,"");
     }
 }

@@ -8,7 +8,7 @@ package com.opensourceteam.modules.enume;
  */
 public enum RootNodeEnume {
 
-    RootNode(0,"根节点")
+    RootNodeParent(0,"根节点")
     ;
 
     RootNodeEnume(Integer value, String name) {

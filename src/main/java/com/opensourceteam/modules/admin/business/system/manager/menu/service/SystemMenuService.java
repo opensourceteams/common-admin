@@ -4,14 +4,11 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.menu.vo.SystemMenuVo;
-import com.opensourceteam.modules.admin.business.system.manager.organization.vo.OrganizationVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemMenuMapper;
 import com.opensourceteam.modules.enume.OrgTypeEnume;
 import com.opensourceteam.modules.enume.RootNodeEnume;
 import com.opensourceteam.modules.po.admin.SystemMenu;
-import com.opensourceteam.modules.po.admin.SystemUser;
-import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -74,7 +71,7 @@ public class SystemMenuService extends BaseService{
                 po.setIsDel(false);
                 //po.setId(0);
                 if(vo.getParentId() == null){
-                    po.setParentId(RootNodeEnume.RootNode.getValue());
+                    po.setParentId(RootNodeEnume.RootNodeParent.getValue());
                     po.setLevleNum(1);
                 }
 

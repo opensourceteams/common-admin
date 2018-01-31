@@ -57,10 +57,10 @@ public class SystemOrganizationController {
      * @param vo
      * @return
      */
-    @RequestMapping("/editJSONOrganization")
+    @RequestMapping("/editJSON")
     @ResponseBody
-    Object editJSONOrganization(TSystemOrganization vo) {
-        ResultBack resultBack = organizationService.editJSONOrganizationDealIcon(vo);
+    Object editJSON(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.editJSON(vo);
 
         logger.info("[OrganizationController jsonList]");
         return resultBack;
@@ -71,10 +71,10 @@ public class SystemOrganizationController {
      * @param vo
      * @return
      */
-    @RequestMapping("/editViewJSONOrganization")
+    @RequestMapping("/editViewJSON")
     @ResponseBody
-    Object editViewJSONOrganization(TSystemOrganization vo) {
-        ResultBack resultBack = organizationService.editViewJSONOrganization(vo);
+    Object editViewJSON(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.editViewJSON(vo);
         return resultBack;
     }
 
@@ -83,10 +83,23 @@ public class SystemOrganizationController {
      * @param vo
      * @return
      */
-    @RequestMapping("/deleteJSONOrganization")
+    @RequestMapping("/deleteJSON")
     @ResponseBody
-    Object deleteJSONOrganization(TSystemOrganization vo) {
-        ResultBack resultBack = organizationService.deleteJSONOrganization(vo);
+    Object deleteJSON(TSystemOrganization vo) {
+        ResultBack resultBack = organizationService.deleteJSON(vo);
+        return resultBack;
+    }
+
+
+    /**
+     * 删除操作
+     * @param ids
+     * @return
+     */
+    @RequestMapping("/deleteIdsJSON")
+    @ResponseBody
+    Object deleteIdsJSON(String ids) {
+        ResultBack resultBack = organizationService.deleteIdsJSON(ids);
         return resultBack;
     }
 }
