@@ -14,5 +14,6 @@
     <result column="creator" jdbcType="INTEGER" property="creator" />
     <result column="is_del" jdbcType="BIT" property="isDel" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="level_num" jdbcType="INTEGER" property="levelNum" />
   </resultMap>
 </mapper>

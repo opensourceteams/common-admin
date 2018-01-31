@@ -39,6 +39,9 @@ public class TSystemOrganization {
      */
     private String remark;
 
+    @Column(name = "level_num")
+    private Integer levelNum;
+
     /**
      * @return id
      */
@@ -177,6 +180,20 @@ public class TSystemOrganization {
         this.remark = remark;
     }
 
+    /**
+     * @return level_num
+     */
+    public Integer getLevelNum() {
+        return levelNum;
+    }
+
+    /**
+     * @param levelNum
+     */
+    public void setLevelNum(Integer levelNum) {
+        this.levelNum = levelNum;
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -192,6 +209,7 @@ public class TSystemOrganization {
         sb.append(", creator=").append(creator);
         sb.append(", isDel=").append(isDel);
         sb.append(", remark=").append(remark);
+        sb.append(", levelNum=").append(levelNum);
         sb.append("]");
         return sb.toString();
     }

@@ -7,6 +7,7 @@ CREATE TABLE t_system_organization (
 	name varchar(200) NULL COMMENT '机构名称',
 	parent_id int(10) not null,
   parent_ids varchar(1000)  null,
+  level_num int(4) DEFAULT 0 null ,
 	org_type char(1) NOT NULL COMMENT '机构类型(1:机构 2:部门 3:组)',
 	create_date DATETIME NOT NULL,
 	creator int(10) NOT NULL,
