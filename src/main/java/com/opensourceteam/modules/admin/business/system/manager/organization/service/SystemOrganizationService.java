@@ -89,8 +89,9 @@ public class SystemOrganizationService extends BaseService{
                 po.setIsDel(false);
                 po.setCreator(getCurrentUserId());
                 if(vo.getParentId() == null){
+                    //根节点
                     po.setParentId(RootNodeEnume.RootNodeParent.getValue());
-                    po.setLevelNum(0);
+                    po.setLevelNum(1);
                 }
                 tSystemOrganizationMapper.insert(po);
                 if(vo.getParentId() == null){
