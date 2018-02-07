@@ -102,7 +102,7 @@
         $("input:hidden[name='operationType']")[0].value = 'add-root-node-operation';
         $("input:hidden[name='parentId']")[0].value = '';
         $("input:hidden[name='id']")[0].value = '';
-        $("input:hidden[name='name']")[0].value = '';
+        $("input:hidden[name='menuName']")[0].value = '';
         $("#id_remark").text( '') ;
         $("#id_remark").val( '') ;
         $("#id_org_type option[value='1']").attr("selected", true) ;
@@ -127,10 +127,10 @@
                 if( operationType== 'add-root-node-operation'){
                     //增加 root 节点
                     zTree.addNodes(null, {id:data.object.id, pId:data.object.parentId, name:data.object.menuName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }if(operationType == 'add-operation'){
+                }else if(operationType == 'add-operation'){
                     //增加
                     zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.menuName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }if( operationTypee == 'edit-operation'){
+                }else if( operationTypee == 'edit-operation'){
                     //修改
                     treeNodeGlobal.name = data.object.menuName ;
                     zTree.updateNode(treeNodeGlobal) ;

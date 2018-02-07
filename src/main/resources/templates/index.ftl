@@ -10,10 +10,10 @@
     <title>登录</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="/static/modules/bootstrap/bootstrap-4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
-    <link href="static/bootstrap/bootstrap-4.0.0/examples/signin.css" rel="stylesheet">
+    <link href="static/modules/bootstrap/bootstrap-4.0.0/examples/signin.css" rel="stylesheet">
 </head>
 
 <body class="text-center">

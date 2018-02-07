@@ -48,6 +48,9 @@
             <generatedKey column="id" sqlStatement="select _nextval(''t_system_menu'')" identity="false" type="pre"/>
         </table>
 
+        <table tableName="t_system_role" domainObjectName="SystemRole"  >
+            <generatedKey column="id" sqlStatement="select _nextval(''t_system_menu'')" identity="false" type="pre"/>
+        </table>
     <!--    <table tableName="t_test_uuid" >
             &lt;!&ndash; uuid&ndash;&gt;
             <generatedKey column="id" sqlStatement="select replace(uuid(), ''-'', '''')" identity="false" type="pre"/>

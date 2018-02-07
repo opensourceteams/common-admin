@@ -6,7 +6,7 @@ import com.opensourceteam.modules.admin.business.system.manager.organization.ser
 import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemUserMapper;
-import com.opensourceteam.modules.enume.OrgTypeEnume;
+import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
@@ -113,9 +113,9 @@ public class SystemUserService {
                 SystemUser voNew = (SystemUser)resultBack.getObject();
                 SystemUserVo resultVo = new SystemUserVo();
                 BeanUtils.copyProperties(voNew,resultVo);
-                resultVo.setIcon(OrgTypeEnume.Employee.getCloseUrl() );
-                resultVo.setIconOpen(OrgTypeEnume.Employee.getOpenUrl() );
-                resultVo.setIconClose(OrgTypeEnume.Employee.getCloseUrl());
+                resultVo.setIcon(IconTypeEnume.Employee.getCloseUrl() );
+                resultVo.setIconOpen(IconTypeEnume.Employee.getOpenUrl() );
+                resultVo.setIconClose(IconTypeEnume.Employee.getCloseUrl());
                 return new ResultBack(true,resultVo);
             }
         }
@@ -140,9 +140,9 @@ public class SystemUserService {
                 jsonObject.put("id",po.getId());
                 jsonObject.put("pId",po.getOrgId());
                 jsonObject.put("name",po.getName());
-                jsonObject.put("icon",OrgTypeEnume.Employee.getCloseUrl() );
-                jsonObject.put("iconOpen",OrgTypeEnume.Employee.getOpenUrl() );
-                jsonObject.put("iconClose",OrgTypeEnume.Employee.getCloseUrl());
+                jsonObject.put("icon", IconTypeEnume.Employee.getCloseUrl() );
+                jsonObject.put("iconOpen", IconTypeEnume.Employee.getOpenUrl() );
+                jsonObject.put("iconClose", IconTypeEnume.Employee.getCloseUrl());
 
                 jsonArray.add(jsonObject);
             }

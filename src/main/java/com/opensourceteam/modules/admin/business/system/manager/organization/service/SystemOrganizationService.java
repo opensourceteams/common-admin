@@ -6,9 +6,8 @@ import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.organization.vo.OrganizationVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.TSystemOrganizationMapper;
-import com.opensourceteam.modules.enume.OrgTypeEnume;
+import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.enume.RootNodeEnume;
-import com.opensourceteam.modules.po.admin.SystemMenu;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -41,18 +40,18 @@ public class SystemOrganizationService extends BaseService{
                 jsonObject.put("id",po.getId());
                 jsonObject.put("pId",po.getParentId());
                 jsonObject.put("name",po.getName());
-                if((OrgTypeEnume.Organization.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Organization.getCloseUrl() );
-                    jsonObject.put("iconOpen",OrgTypeEnume.Organization.getOpenUrl() );
-                    jsonObject.put("iconClose",OrgTypeEnume.Organization.getCloseUrl());
-                }else if((OrgTypeEnume.Department.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Department.getCloseUrl() );
-                    jsonObject.put("iconOpen",OrgTypeEnume.Department.getOpenUrl() );
-                    jsonObject.put("iconClose",OrgTypeEnume.Department.getCloseUrl());
-                }else if((OrgTypeEnume.Group.getValue()+"").equals(po.getOrgType())){
-                    jsonObject.put("icon",OrgTypeEnume.Group.getCloseUrl() );
-                    jsonObject.put("iconOpen",OrgTypeEnume.Group.getOpenUrl() );
-                    jsonObject.put("iconClose",OrgTypeEnume.Group.getCloseUrl());
+                if((IconTypeEnume.Organization.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon", IconTypeEnume.Organization.getCloseUrl() );
+                    jsonObject.put("iconOpen", IconTypeEnume.Organization.getOpenUrl() );
+                    jsonObject.put("iconClose", IconTypeEnume.Organization.getCloseUrl());
+                }else if((IconTypeEnume.Department.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon", IconTypeEnume.Department.getCloseUrl() );
+                    jsonObject.put("iconOpen", IconTypeEnume.Department.getOpenUrl() );
+                    jsonObject.put("iconClose", IconTypeEnume.Department.getCloseUrl());
+                }else if((IconTypeEnume.Group.getValue()+"").equals(po.getOrgType())){
+                    jsonObject.put("icon", IconTypeEnume.Group.getCloseUrl() );
+                    jsonObject.put("iconOpen", IconTypeEnume.Group.getOpenUrl() );
+                    jsonObject.put("iconClose", IconTypeEnume.Group.getCloseUrl());
                 }
                 jsonObject.put("open",true);
                 jsonArray.add(jsonObject);
@@ -160,18 +159,18 @@ public class SystemOrganizationService extends BaseService{
                     TSystemOrganization voNew = (TSystemOrganization)resultBack.getObject();
                     OrganizationVo organizationVo = new OrganizationVo();
                     BeanUtils.copyProperties(voNew,organizationVo);
-                    if((OrgTypeEnume.Organization.getValue()+"").equals(organizationVo.getOrgType())){
-                        organizationVo.setIcon(OrgTypeEnume.Organization.getCloseUrl() );
-                        organizationVo.setIconOpen(OrgTypeEnume.Organization.getOpenUrl() );
-                        organizationVo.setIconClose(OrgTypeEnume.Organization.getCloseUrl());
-                    }else if((OrgTypeEnume.Department.getValue()+"").equals(organizationVo.getOrgType())){
-                        organizationVo.setIcon(OrgTypeEnume.Department.getCloseUrl() );
-                        organizationVo.setIconOpen(OrgTypeEnume.Department.getOpenUrl() );
-                        organizationVo.setIconClose(OrgTypeEnume.Department.getCloseUrl());
-                    }else if((OrgTypeEnume.Group.getValue()+"").equals(organizationVo.getOrgType())){
-                        organizationVo.setIcon(OrgTypeEnume.Group.getCloseUrl() );
-                        organizationVo.setIconOpen(OrgTypeEnume.Group.getOpenUrl() );
-                        organizationVo.setIconClose(OrgTypeEnume.Group.getCloseUrl());
+                    if((IconTypeEnume.Organization.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(IconTypeEnume.Organization.getCloseUrl() );
+                        organizationVo.setIconOpen(IconTypeEnume.Organization.getOpenUrl() );
+                        organizationVo.setIconClose(IconTypeEnume.Organization.getCloseUrl());
+                    }else if((IconTypeEnume.Department.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(IconTypeEnume.Department.getCloseUrl() );
+                        organizationVo.setIconOpen(IconTypeEnume.Department.getOpenUrl() );
+                        organizationVo.setIconClose(IconTypeEnume.Department.getCloseUrl());
+                    }else if((IconTypeEnume.Group.getValue()+"").equals(organizationVo.getOrgType())){
+                        organizationVo.setIcon(IconTypeEnume.Group.getCloseUrl() );
+                        organizationVo.setIconOpen(IconTypeEnume.Group.getOpenUrl() );
+                        organizationVo.setIconClose(IconTypeEnume.Group.getCloseUrl());
                     }
                     return new ResultBack(true,organizationVo);
                 }

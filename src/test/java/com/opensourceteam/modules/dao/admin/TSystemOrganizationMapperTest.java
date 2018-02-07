@@ -1,7 +1,7 @@
 package com.opensourceteam.modules.dao.admin;
 
 import com.opensourceteam.modules.admin.configuration.spring.CustomMVCConfiguration;
-import com.opensourceteam.modules.enume.OrgTypeEnume;
+import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +36,7 @@ public class TSystemOrganizationMapperTest {
         TSystemOrganization po = new TSystemOrganization();
 
         po.setName("总公司");
-        po.setOrgType(OrgTypeEnume.Organization.getValue()+"");
+        po.setOrgType(IconTypeEnume.Organization.getValue()+"");
         po.setParentId(0);
         po.setCreateDate(new Date());
         po.setCreator(0);

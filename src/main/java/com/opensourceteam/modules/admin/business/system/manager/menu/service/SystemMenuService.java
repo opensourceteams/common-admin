@@ -6,7 +6,7 @@ import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.menu.vo.SystemMenuVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemMenuMapper;
-import com.opensourceteam.modules.enume.OrgTypeEnume;
+import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.enume.RootNodeEnume;
 import com.opensourceteam.modules.po.admin.SystemMenu;
 import org.apache.commons.lang3.StringUtils;
@@ -44,9 +44,9 @@ public class SystemMenuService extends BaseService{
                 jsonObject.put("id",po.getId());
                 jsonObject.put("pId",po.getParentId());
                 jsonObject.put("name",po.getMenuName());
-                jsonObject.put("icon",OrgTypeEnume.Menu.getCloseUrl() );
-                jsonObject.put("iconOpen",OrgTypeEnume.Menu.getOpenUrl() );
-                jsonObject.put("iconClose",OrgTypeEnume.Menu.getCloseUrl());
+                jsonObject.put("icon", IconTypeEnume.Menu.getCloseUrl() );
+                jsonObject.put("iconOpen", IconTypeEnume.Menu.getOpenUrl() );
+                jsonObject.put("iconClose", IconTypeEnume.Menu.getCloseUrl());
                 jsonObject.put("open",true);
                 jsonArray.add(jsonObject);
             }
@@ -119,9 +119,9 @@ public class SystemMenuService extends BaseService{
                 SystemMenu editVo = (SystemMenu)resultBack.getObject();
                 SystemMenuVo resultVo = new SystemMenuVo();
                 BeanUtils.copyProperties(editVo,resultVo);
-                resultVo.setIcon(OrgTypeEnume.Menu.getCloseUrl() );
-                resultVo.setIconOpen(OrgTypeEnume.Menu.getOpenUrl() );
-                resultVo.setIconClose(OrgTypeEnume.Menu.getCloseUrl());
+                resultVo.setIcon(IconTypeEnume.Menu.getCloseUrl() );
+                resultVo.setIconOpen(IconTypeEnume.Menu.getOpenUrl() );
+                resultVo.setIconClose(IconTypeEnume.Menu.getCloseUrl());
                 return new ResultBack(true,resultVo);
             }
         }
