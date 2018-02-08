@@ -68,13 +68,29 @@ CREATE TABLE t_system_menu (
 	is_del bit(1) NOT NULL default 0 ,
 	remark varchar(100) NULL COMMENT '备注'
 );
+/**
+ * 权限
+ */
+drop table if EXISTS t_system_permission;
+CREATE TABLE t_system_permission (
+	id int(10) primary key not null auto_increment ,
+	permission_name varchar(300) not NULL COMMENT '权限名称',
+	permission_code varchar(300) not NULL COMMENT '权限代码',
+	menu_id int(10) not null COMMENT '菜单id' ,
+	create_date DATETIME NOT NULL,
+	creator int(10) NOT NULL,
+	update_date DATETIME NOT NULL,
+	updator int(10) NOT NULL,
+	is_del bit(1) NOT NULL default 0 ,
+	remark varchar(100) NULL COMMENT '备注'
+);
 
 /**
  * 角色
  */
 drop table if EXISTS t_system_role;
 CREATE TABLE t_system_role (
-	id int(10) primary key not null ,
+	id int(10) primary key not null auto_increment ,
 	role_name varchar(300) not NULL COMMENT '角色名',
 	role_code varchar(300) not NULL COMMENT '角色代码',
 	org_id int(10) not null COMMENT '机构ID',

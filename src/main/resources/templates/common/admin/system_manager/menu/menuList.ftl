@@ -130,7 +130,7 @@
                 }else if(operationType == 'add-operation'){
                     //增加
                     zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.menuName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
-                }else if( operationTypee == 'edit-operation'){
+                }else if( operationType == 'edit-operation'){
                     //修改
                     treeNodeGlobal.name = data.object.menuName ;
                     zTree.updateNode(treeNodeGlobal) ;

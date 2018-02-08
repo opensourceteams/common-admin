@@ -3,7 +3,9 @@ package com.opensourceteam.modules.admin.business.system.manager.role.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
+import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.dao.admin.SystemRoleMapper;
+import com.opensourceteam.modules.enume.BusinessTypeEnume;
 import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.SystemRole;
 import com.opensourceteam.modules.po.admin.SystemUser;
@@ -42,7 +44,8 @@ public class SystemRoleService {
         if(list !=null && list.size() >0){
             for(SystemRole po : list){
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",po.getId());
+                String id = IdUtils.getPrefixId(BusinessTypeEnume.Role,po.getId());
+                jsonObject.put("id",id);
                 jsonObject.put("pId",po.getOrgId());
                 jsonObject.put("name",po.getRoleName());
                 jsonObject.put("icon", IconTypeEnume.Role.getCloseUrl() );

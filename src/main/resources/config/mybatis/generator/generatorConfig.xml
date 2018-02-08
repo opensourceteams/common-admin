@@ -35,7 +35,7 @@
         </table>
         <table tableName="t_system_organization" >
             <!-- mysql 主键自增长-->
-            <generatedKey column="id" sqlStatement="select _nextval(''t_system_organization'')" identity="false" type="pre"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
         <table tableName="t_business_check" >
             <!-- mysql 主键自增长-->
@@ -44,8 +44,11 @@
         <table tableName="t_system_user" domainObjectName="SystemUser"  >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
+        <table tableName="t_system_permission" domainObjectName="SystemPermission"  >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
         <table tableName="t_system_menu" domainObjectName="SystemMenu"  >
-            <generatedKey column="id" sqlStatement="select _nextval(''t_system_menu'')" identity="false" type="pre"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
 
         <table tableName="t_system_role" domainObjectName="SystemRole"  >

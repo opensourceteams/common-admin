@@ -3,41 +3,29 @@ package com.opensourceteam.modules.po.admin;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "t_system_menu")
-public class SystemMenu {
+@Table(name = "t_system_permission")
+public class SystemPermission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**
-     * 菜单名称
+     * 权限名称
      */
-    @Column(name = "menu_name")
-    private String menuName;
-
-    @Column(name = "parent_id")
-    private Integer parentId;
+    @Column(name = "permission_name")
+    private String permissionName;
 
     /**
-     * 菜单url
+     * 权限代码
      */
-    @Column(name = "menu_url")
-    private String menuUrl;
-
-    @Column(name = "parent_ids")
-    private String parentIds;
+    @Column(name = "permission_code")
+    private String permissionCode;
 
     /**
-     * 菜单类型(1:菜单2:权限节点)
+     * 菜单id
      */
-    @Column(name = "type_code")
-    private String typeCode;
-
-    /**
-     * 菜单是第几级
-     */
-    @Column(name = "levle_num")
-    private Integer levleNum;
+    @Column(name = "menu_id")
+    private Integer menuId;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -72,103 +60,57 @@ public class SystemMenu {
     }
 
     /**
-     * 获取菜单名称
+     * 获取权限名称
      *
-     * @return menu_name - 菜单名称
+     * @return permission_name - 权限名称
      */
-    public String getMenuName() {
-        return menuName;
+    public String getPermissionName() {
+        return permissionName;
     }
 
     /**
-     * 设置菜单名称
+     * 设置权限名称
      *
-     * @param menuName 菜单名称
+     * @param permissionName 权限名称
      */
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
+    public void setPermissionName(String permissionName) {
+        this.permissionName = permissionName;
     }
 
     /**
-     * @return parent_id
-     */
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    /**
-     * @param parentId
-     */
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
-
-    /**
-     * 获取菜单url
+     * 获取权限代码
      *
-     * @return menu_url - 菜单url
+     * @return permission_code - 权限代码
      */
-    public String getMenuUrl() {
-        return menuUrl;
+    public String getPermissionCode() {
+        return permissionCode;
     }
 
     /**
-     * 设置菜单url
+     * 设置权限代码
      *
-     * @param menuUrl 菜单url
+     * @param permissionCode 权限代码
      */
-    public void setMenuUrl(String menuUrl) {
-        this.menuUrl = menuUrl;
+    public void setPermissionCode(String permissionCode) {
+        this.permissionCode = permissionCode;
     }
 
     /**
-     * @return parent_ids
-     */
-    public String getParentIds() {
-        return parentIds;
-    }
-
-    /**
-     * @param parentIds
-     */
-    public void setParentIds(String parentIds) {
-        this.parentIds = parentIds;
-    }
-
-    /**
-     * 获取菜单类型(1:菜单2:权限节点)
+     * 获取菜单id
      *
-     * @return type_code - 菜单类型(1:菜单2:权限节点)
+     * @return menu_id - 菜单id
      */
-    public String getTypeCode() {
-        return typeCode;
+    public Integer getMenuId() {
+        return menuId;
     }
 
     /**
-     * 设置菜单类型(1:菜单2:权限节点)
+     * 设置菜单id
      *
-     * @param typeCode 菜单类型(1:菜单2:权限节点)
+     * @param menuId 菜单id
      */
-    public void setTypeCode(String typeCode) {
-        this.typeCode = typeCode;
-    }
-
-    /**
-     * 获取菜单是第几级
-     *
-     * @return levle_num - 菜单是第几级
-     */
-    public Integer getLevleNum() {
-        return levleNum;
-    }
-
-    /**
-     * 设置菜单是第几级
-     *
-     * @param levleNum 菜单是第几级
-     */
-    public void setLevleNum(Integer levleNum) {
-        this.levleNum = levleNum;
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     /**
@@ -266,12 +208,9 @@ public class SystemMenu {
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
         sb.append(", id=").append(id);
-        sb.append(", menuName=").append(menuName);
-        sb.append(", parentId=").append(parentId);
-        sb.append(", menuUrl=").append(menuUrl);
-        sb.append(", parentIds=").append(parentIds);
-        sb.append(", typeCode=").append(typeCode);
-        sb.append(", levleNum=").append(levleNum);
+        sb.append(", permissionName=").append(permissionName);
+        sb.append(", permissionCode=").append(permissionCode);
+        sb.append(", menuId=").append(menuId);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", updateDate=").append(updateDate);

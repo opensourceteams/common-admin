@@ -8,7 +8,9 @@ package com.opensourceteam.modules.enume;
  */
 public enum BusinessTypeEnume {
 
-    User("user","用户")
+    User("user","用户"),
+    Role("role","角色"),
+    Permission("permission","权限"),
     ;
 
     BusinessTypeEnume(String prefix, String name) {

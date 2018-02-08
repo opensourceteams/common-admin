@@ -40,7 +40,7 @@
     $(document).ready(function(){
 
         $.ajax({
-            url: "/common/admin/system_manager/role/jsonList",
+            url: "/common/admin/system_manager/permission/jsonList",
             data:{},
             dataType:"json",
             success: function(result){
@@ -67,7 +67,7 @@
         if (treeNode.editNameFlag || $("#removeBtn_"+ treeNode.tId).length>0) return;
 
         if(treeNode && treeNode.icon) {
-            if (treeNode.icon.indexOf("13_") > 0) {
+            if (treeNode.icon.indexOf("permission_") > 0) {
                 //员工
                 var removeStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
                         + "' title='删除' onfocus='this.blur();'   ></span>";
@@ -95,10 +95,8 @@
 
                 if (btn) btn.bind("click", function(){
                     $('#exampleModal').modal('show');
-                    $("input:hidden[name='orgId']")[0].value = treeNode.id;
+                    $("input:hidden[name='menuId']")[0].value = treeNode.id;
                     $("input:hidden[name='id']")[0].value = '';
-                    $("input:hidden[name='name']")[0].value = '';
-                    $("input:hidden[name='loginId']")[0].value = '';
                     $("#id_remark").text( '') ;
                     $("#id_remark").val( '') ;
                     $("#parentId option[value='1']").attr("selected", true) ;
@@ -123,16 +121,16 @@
     function submitForm() {
 
         var basicFormData = $('.submit-form').serialize();
-        $.post( "/common/admin/system_manager/role/editJSON", basicFormData, function( data ) {
+        $.post( "/common/admin/system_manager/permission/editJSON", basicFormData, function( data ) {
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
                 if( $("input:hidden[name='id']")[0].value == ''){
                     //增加
-                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
+                    zTree.addNodes(treeNodeGlobal, {id:data.object.sId, pId:data.object.menuId, name:data.object.permissionName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
                 }else{
                     //修改
-                    treeNodeGlobal.name = data.object.name ;
+                    treeNodeGlobal.name = data.object.permissionName ;
                     zTree.updateNode(treeNodeGlobal) ;
                 }
 
@@ -148,13 +146,14 @@
      */
     function editForm(id) {
         id = id.split('_')[1];
-        $.post( "/common/admin/system_manager/role/editViewJSON", {id:id }, function( data ) {
+        $.post( "/common/admin/system_manager/permission/editViewJSON", {id:id }, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
-                $("input[name='name']")[0].value = data.object.name;
-                $("input[name='loginId']")[0].value = data.object.loginId;
-                $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
+                $("input:hidden[name='menuId']")[0].value = data.object.menuId;
+                $("input[name='permissionName']")[0].value = data.object.permissionName;
+                $("input[name='permissionCode']")[0].value = data.object.permissionCode;
+
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
@@ -168,7 +167,7 @@
      */
     function deleteForm(id) {
         id = id.split('_')[1];
-        $.post( "/common/admin/system_manager/role/deleteJSON", {id:id}, function( data ) {
+        $.post( "/common/admin/system_manager/permission/deleteJSON", {id:id}, function( data ) {
             if(data && data.success){
 
                 if(data && data.success){
@@ -215,39 +214,25 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">角色编辑</h5>
+                <h5 class="modal-title" id="exampleModalLabel">权限编辑</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <form method="post"  class="submit-form">
-                    <input type="hidden" name="orgId" />
+                    <input type="hidden" name="menuId" />
                     <input type="hidden" name="id" />
                     <div class="form-group">
-                        <label for="loginId" class="col-form-label">登录名:</label>
-                        <input type="text" class="form-control" id="loginId" name="loginId">
+                        <label for="permissionName" class="col-form-label">权限名:</label>
+                        <input type="text" class="form-control" id="permissionName" name="permissionName">
                     </div>
                     <div class="form-group">
-                        <label for="loginPwd" class="col-form-label">登录密码:</label>
-                        <input type="password" class="form-control" id="loginPwd" name="loginPwd">
+                        <label for="permissionCode" class="col-form-label">权限代码:</label>
+                        <input type="text" class="form-control" id="permissionCode" name="permissionCode">
                     </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">姓名:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelect2">上级</label>
-                        <select  class="form-control selector_parentId" id="exampleSelect2" id="parentId"  name="parentId" >
 
-                            <#if (superiors?? && superiors?size gt  0) >
-                                <#list superiors as vo>
-                                    <option value="${vo.id}">${vo.name}</option>
-                                </#list>
-                            </#if>
 
-                        </select>
-                    </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">备注:</label>
                         <textarea class="form-control" id="id_remark" name="remark"></textarea>
