@@ -225,29 +225,15 @@
                     <input type="hidden" name="orgId" />
                     <input type="hidden" name="id" />
                     <div class="form-group">
-                        <label for="loginId" class="col-form-label">登录名:</label>
-                        <input type="text" class="form-control" id="loginId" name="loginId">
+                        <label for="role_name" class="col-form-label">角色名称:</label>
+                        <input type="text" class="form-control" id="role_name" name="role_name">
                     </div>
                     <div class="form-group">
-                        <label for="loginPwd" class="col-form-label">登录密码:</label>
-                        <input type="password" class="form-control" id="loginPwd" name="loginPwd">
+                        <label for="roleCode" class="col-form-label">角色代码:</label>
+                        <input type="text" class="form-control" id="roleCode" name="roleCode">
                     </div>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">姓名:</label>
-                        <input type="text" class="form-control" id="recipient-name" name="name">
-                    </div>
-                    <div class="form-group">
-                        <label for="exampleSelect2">上级</label>
-                        <select  class="form-control selector_parentId" id="exampleSelect2" id="parentId"  name="parentId" >
 
-                            <#if (superiors?? && superiors?size gt  0) >
-                                <#list superiors as vo>
-                                    <option value="${vo.id}">${vo.name}</option>
-                                </#list>
-                            </#if>
 
-                        </select>
-                    </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">备注:</label>
                         <textarea class="form-control" id="id_remark" name="remark"></textarea>
