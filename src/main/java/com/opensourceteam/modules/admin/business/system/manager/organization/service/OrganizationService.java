@@ -90,7 +90,7 @@ public class OrganizationService {
     public List<TSystemOrganization> getAllOrganization(Integer userId){
         Condition condition = new Condition(TSystemOrganization.class);
         condition.createCriteria().andEqualTo("isDel",false)
-                .andEqualTo("creator",userId)
+               // .andEqualTo("creator",userId)
         ;
         condition.setOrderByClause("id asc");
         List<TSystemOrganization> list = tSystemOrganizationMapper.selectByExample(condition);
