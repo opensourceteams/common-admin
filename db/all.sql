@@ -17,8 +17,8 @@ CREATE TABLE t_system_organization (
  * 用户
  */
 drop table if EXISTS t_system_user;
-CREATE TABLE t_system_user (
-	id int(10) primary key not null ,
+CREATE TABLE t_system_user  (
+	id int(10) primary key not null auto_increment ,
 	login_id varchar(30) not NULL COMMENT '登录名',
 	login_pwd varchar(300) not NULL COMMENT '登录密码',
 	name varchar(200) NULL COMMENT '用户名称',

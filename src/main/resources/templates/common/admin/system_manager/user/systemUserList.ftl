@@ -147,7 +147,8 @@
      * 修改(节点)
      */
     function editForm(id) {
-        $.post( "/common/admin/system_manager/user/editViewJSON", {id:id}, function( data ) {
+        id = id.split('_')[1];
+        $.post( "/common/admin/system_manager/user/editViewJSON", {id:id }, function( data ) {
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
@@ -166,6 +167,7 @@
      * 删除(节点)
      */
     function deleteForm(id) {
+        id = id.split('_')[1];
         $.post( "/common/admin/system_manager/user/deleteJSON", {id:id}, function( data ) {
             if(data && data.success){
 
