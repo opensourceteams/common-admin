@@ -42,7 +42,7 @@
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
         <table tableName="t_system_user" domainObjectName="SystemUser"  >
-            <generatedKey column="id" sqlStatement="select _nextval(''t_system_user'')" identity="false" type="pre"/>
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
         <table tableName="t_system_menu" domainObjectName="SystemMenu"  >
             <generatedKey column="id" sqlStatement="select _nextval(''t_system_menu'')" identity="false" type="pre"/>

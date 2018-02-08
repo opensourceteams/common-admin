@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.opensourceteam.modules.dao.admin.TSystemOrganizationMapper">
-  <resultMap id="BaseResultMap" type="com.opensourceteam.modules.po.admin.TSystemOrganization">
+<mapper namespace="com.opensourceteam.modules.dao.admin.SystemRoleMapper">
+  <resultMap id="BaseResultMap" type="com.opensourceteam.modules.po.admin.SystemRole">
     <!--
       WARNING - @mbg.generated
     -->
     <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="name" jdbcType="VARCHAR" property="name" />
-    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
-    <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
-    <result column="level_num" jdbcType="INTEGER" property="levelNum" />
-    <result column="org_type" jdbcType="CHAR" property="orgType" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="role_code" jdbcType="VARCHAR" property="roleCode" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
+    <result column="updator" jdbcType="INTEGER" property="updator" />
     <result column="is_del" jdbcType="BIT" property="isDel" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
   </resultMap>

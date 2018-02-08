@@ -3,22 +3,6 @@ select * from t_system_user;
 
 
 
-/**
- * 角色
- */
-drop table if EXISTS t_system_role;
-CREATE TABLE t_system_role (
-	id int(10) primary key not null ,
-	role_name varchar(300) not NULL COMMENT '角色名',
-	role_code varchar(300) not NULL COMMENT '角色代码',
-	org_id int(10) not null COMMENT '机构ID',
-	create_date DATETIME NOT NULL,
-	creator int(10) NOT NULL,
-	update_date DATETIME NOT NULL,
-	updator int(10) NOT NULL,
-	is_del bit(1) NOT NULL default 0 ,
-	remark varchar(100) NULL COMMENT '备注'
-);
 
 
 

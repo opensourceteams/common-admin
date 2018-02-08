@@ -43,8 +43,8 @@ insert into t_system_user(id,login_id,login_pwd,name,parent_id,
 parent_ids,level_num,org_id,type_code,status_code,
 create_date,creator,is_del)
 values
-(2,'root','root','超级管理员',0,
-'/0/2/',1,0,'1','1',
+(1,'root','root','超级管理员',0,
+'/0/1/',1,0,'1','1',
 now(),1,0);
 
 
@@ -61,6 +61,23 @@ CREATE TABLE t_system_menu (
     parent_ids varchar(1000)  null,
 	type_code char(1) NOT NULL COMMENT '菜单类型(1:菜单2:权限节点)',
 	levle_num int(4)  null COMMENT '菜单是第几级',
+	create_date DATETIME NOT NULL,
+	creator int(10) NOT NULL,
+	update_date DATETIME NOT NULL,
+	updator int(10) NOT NULL,
+	is_del bit(1) NOT NULL default 0 ,
+	remark varchar(100) NULL COMMENT '备注'
+);
+
+/**
+ * 角色
+ */
+drop table if EXISTS t_system_role;
+CREATE TABLE t_system_role (
+	id int(10) primary key not null ,
+	role_name varchar(300) not NULL COMMENT '角色名',
+	role_code varchar(300) not NULL COMMENT '角色代码',
+	org_id int(10) not null COMMENT '机构ID',
 	create_date DATETIME NOT NULL,
 	creator int(10) NOT NULL,
 	update_date DATETIME NOT NULL,

@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
 import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
+import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemUserMapper;
+import com.opensourceteam.modules.enume.BusinessTypeEnume;
 import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
@@ -137,7 +139,8 @@ public class SystemUserService {
         if(list !=null && list.size() >0){
             for(SystemUser po : list){
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",po.getId());
+                String id = IdUtils.getPrefixId(BusinessTypeEnume.User,po.getId());
+                jsonObject.put("id", id);
                 jsonObject.put("pId",po.getOrgId());
                 jsonObject.put("name",po.getName());
                 jsonObject.put("icon", IconTypeEnume.Employee.getCloseUrl() );

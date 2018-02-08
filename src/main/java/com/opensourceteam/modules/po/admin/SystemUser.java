@@ -6,7 +6,7 @@ import javax.persistence.*;
 @Table(name = "t_system_user")
 public class SystemUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "select _nextval('t_system_user')")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     /**

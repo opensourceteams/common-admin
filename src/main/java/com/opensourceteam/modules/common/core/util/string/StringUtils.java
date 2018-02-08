@@ -24,4 +24,18 @@ public class StringUtils {
             return str;
         }
     }
+
+    /**
+     * 将 int ID 转成带前缀的字符串id
+     * @param prefix
+     * @param id
+     * @return
+     */
+    public static String getPrefixId(String prefix,Integer id){
+        if(id == null ){
+            return prefix + "_";
+        }else{
+            return prefix + "_" + Integer.toString(id);
+        }
+    }
 }

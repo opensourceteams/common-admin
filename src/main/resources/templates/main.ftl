@@ -51,6 +51,7 @@
                     <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView" >机构管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/listView" >用户管理</a>
                     <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/menu/listView">菜单管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/role/listView">角色管理</a>
                 </div>
             </li>
         </ul>

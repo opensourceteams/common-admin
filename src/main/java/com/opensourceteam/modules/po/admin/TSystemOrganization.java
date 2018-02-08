@@ -20,6 +20,9 @@ public class TSystemOrganization {
     @Column(name = "parent_ids")
     private String parentIds;
 
+    @Column(name = "level_num")
+    private Integer levelNum;
+
     /**
      * 机构类型(1:机构 2:部门 3:组)
      */
@@ -38,9 +41,6 @@ public class TSystemOrganization {
      * 备注
      */
     private String remark;
-
-    @Column(name = "level_num")
-    private Integer levelNum;
 
     /**
      * @return id
@@ -100,6 +100,20 @@ public class TSystemOrganization {
      */
     public void setParentIds(String parentIds) {
         this.parentIds = parentIds;
+    }
+
+    /**
+     * @return level_num
+     */
+    public Integer getLevelNum() {
+        return levelNum;
+    }
+
+    /**
+     * @param levelNum
+     */
+    public void setLevelNum(Integer levelNum) {
+        this.levelNum = levelNum;
     }
 
     /**
@@ -180,20 +194,6 @@ public class TSystemOrganization {
         this.remark = remark;
     }
 
-    /**
-     * @return level_num
-     */
-    public Integer getLevelNum() {
-        return levelNum;
-    }
-
-    /**
-     * @param levelNum
-     */
-    public void setLevelNum(Integer levelNum) {
-        this.levelNum = levelNum;
-    }
-
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -204,12 +204,12 @@ public class TSystemOrganization {
         sb.append(", name=").append(name);
         sb.append(", parentId=").append(parentId);
         sb.append(", parentIds=").append(parentIds);
+        sb.append(", levelNum=").append(levelNum);
         sb.append(", orgType=").append(orgType);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", isDel=").append(isDel);
         sb.append(", remark=").append(remark);
-        sb.append(", levelNum=").append(levelNum);
         sb.append("]");
         return sb.toString();
     }
