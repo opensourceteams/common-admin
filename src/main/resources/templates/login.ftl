@@ -17,13 +17,13 @@
 </head>
 
 <body class="text-center">
-<form class="form-signin" action="main" method="post">
+<form class="form-signin" action="doLogin" method="post">
     <#--<img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
     <h1 class="h3 mb-3 font-weight-normal">登录</h1>
     <label for="inputEmail" class="sr-only">用户名</label>
-    <input type="text" id="inputEmail" class="form-control" placeholder="用户名" required autofocus>
+    <input type="text" id="inputEmail" name="loginId" class="form-control" placeholder="用户名" required autofocus>
     <label for="inputPassword" class="sr-only">密码</label>
-    <input type="password" id="inputPassword" class="form-control" placeholder="密码" required>
+    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="密码" required>
     <div class="checkbox mb-3">
         <label>
             <input type="checkbox" value="remember-me"> 记住密码

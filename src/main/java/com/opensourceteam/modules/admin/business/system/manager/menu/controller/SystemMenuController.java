@@ -5,6 +5,7 @@ import com.opensourceteam.modules.admin.business.system.manager.menu.service.Sys
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.po.admin.SystemMenu;
 import com.opensourceteam.modules.po.admin.SystemUser;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,7 @@ public class SystemMenuController {
      * 视图页
      * @return
      */
+    @RequiresPermissions({"admin:systemmanager:menu:listView"})
     @RequestMapping("/listView")
     ModelAndView listView() {
         ModelAndView modelAndView = new ModelAndView("/common/admin/system_manager/menu/menuList");
@@ -42,6 +44,7 @@ public class SystemMenuController {
      * 列表JSON
      * @return
      */
+    @RequiresPermissions({"admin:systemmanager:menu:jsonList"})
     @RequestMapping("/jsonList")
     @ResponseBody
     String jsonList() {

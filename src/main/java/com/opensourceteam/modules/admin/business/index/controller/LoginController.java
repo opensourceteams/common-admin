@@ -1,5 +1,9 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.PrincipalCollection;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -21,6 +25,19 @@ public class LoginController {
     @RequestMapping("/login")
     ModelAndView login() {
         ModelAndView modelAndView = new ModelAndView("login");
+        return modelAndView;
+    }
+
+    @RequestMapping("/doLogin")
+    ModelAndView doLogin(String loginId,String password) {
+        ModelAndView modelAndView = new ModelAndView("redirect:/login");
+        UsernamePasswordToken token = new UsernamePasswordToken("admin","000000");
+        SecurityUtils.getSubject().login(token);
+        if( SecurityUtils.getSubject().isAuthenticated()){
+            modelAndView = new ModelAndView("redirect:/main");
+        }
+
+
         return modelAndView;
     }
 }
