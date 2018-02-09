@@ -3,6 +3,7 @@ package com.opensourceteam.modules.admin.business.system.manager.role.service;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.base.service.BaseService;
+import com.opensourceteam.modules.admin.business.system.manager.menu.service.SystemMenuService;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
 import com.opensourceteam.modules.admin.business.system.manager.role.vo.SystemRoleVo;
 
@@ -40,6 +41,9 @@ public class SystemRoleService extends BaseService {
     SystemRoleMapper systemRoleMapper;
 
     @Autowired
+    SystemMenuService systemMenuService;
+
+    @Autowired
     SystemRolePermissionMapper systemRolePermissionMapper;
 
 
@@ -51,14 +55,15 @@ public class SystemRoleService extends BaseService {
         return jsonArray;
     }
 
+
+
+
     public JSONArray getList(){
         JSONArray jsonArray = new JSONArray();
         List<SystemRole> list = selectAll();
         if(list !=null && list.size() >0){
             for(SystemRole po : list){
                 JSONObject jsonObject = new JSONObject();
-
-
                 String sId = IdUtils.getPrefixId(BusinessTypeEnume.Role,po.getId());
                 jsonObject.put("sId",sId);
                 jsonObject.put("id",sId);
@@ -97,8 +102,6 @@ public class SystemRoleService extends BaseService {
                 systemRoleMapper.insert(po);
                 if(po !=null && po.getId() !=null){
                     vo.setId(po.getId());
-                    deleteRolePermission(po.getId());
-                    insertRolePermissionRelation(vo);
                 }
 
 
@@ -112,10 +115,14 @@ public class SystemRoleService extends BaseService {
                     po.setUpdateDate(new Date());
                     po.setUpdator(getCurrentUserId());
                     systemRoleMapper.updateByPrimaryKey(po);
+                    vo.setId(po.getId());
                 }
 
 
             }
+
+            deleteRolePermission(po.getId());
+            insertRolePermissionRelation(vo);
 
         }
 
@@ -166,7 +173,9 @@ public class SystemRoleService extends BaseService {
     public ResultBack editViewJSON(Integer id){
         if( id !=null){
             SystemRole po = systemRoleMapper.selectByPrimaryKey(id);
-            return new ResultBack(true,po);
+            SystemRoleVo systemRoleVo = new SystemRoleVo();
+            BeanUtils.copyProperties(po,systemRoleVo);
+            return new ResultBack(true,systemRoleVo);
         }
         return new ResultBack(false,"");
     }

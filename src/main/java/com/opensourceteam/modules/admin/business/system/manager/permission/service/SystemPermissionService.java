@@ -9,9 +9,11 @@ import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUs
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemPermissionMapper;
+import com.opensourceteam.modules.dao.admin.SystemRolePermissionMapper;
 import com.opensourceteam.modules.enume.BusinessTypeEnume;
 import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.SystemPermission;
+import com.opensourceteam.modules.po.admin.SystemRolePermission;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +23,10 @@ import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * 开发人:刘文
@@ -30,7 +35,7 @@ import java.util.List;
  * 功能描述:
  */
 @Service
-public class PermissionService extends BaseService{
+public class SystemPermissionService extends BaseService{
 
     @Autowired
     SystemPermissionMapper systemPermissionMapper;
@@ -38,12 +43,35 @@ public class PermissionService extends BaseService{
     @Autowired
     SystemMenuService systemMenuService;
 
+    @Autowired
+    SystemRolePermissionMapper systemRolePermissionMapper;
+
     public JSONArray getAllList(){
         JSONArray jsonArray = new JSONArray();
         jsonArray.addAll( systemMenuService.getList());
         jsonArray.addAll(getList());
         return jsonArray;
     }
+
+    public JSONArray getListByRoleId(Integer roleId){
+        JSONArray jsonArray = new JSONArray();
+        jsonArray.addAll( systemMenuService.getList());
+        jsonArray.addAll(getList(getMapPermissionByRoleId(roleId)));
+        return jsonArray;
+    }
+
+    public Map<Integer,Boolean> getMapPermissionByRoleId(Integer roleId){
+        Map<Integer,Boolean> map = new HashMap<>();
+        List<SystemRolePermission> systemPermissionList = selectRolePermissionByRoleId(roleId);
+        if(systemPermissionList !=null && systemPermissionList.size()>0){
+            for(SystemRolePermission systemRolePermission : systemPermissionList){
+                map.put(IdUtils.getRemovePrefixId(systemRolePermission.getPermissionId()),true);
+            }
+        }
+        return map;
+    }
+
+
 
     public JSONArray getList(){
         JSONArray jsonArray = new JSONArray();
@@ -65,11 +93,47 @@ public class PermissionService extends BaseService{
 
         return jsonArray;
     }
+
+    public JSONArray getList(Map<Integer,Boolean> mapPermissionByRole){
+        JSONArray jsonArray = new JSONArray();
+        List<SystemPermission> list = selectAll();
+        if(list !=null && list.size() >0){
+            for(SystemPermission po : list){
+                JSONObject jsonObject = new JSONObject();
+                String id = IdUtils.getPrefixId(BusinessTypeEnume.Permission,po.getId());
+                jsonObject.put("id", id);
+                jsonObject.put("pId",po.getMenuId());
+                jsonObject.put("name",po.getPermissionName());
+                jsonObject.put("icon", IconTypeEnume.Permision.getCloseUrl() );
+                jsonObject.put("iconOpen", IconTypeEnume.Permision.getOpenUrl() );
+                jsonObject.put("iconClose", IconTypeEnume.Permision.getCloseUrl());
+                if(mapPermissionByRole.containsKey(po.getId())){
+                    //有该权限
+                    jsonObject.put("checked",true);
+                }else{
+                    //没有该权限
+                    jsonObject.put("checked",false);
+                }
+
+                jsonArray.add(jsonObject);
+            }
+        }
+
+        return jsonArray;
+    }
     public List<SystemPermission> selectAll(){
         Condition condition = new Condition(SystemUser.class);
         condition.createCriteria().andEqualTo("isDel",false);
         condition.setOrderByClause("permission_name asc");
         return systemPermissionMapper.selectByExample(condition);
+    }
+    public List<SystemRolePermission> selectRolePermissionByRoleId(Integer roleId){
+        Condition condition = new Condition(SystemRolePermission.class);
+        condition.createCriteria().andEqualTo("isDel",false)
+        .andEqualTo("roleId",roleId)
+        ;
+        condition.setOrderByClause("permission_id asc");
+        return systemRolePermissionMapper.selectByExample(condition);
     }
 
     public ResultBack editViewJSON(SystemPermission vo){

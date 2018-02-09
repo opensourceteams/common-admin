@@ -68,7 +68,7 @@
         },
         simpleData:{
             enable:false,
-            idKey:"sId",
+            idKey:"id",
             pIdKey:"pId",
             rootPid:0
         }
@@ -134,8 +134,8 @@
                 var btn = $("#addBtn_"+treeNode.tId);
 
                 if (btn) btn.bind("click", function(){
-
-                    $("input:hidden[name='orgId']")[0].value = treeNode.id;
+                    var orgId  = treeNode.id.split('_')[1];
+                    $("input:hidden[name='orgId']")[0].value = orgId;
                     $("input:hidden[name='id']")[0].value = '';
                     $("input[name='roleName']")[0].value = '';
                     $("input[name='roleCode']")[0].value = '';
@@ -214,11 +214,22 @@
                 $("input[name='roleName']")[0].value = data.object.roleName;
                 $("input[name='roleCode']")[0].value = data.object.roleCode;
                 $("#id_remark").text( data.object.remark) ;
-                $('#exampleModal').modal('show');
+                //$('#exampleModal').modal('show');
 
             }
 
         }, "json" );
+
+
+        $.post( "/common/admin/system_manager/role/jsonListPermissionByRoleId", {roleId:id }, function( data ) {
+            if(data && data.success){
+
+                $.fn.zTree.init($("#treePermission"), setting_base, data.object);
+                $('#exampleModal').modal('show');
+            }
+
+        }, "json" );
+
     }
 
     /**
@@ -292,11 +303,8 @@
                         <input type="text" class="form-control" id="roleCode" name="roleCode">
                     </div>
                     <div class="form-group">
-                        <label for="roleCode" class="col-form-label">角色代码:</label>
-                        <input type="text" class="form-control" id="roleCode" name="roleCode">
-                    </div>
-                    <div class="form-group">
-                        权限
+
+                        <label for="treePermission" class="col-form-label">权限:</label>
                         <ul id="treePermission" class="ztree"></ul>
                     </div>
 

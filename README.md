@@ -9,7 +9,10 @@
 
 - git:https://github.com/opensourceteams/common-admin
 
-
+## common_admin_v1.0.5
+###  权限管理、角色管理
+- 权限增、删、查、修改
+- 角色配权限，增、删、查、修改
 
 ## common_admin_v1.0.4
 ###  菜单管理

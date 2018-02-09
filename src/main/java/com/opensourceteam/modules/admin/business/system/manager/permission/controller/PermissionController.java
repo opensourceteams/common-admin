@@ -1,12 +1,10 @@
 package com.opensourceteam.modules.admin.business.system.manager.permission.controller;
 
 import com.alibaba.fastjson.JSONArray;
-import com.opensourceteam.modules.admin.business.system.manager.permission.service.PermissionService;
+import com.opensourceteam.modules.admin.business.system.manager.permission.service.SystemPermissionService;
 import com.opensourceteam.modules.admin.business.system.manager.user.controller.SystemUserController;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.po.admin.SystemPermission;
-import com.opensourceteam.modules.po.admin.SystemUser;
-import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +26,7 @@ public class PermissionController {
     Logger logger = LoggerFactory.getLogger(SystemUserController.class);
 
     @Autowired
-    PermissionService permissionService;
+    SystemPermissionService permissionService;
 
     /**
      * 视图页

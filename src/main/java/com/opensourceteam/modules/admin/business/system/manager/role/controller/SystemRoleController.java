@@ -1,6 +1,7 @@
 package com.opensourceteam.modules.admin.business.system.manager.role.controller;
 
 import com.alibaba.fastjson.JSONArray;
+import com.opensourceteam.modules.admin.business.system.manager.permission.service.SystemPermissionService;
 import com.opensourceteam.modules.admin.business.system.manager.role.service.SystemRoleService;
 import com.opensourceteam.modules.admin.business.system.manager.role.vo.SystemRoleVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
@@ -27,6 +28,9 @@ public class SystemRoleController {
     @Autowired
     SystemRoleService systemRoleService;
 
+    @Autowired
+    SystemPermissionService systemPermissionService;
+
 
     /**
      * 视图页
@@ -47,6 +51,17 @@ public class SystemRoleController {
     String jsonList() {
         ResultBack resultBack = new ResultBack(true, systemRoleService.getAllList());
         logger.info("[OrganizationController jsonList]");
+        return JSONArray.toJSONString(resultBack);
+    }
+
+    /**
+     * 列表JSON
+     * @return
+     */
+    @RequestMapping("/jsonListPermissionByRoleId")
+    @ResponseBody
+    String jsonListPermissionByRoleId(Integer roleId) {
+        ResultBack resultBack = new ResultBack(true, systemPermissionService.getListByRoleId(roleId));
         return JSONArray.toJSONString(resultBack);
     }
 
