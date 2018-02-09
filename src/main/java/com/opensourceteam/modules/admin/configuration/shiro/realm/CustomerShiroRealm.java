@@ -2,10 +2,14 @@ package com.opensourceteam.modules.admin.configuration.shiro.realm;
 
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.AuthorizationInfo;
+import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * 开发人:刘文
@@ -21,7 +25,12 @@ public class CustomerShiroRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
         logger.info("[CustomerShiroRealm doGetAuthorizationInfo]");
-        return null;
+        String loginId = principalCollection.getPrimaryPrincipal().toString();
+        SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        Collection<String> permissions = new ArrayList<>();
+        permissions.add("admin:systemmanager:menu:listView");
+        info.addStringPermissions(permissions);
+        return info;
     }
 
     @Override
