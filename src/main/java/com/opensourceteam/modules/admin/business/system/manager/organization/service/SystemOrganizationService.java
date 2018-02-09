@@ -39,10 +39,12 @@ public class SystemOrganizationService extends BaseService{
         if(list !=null && list.size() >0){
             for(TSystemOrganization po : list){
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("id",po.getId());
+
                 String sId = IdUtils.getPrefixId(BusinessTypeEnume.Organization,po.getId());
+                String sPid = IdUtils.getPrefixId(BusinessTypeEnume.Organization,po.getParentId());
                 jsonObject.put("sId",sId);
-                jsonObject.put("pId",po.getParentId());
+                jsonObject.put("id",sId);
+                jsonObject.put("pId",sPid);
                 jsonObject.put("name",po.getName());
                 if((IconTypeEnume.Organization.getValue()+"").equals(po.getOrgType())){
                     jsonObject.put("icon", IconTypeEnume.Organization.getCloseUrl() );

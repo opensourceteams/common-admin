@@ -32,13 +32,13 @@
         callback: {
             //onRemove: zTreeOnRemove ,//删除事件
             beforeEditName: zTreeBeforeEditName
-        }/*,
+        },
         simpleData:{
             enable:true,
-            idKey:"sId",
+            idKey:"id",
             pIdKey:"pId",
             rootPid:0
-        }*/
+        }
     };
 
     var setting_base = {
@@ -67,7 +67,7 @@
             //beforeEditName: zTreeBeforeEditName
         },
         simpleData:{
-            enable:true,
+            enable:false,
             idKey:"sId",
             pIdKey:"pId",
             rootPid:0
@@ -211,9 +211,8 @@
             if(data && data.success){
 
                 $("input:hidden[name='id']")[0].value = id;
-                $("input[name='name']")[0].value = data.object.name;
-                $("input[name='loginId']")[0].value = data.object.loginId;
-                $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
+                $("input[name='roleName']")[0].value = data.object.roleName;
+                $("input[name='roleCode']")[0].value = data.object.roleCode;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 

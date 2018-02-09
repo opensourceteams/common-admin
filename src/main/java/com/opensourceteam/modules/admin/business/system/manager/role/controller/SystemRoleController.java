@@ -3,10 +3,7 @@ package com.opensourceteam.modules.admin.business.system.manager.role.controller
 import com.alibaba.fastjson.JSONArray;
 import com.opensourceteam.modules.admin.business.system.manager.role.service.SystemRoleService;
 import com.opensourceteam.modules.admin.business.system.manager.role.vo.SystemRoleVo;
-import com.opensourceteam.modules.admin.business.system.manager.user.controller.SystemUserController;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
-import com.opensourceteam.modules.po.admin.SystemRole;
-import com.opensourceteam.modules.po.admin.SystemUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +48,18 @@ public class SystemRoleController {
         ResultBack resultBack = new ResultBack(true, systemRoleService.getAllList());
         logger.info("[OrganizationController jsonList]");
         return JSONArray.toJSONString(resultBack);
+    }
+
+    /**
+     * 编辑页面
+     * @param id
+     * @return
+     */
+    @RequestMapping("/editViewJSON")
+    @ResponseBody
+    Object editViewJSON(Integer id) {
+        ResultBack resultBack = systemRoleService.editViewJSON(id);
+        return resultBack;
     }
 
     /**

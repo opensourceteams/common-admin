@@ -58,11 +58,11 @@ public class SystemRoleService extends BaseService {
             for(SystemRole po : list){
                 JSONObject jsonObject = new JSONObject();
 
-                jsonObject.put("id",po.getId());
+
                 String sId = IdUtils.getPrefixId(BusinessTypeEnume.Role,po.getId());
                 jsonObject.put("sId",sId);
-                //jsonObject.put("id",sId);
-                jsonObject.put("pId",po.getOrgId());
+                jsonObject.put("id",sId);
+                jsonObject.put("pId",IdUtils.getPrefixId(BusinessTypeEnume.Organization,po.getOrgId()));
                 jsonObject.put("name",po.getRoleName());
                 jsonObject.put("icon", IconTypeEnume.Role.getCloseUrl() );
                 jsonObject.put("iconOpen", IconTypeEnume.Role.getOpenUrl() );
@@ -161,6 +161,14 @@ public class SystemRoleService extends BaseService {
         }
 
         return true;
+    }
+
+    public ResultBack editViewJSON(Integer id){
+        if( id !=null){
+            SystemRole po = systemRoleMapper.selectByPrimaryKey(id);
+            return new ResultBack(true,po);
+        }
+        return new ResultBack(false,"");
     }
 
     public Boolean deleteRolePermission(Integer roleId){
