@@ -28,4 +28,51 @@ function removeCheckedNodes(treeObj,nodes)
 }
 
 
+/**
+ * 得到选中的ids
+ * @param treeId
+ * @returns {string}
+ */
+function getTreeSelectedIds(treeId) {
+    var zTree = $.fn.zTree.getZTreeObj(treeId);
+    var nodes = zTree.getCheckedNodes();
+    var selectedIds = '';
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        var checked = nodes[i].checked;
+        if (checked) {
+            selectedIds += nodes[i].id + ",";
+        }
+
+    }
+    selectedIds = selectedIds.removeEndWith(",");
+    return selectedIds;
+}
+
+/**
+ * 得到选中的ids
+ * @param treeId
+ * @returns {string}
+ */
+function getTreeSelectedIdsRemovePrefix(treeId) {
+    var zTree = $.fn.zTree.getZTreeObj(treeId);
+    var nodes = zTree.getCheckedNodes();
+    var selectedIds = '';
+    for (var i = 0, l = nodes.length; i < l; i++) {
+        var checked = nodes[i].checked;
+        if (checked) {
+            if(nodes[i].id.toString().indexOf("_") == -1){
+                //不带前缀的id
+                selectedIds += nodes[i].id + ",";
+            }else{
+                //带前缀的id
+                selectedIds += nodes[i].id.split('_')[1] + ",";
+            }
+
+        }
+
+    }
+    selectedIds = selectedIds.removeEndWith(",");
+    return selectedIds;
+}
+
 

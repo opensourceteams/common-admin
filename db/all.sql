@@ -101,3 +101,19 @@ CREATE TABLE t_system_role (
 	is_del bit(1) NOT NULL default 0 ,
 	remark varchar(100) NULL COMMENT '备注'
 );
+
+/**
+ * 角色权限关联表
+ */
+drop table if EXISTS t_system_role_permission;
+CREATE TABLE t_system_role_permission (
+	role_id int(10) not null  ,
+	permission_id varchar(100) not null,
+	create_date DATETIME NOT NULL,
+	creator int(10) NOT NULL,
+	update_date DATETIME NOT NULL,
+	updator int(10) NOT NULL,
+	is_del bit(1) NOT NULL default 0 ,
+	remark varchar(100) NULL COMMENT '备注',
+	 primary key (role_id,permission_id)
+);

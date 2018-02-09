@@ -3,29 +3,15 @@ package com.opensourceteam.modules.po.admin;
 import java.util.Date;
 import javax.persistence.*;
 
-@Table(name = "t_system_role")
-public class SystemRole {
+@Table(name = "t_system_role_permission")
+public class SystemRolePermission {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    @Column(name = "role_id")
+    private Integer roleId;
 
-    /**
-     * 角色名
-     */
-    @Column(name = "role_name")
-    private String roleName;
-
-    /**
-     * 角色代码
-     */
-    @Column(name = "role_code")
-    private String roleCode;
-
-    /**
-     * 机构ID
-     */
-    @Column(name = "org_id")
-    private Integer orgId;
+    @Id
+    @Column(name = "permission_id")
+    private String permissionId;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -46,71 +32,31 @@ public class SystemRole {
     private String remark;
 
     /**
-     * @return id
+     * @return role_id
      */
-    public Integer getId() {
-        return id;
+    public Integer getRoleId() {
+        return roleId;
     }
 
     /**
-     * @param id
+     * @param roleId
      */
-    public void setId(Integer id) {
-        this.id = id;
+    public void setRoleId(Integer roleId) {
+        this.roleId = roleId;
     }
 
     /**
-     * 获取角色名
-     *
-     * @return role_name - 角色名
+     * @return permission_id
      */
-    public String getRoleName() {
-        return roleName;
+    public String getPermissionId() {
+        return permissionId;
     }
 
     /**
-     * 设置角色名
-     *
-     * @param roleName 角色名
+     * @param permissionId
      */
-    public void setRoleName(String roleName) {
-        this.roleName = roleName;
-    }
-
-    /**
-     * 获取角色代码
-     *
-     * @return role_code - 角色代码
-     */
-    public String getRoleCode() {
-        return roleCode;
-    }
-
-    /**
-     * 设置角色代码
-     *
-     * @param roleCode 角色代码
-     */
-    public void setRoleCode(String roleCode) {
-        this.roleCode = roleCode;
-    }
-
-    /**
-     * 获取机构ID
-     *
-     * @return org_id - 机构ID
-     */
-    public Integer getOrgId() {
-        return orgId;
-    }
-
-    /**
-     * 设置机构ID
-     *
-     * @param orgId 机构ID
-     */
-    public void setOrgId(Integer orgId) {
-        this.orgId = orgId;
+    public void setPermissionId(String permissionId) {
+        this.permissionId = permissionId;
     }
 
     /**
@@ -207,10 +153,8 @@ public class SystemRole {
         sb.append(getClass().getSimpleName());
         sb.append(" [");
         sb.append("Hash = ").append(hashCode());
-        sb.append(", id=").append(id);
-        sb.append(", roleName=").append(roleName);
-        sb.append(", roleCode=").append(roleCode);
-        sb.append(", orgId=").append(orgId);
+        sb.append(", roleId=").append(roleId);
+        sb.append(", permissionId=").append(permissionId);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", updateDate=").append(updateDate);

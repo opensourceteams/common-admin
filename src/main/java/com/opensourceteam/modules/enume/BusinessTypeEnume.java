@@ -11,6 +11,7 @@ public enum BusinessTypeEnume {
     User("user","用户"),
     Role("role","角色"),
     Permission("permission","权限"),
+    Organization("organization","机构"),
     ;
 
     BusinessTypeEnume(String prefix, String name) {

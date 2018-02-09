@@ -32,6 +32,45 @@
         callback: {
             //onRemove: zTreeOnRemove ,//删除事件
             beforeEditName: zTreeBeforeEditName
+        }/*,
+        simpleData:{
+            enable:true,
+            idKey:"sId",
+            pIdKey:"pId",
+            rootPid:0
+        }*/
+    };
+
+    var setting_base = {
+        view: {
+            //addHoverDom: addHoverDom,
+            //removeHoverDom: removeHoverDom,
+            selectedMulti: false
+        },
+        check: {
+            enable: true
+        },
+        data: {
+            simpleData: {
+                enable: true
+            }
+        },
+        edit: {
+            enable: true,
+            showRemoveBtn:false,
+            showRenameBtn:false,
+            removeTitle:"删除",
+            renameTitle:"修改"
+        },
+        callback: {
+            //onRemove: zTreeOnRemove ,//删除事件
+            //beforeEditName: zTreeBeforeEditName
+        },
+        simpleData:{
+            enable:true,
+            idKey:"sId",
+            pIdKey:"pId",
+            rootPid:0
         }
     };
 
@@ -67,14 +106,15 @@
         if (treeNode.editNameFlag || $("#removeBtn_"+ treeNode.tId).length>0) return;
 
         if(treeNode && treeNode.icon) {
-            if (treeNode.icon.indexOf("13_") > 0) {
-                //员工
+            if (treeNode.icon.indexOf("role_") > 0) {
+                //
                 var removeStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
                         + "' title='删除' onfocus='this.blur();'   ></span>";
                 sObj.after(removeStr);
                 var removeBtn = $("#removeBtn_"+treeNode.tId);
                 if (removeBtn) removeBtn.bind("click", function(){
-                    deleteForm(treeNode.id);
+
+                    deleteForm(treeNode.sId);
                 });
 
                 var editStr = "<span class='button edit' id='editBtn_" + treeNode.tId
@@ -82,7 +122,7 @@
                 sObj.after(editStr);
                 var editBtn = $("#editBtn_"+treeNode.tId);
                 if (editBtn) editBtn.bind("click", function(){
-                    editForm(treeNode.id);
+                    editForm(treeNode.sId);
                 });
             }else{
                 //机构，部门，组
@@ -94,14 +134,27 @@
                 var btn = $("#addBtn_"+treeNode.tId);
 
                 if (btn) btn.bind("click", function(){
-                    $('#exampleModal').modal('show');
+
                     $("input:hidden[name='orgId']")[0].value = treeNode.id;
                     $("input:hidden[name='id']")[0].value = '';
-                    $("input:hidden[name='name']")[0].value = '';
-                    $("input:hidden[name='loginId']")[0].value = '';
+                    $("input[name='roleName']")[0].value = '';
+                    $("input[name='roleCode']")[0].value = '';
                     $("#id_remark").text( '') ;
                     $("#id_remark").val( '') ;
-                    $("#parentId option[value='1']").attr("selected", true) ;
+
+
+                    $.ajax({
+                        url: "/common/admin/system_manager/permission/jsonList",
+                        data:{},
+                        dataType:"json",
+                        success: function(result){
+                            if(result.success){
+                                $.fn.zTree.init($("#treePermission"), setting_base, result.object);
+                                $('#exampleModal').modal('show');
+                            }
+
+                        }
+                    });
 
                     return false;
                 });
@@ -122,17 +175,23 @@
      */
     function submitForm() {
 
+        var treePermission = getTreeSelectedIds('treePermission');
+        $("input:hidden[name='permissionList']")[0].value = treePermission;
+        console.log('treePermission:' + treePermission);
+
         var basicFormData = $('.submit-form').serialize();
+
+
         $.post( "/common/admin/system_manager/role/editJSON", basicFormData, function( data ) {
             if(data && data.success){
                 var zTree = $.fn.zTree.getZTreeObj("treeDemo");
 
                 if( $("input:hidden[name='id']")[0].value == ''){
                     //增加
-                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
+                    zTree.addNodes(treeNodeGlobal, {id:data.object.id,sId: data.object.sId, pId:data.object.sPid, name:data.object.roleName,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
                 }else{
                     //修改
-                    treeNodeGlobal.name = data.object.name ;
+                    treeNodeGlobal.name = data.object.roleName ;
                     zTree.updateNode(treeNodeGlobal) ;
                 }
 
@@ -194,7 +253,7 @@
     function zTreeBeforeEditName(treeId, treeNode) {
 
         if(treeNode && treeNode.icon) {
-            if (treeNode.icon.indexOf("13_") > 0) {
+            if (treeNode.icon.indexOf("role_") > 0) {
                 //人员
                 return true;
             }
@@ -224,15 +283,23 @@
                 <form method="post"  class="submit-form">
                     <input type="hidden" name="orgId" />
                     <input type="hidden" name="id" />
+                    <input type="hidden" name="permissionList" />
                     <div class="form-group">
-                        <label for="role_name" class="col-form-label">角色名称:</label>
-                        <input type="text" class="form-control" id="role_name" name="role_name">
+                        <label for="roleName" class="col-form-label">角色名称:</label>
+                        <input type="text" class="form-control" id="roleName" name="roleName">
                     </div>
                     <div class="form-group">
                         <label for="roleCode" class="col-form-label">角色代码:</label>
                         <input type="text" class="form-control" id="roleCode" name="roleCode">
                     </div>
-
+                    <div class="form-group">
+                        <label for="roleCode" class="col-form-label">角色代码:</label>
+                        <input type="text" class="form-control" id="roleCode" name="roleCode">
+                    </div>
+                    <div class="form-group">
+                        权限
+                        <ul id="treePermission" class="ztree"></ul>
+                    </div>
 
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">备注:</label>
