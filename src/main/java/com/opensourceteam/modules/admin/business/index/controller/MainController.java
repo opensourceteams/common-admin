@@ -19,7 +19,7 @@ public class MainController {
 
 
     @RequestMapping("/main")
-    ModelAndView login(String message) {
+    ModelAndView main(String message) {
         ModelAndView modelAndView = new ModelAndView("main");
         logger.info("[IndexController login]");
         modelAndView.addObject("user","admin");

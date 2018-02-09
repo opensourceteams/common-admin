@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 开发人:刘文
@@ -18,9 +19,8 @@ public class LoginController {
 
 
     @RequestMapping("/login")
-    String login(String message) {
-        logger.info("[IndexController login]");
-
-        return "redirect:main";
+    ModelAndView login() {
+        ModelAndView modelAndView = new ModelAndView("login");
+        return modelAndView;
     }
 }
