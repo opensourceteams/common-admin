@@ -1,12 +1,11 @@
 package com.opensourceteam.modules.admin.configuration.spring.exception.handler;
 
+import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 /**
@@ -15,15 +14,18 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
  * 日期:  2018/2/10.
  * 功能描述:
  */
+@ControllerAdvice
 public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
 
     Logger logger = LoggerFactory.getLogger(CustomerExceptionHandler.class);
-    @ExceptionHandler(Exception.class)
-    @Override
-    protected ResponseEntity<Object> handleExceptionInternal(Exception ex, Object body, HttpHeaders headers, HttpStatus status, WebRequest request) {
-        //return super.handleExceptionInternal(ex, body, headers, status, request);
-        logger.debug("[CustomerExceptionHandler]");
-       // return new ResponseEntity(body, headers, status);
-        return super.handleExceptionInternal(ex, body, headers, status, request);
+
+    @ExceptionHandler(AuthorizationException.class)
+   // @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ModelAndView handleException(AuthorizationException e) {
+        ModelAndView modelAndView = new ModelAndView("/modules/common/transfer/transfer");
+        modelAndView.addObject("url","/module/common/message/show");
+        modelAndView.addObject("message","没有权限访问");
+        logger.debug("[CustomerExceptionHandler] 无权限访问处理");
+        return modelAndView;
     }
 }
