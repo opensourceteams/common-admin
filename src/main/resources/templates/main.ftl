@@ -61,6 +61,9 @@
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
         <span class="btn-outline-success my-2 my-sm-0" style="padding-left: 10px">${user}</span>
+        <a href="/logout" class="btn-outline-success my-2 my-sm-0" style="padding-left: 10px">退出</a>
+
+
 
     </div>
 </nav>
