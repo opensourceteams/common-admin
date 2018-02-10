@@ -1,5 +1,6 @@
 package com.opensourceteam.modules.admin.configuration.spring.exception.handler;
 
+import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,4 +29,14 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
         logger.debug("[CustomerExceptionHandler] 无权限访问处理");
         return modelAndView;
     }
+
+    @ExceptionHandler(IncorrectCredentialsException.class)
+    public ModelAndView handleExceptionIncorrectCredentialsException(IncorrectCredentialsException e) {
+        ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("url","/module/common/message/show");
+        modelAndView.addObject("message","密码错误");
+        logger.debug("[CustomerExceptionHandler] 密码错误");
+        return modelAndView;
+    }
+
 }

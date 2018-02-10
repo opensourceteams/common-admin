@@ -29,9 +29,9 @@ public class LoginController {
     }
 
     @RequestMapping("/doLogin")
-    ModelAndView doLogin(String loginId,String password) {
+    public ModelAndView doLogin(String loginId,String password) {
         ModelAndView modelAndView = new ModelAndView("redirect:/login");
-        UsernamePasswordToken token = new UsernamePasswordToken("admin","000000");
+        UsernamePasswordToken token = new UsernamePasswordToken(loginId,password);
         SecurityUtils.getSubject().login(token);
         if( SecurityUtils.getSubject().isAuthenticated()){
             modelAndView = new ModelAndView("redirect:/main");
@@ -39,5 +39,12 @@ public class LoginController {
 
 
         return modelAndView;
+    }
+
+    @RequestMapping("/logout")
+    public ModelAndView logOut() {
+        Subject subject = SecurityUtils.getSubject();
+        subject.logout();
+        return  new ModelAndView("redirect:/login");
     }
 }

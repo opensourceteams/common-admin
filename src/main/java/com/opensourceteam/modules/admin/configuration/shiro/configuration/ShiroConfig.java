@@ -2,8 +2,11 @@
 package com.opensourceteam.modules.admin.configuration.shiro.configuration;
 
 import com.opensourceteam.modules.admin.configuration.shiro.realm.CustomerShiroRealm;
+import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
+import org.apache.shiro.authc.credential.Sha512CredentialsMatcher;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -31,14 +34,31 @@ public class ShiroConfig {
 
 
     @Bean
-    public DefaultWebSecurityManager securityManager() {
-        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(myRealm());
+    public DefaultWebSecurityManager securityManager(@Qualifier("hashedCredentialsMatcher") HashedCredentialsMatcher matcher) {
+        DefaultWebSecurityManager defaultWebSecurityManager = new DefaultWebSecurityManager(myRealm(matcher));
         return defaultWebSecurityManager;
     }
 
     @Bean
-    public CustomerShiroRealm myRealm() {
-        CustomerShiroRealm myRealm = new CustomerShiroRealm();
-        return myRealm;
+    public CustomerShiroRealm myRealm(HashedCredentialsMatcher matcher) {
+        CustomerShiroRealm customerShiroRealm = new CustomerShiroRealm();
+        customerShiroRealm.setCredentialsMatcher(matcher);
+        return customerShiroRealm;
+    }
+
+    /**
+     * 密码匹配凭证管理器
+     *
+     * @return
+     */
+    @Bean(name = "hashedCredentialsMatcher")
+    public HashedCredentialsMatcher hashedCredentialsMatcher() {
+        HashedCredentialsMatcher hashedCredentialsMatcher = new HashedCredentialsMatcher();
+        // 采用MD5方式加密
+        hashedCredentialsMatcher.setHashAlgorithmName("MD5");
+        // 设置加密次数
+        hashedCredentialsMatcher.setHashIterations(1024);
+        return hashedCredentialsMatcher;
+
     }
 }

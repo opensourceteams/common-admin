@@ -159,4 +159,14 @@ public class SystemUserService {
         condition.setOrderByClause("name asc");
         return systemUserMapper.selectByExample(condition);
     }
+
+    public SystemUser getUserById(Integer id){
+        return systemUserMapper.selectByPrimaryKey(id);
+    }
+
+    public SystemUser getUserByLoginId(String loginId){
+        SystemUser systemUser = new SystemUser();
+        systemUser.setLoginId(loginId);
+        return  systemUserMapper.selectOne(systemUser);
+    }
 }
