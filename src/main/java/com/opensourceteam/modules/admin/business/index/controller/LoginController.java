@@ -4,7 +4,6 @@ import com.opensourceteam.modules.admin.base.controller.BaseController;
 import com.opensourceteam.modules.common.core.util.ip.IpUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

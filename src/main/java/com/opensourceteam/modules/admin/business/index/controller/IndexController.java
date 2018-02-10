@@ -1,8 +1,6 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
-import com.opensourceteam.modules.admin.business.sample.controller.HelloJspController;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
