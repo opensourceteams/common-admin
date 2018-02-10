@@ -1,5 +1,7 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
+import com.opensourceteam.modules.admin.base.controller.BaseController;
+import com.opensourceteam.modules.common.core.util.ip.IpUtil;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.PrincipalCollection;
@@ -17,7 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping
-public class LoginController {
+public class LoginController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(LoginController.class);
 
@@ -31,7 +33,9 @@ public class LoginController {
     @RequestMapping("/doLogin")
     public ModelAndView doLogin(String loginId,String password) {
         ModelAndView modelAndView = new ModelAndView("redirect:/login");
-        UsernamePasswordToken token = new UsernamePasswordToken(loginId,password);
+        String ip = IpUtil.getIpAddr(request);
+        logger.debug("[login ip] ip:{}",ip);
+        UsernamePasswordToken token = new UsernamePasswordToken(loginId,password,ip);
         SecurityUtils.getSubject().login(token);
         if( SecurityUtils.getSubject().isAuthenticated()){
             modelAndView = new ModelAndView("redirect:/main");

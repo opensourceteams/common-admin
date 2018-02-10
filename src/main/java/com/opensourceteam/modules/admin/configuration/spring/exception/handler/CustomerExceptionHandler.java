@@ -1,6 +1,7 @@
 package com.opensourceteam.modules.admin.configuration.spring.exception.handler;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authz.AuthorizationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +21,11 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
 
     Logger logger = LoggerFactory.getLogger(CustomerExceptionHandler.class);
 
+    /**
+     * 没有权限访问
+     * @param e
+     * @return
+     */
     @ExceptionHandler(AuthorizationException.class)
    // @ResponseStatus(HttpStatus.FORBIDDEN)
     public ModelAndView handleException(AuthorizationException e) {
@@ -30,13 +36,35 @@ public class CustomerExceptionHandler extends ResponseEntityExceptionHandler {
         return modelAndView;
     }
 
+    /**
+     * 用户不存在　
+     * @param e
+     * @return
+     */
+    @ExceptionHandler(UnknownAccountException.class)
+    public ModelAndView handleExceptionUnknownAccountException(UnknownAccountException e) {
+        ModelAndView modelAndView = new ModelAndView("/login");
+        modelAndView.addObject("message","用户不存在");
+        modelAndView.addObject("code","1");
+        logger.debug("[CustomerExceptionHandler] 用户不存在");
+        return modelAndView;
+    }
+
+    /**
+     * 密码错误　
+     * @param e
+     * @return
+     */
     @ExceptionHandler(IncorrectCredentialsException.class)
     public ModelAndView handleExceptionIncorrectCredentialsException(IncorrectCredentialsException e) {
         ModelAndView modelAndView = new ModelAndView("/login");
-        modelAndView.addObject("url","/module/common/message/show");
+        modelAndView.addObject("code","2");
         modelAndView.addObject("message","密码错误");
         logger.debug("[CustomerExceptionHandler] 密码错误");
         return modelAndView;
     }
+
+
+
 
 }

@@ -22,12 +22,18 @@
 
     <#--<img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">-->
     <h1 class="h3 mb-3 font-weight-normal">登录</h1>
-    <input type="text" name="loginId" class="form-control" placeholder="用户名" required autofocus>
-    <div class="form-group <#if message??> has-warning </#if> ">
-        <input type="text" name="password" class="form-control form-control-warning" placeholder="密码" required>
-        <div class="form-control-feedback">${message!''}</div>
+
+    <div class="form-group <#if message?? && code == "1" > has-warning </#if> ">
+        <input type="text" name="loginId" class="form-control form-control-warning" placeholder="用户名" required autofocus>
     </div>
 
+    <div class="form-group <#if message?? && code == "2" > has-warning </#if> ">
+        <input type="text" name="password" class="form-control form-control-warning" placeholder="密码" required>
+    </div>
+
+    <div class="form-group <#if message??> has-warning </#if> ">
+        <div class="form-control-feedback">${message!''}</div>
+    </div>
 
 
     <div class="checkbox mb-3">

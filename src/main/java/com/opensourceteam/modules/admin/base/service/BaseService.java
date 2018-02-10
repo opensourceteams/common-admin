@@ -1,14 +1,10 @@
 package com.opensourceteam.modules.admin.base.service;
 
-import com.opensourceteam.modules.common.core.vo.message.ResultBack;
-import com.opensourceteam.modules.po.admin.SystemMenu;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import tk.mybatis.mapper.common.Mapper;
-import tk.mybatis.mapper.entity.Condition;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 开发人:刘文
@@ -28,5 +24,10 @@ public class BaseService{
         return 2;
     }
 
+
+    public HttpServletRequest getRequest(){
+        HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+        return request;
+    }
 
 }
