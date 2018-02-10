@@ -33,14 +33,11 @@ public class LoginController extends BaseController {
     @RequestMapping("/doLogin")
     public ModelAndView doLogin(String loginId,String password) {
         ModelAndView modelAndView = new ModelAndView("redirect:/login");
-        String ip = IpUtil.getIpAddr(request);
-        logger.debug("[login ip] ip:{}",ip);
-        UsernamePasswordToken token = new UsernamePasswordToken(loginId,password,ip);
+        UsernamePasswordToken token = new UsernamePasswordToken(loginId,password,IpUtil.getIpAddr(request));
         SecurityUtils.getSubject().login(token);
         if( SecurityUtils.getSubject().isAuthenticated()){
             modelAndView = new ModelAndView("redirect:/main");
         }
-
 
         return modelAndView;
     }
