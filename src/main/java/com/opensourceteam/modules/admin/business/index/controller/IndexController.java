@@ -1,10 +1,13 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
 import com.opensourceteam.modules.admin.business.sample.controller.HelloJspController;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * 开发人:刘文
@@ -19,8 +22,10 @@ public class IndexController {
 
 
     @RequestMapping("/")
-    String hello(String message) {
-        logger.info("[IndexController index]");
-        return "index";
+    public ModelAndView hello(String message) {
+        ModelAndView modelAndView = new ModelAndView("main");
+        logger.info("[IndexController login]");
+        modelAndView.addObject("user",SecurityUtils.getSubject().getPrincipal().toString());
+        return modelAndView;
     }
 }

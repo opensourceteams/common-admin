@@ -36,7 +36,7 @@ public class LoginController extends BaseController {
         UsernamePasswordToken token = new UsernamePasswordToken(loginId,password,IpUtil.getIpAddr(request));
         SecurityUtils.getSubject().login(token);
         if( SecurityUtils.getSubject().isAuthenticated()){
-            modelAndView = new ModelAndView("redirect:/main");
+            modelAndView = new ModelAndView("redirect:/");
         }
 
         return modelAndView;
