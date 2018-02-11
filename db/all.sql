@@ -1,3 +1,20 @@
+/**
+ * 业务代码
+ */
+drop table if EXISTS t_business_type;
+CREATE TABLE t_business_type (
+	business_id int(10) not null primary key  ,
+	business_name varchar(100) not null
+);
+ALTER TABLE t_business_type ADD UNIQUE (business_id);
+
+insert into t_business_type(business_id,business_name) value (1,'机构');
+insert into t_business_type(business_id,business_name) value (2,'菜单');
+insert into t_business_type(business_id,business_name) value (3,'角色');
+insert into t_business_type(business_id,business_name) value (4,'权限');
+insert into t_business_type(business_id,business_name) value (5,'用户');
+
+
 drop table if EXISTS t_system_organization;
 CREATE TABLE t_system_organization (
 	id int(10) primary key not null auto_increment,
@@ -102,22 +119,23 @@ CREATE TABLE t_system_role (
 	remark varchar(100) NULL COMMENT '备注'
 );
 
+
 /**
  * 角色权限关联表
  */
 drop table if EXISTS t_system_role_permission;
 CREATE TABLE t_system_role_permission (
 	role_id int(10) not null  ,
-	permission_id varchar(100) not null,
+	permission_id int(10) not null,
+	business_id int(10) not null ,
 	create_date DATETIME NOT NULL,
 	creator int(10) NOT NULL,
 	update_date DATETIME NOT NULL,
 	updator int(10) NOT NULL,
 	is_del bit(1) NOT NULL default 0 ,
 	remark varchar(100) NULL COMMENT '备注',
-	 primary key (role_id,permission_id)
+	 primary key (role_id,permission_id,business_id)
 );
-
 
 
 /**

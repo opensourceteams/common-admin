@@ -64,7 +64,7 @@ public class SystemPermissionService extends BaseService{
         List<SystemRolePermission> systemPermissionList = selectRolePermissionByRoleId(roleId);
         if(systemPermissionList !=null && systemPermissionList.size()>0){
             for(SystemRolePermission systemRolePermission : systemPermissionList){
-                map.put(IdUtils.getRemovePrefixId(systemRolePermission.getPermissionId()),true);
+                map.put(systemRolePermission.getPermissionId(),true);
             }
         }
         return map;
@@ -163,7 +163,7 @@ public class SystemPermissionService extends BaseService{
         List<Integer> list = new ArrayList<>();
         List<SystemRolePermission> systemRolePermissionList = selectRolePermissionByRoleId(roleIds);
         for(SystemRolePermission systemRolePermission : systemRolePermissionList){
-            list.add(IdUtils.getRemovePrefixId(BusinessTypeEnume.Permission.getPrefix(),systemRolePermission.getPermissionId()));
+            list.add(systemRolePermission.getPermissionId());
         }
         return list;
     }

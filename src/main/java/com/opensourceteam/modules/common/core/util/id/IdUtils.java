@@ -36,10 +36,11 @@ public class IdUtils {
         }else{
             if(id.contains("_")){
                 return Integer.parseInt(id.split("_")[1]);
+            }else {
+                return Integer.parseInt(id);
             }
 
         }
-        return  null;
     }
 
     /**

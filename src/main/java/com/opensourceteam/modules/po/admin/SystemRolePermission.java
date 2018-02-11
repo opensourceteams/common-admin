@@ -11,7 +11,10 @@ public class SystemRolePermission {
 
     @Id
     @Column(name = "permission_id")
-    private String permissionId;
+    private Integer permissionId;
+
+    @Column(name = "business_id")
+    private Integer businessId;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -48,15 +51,29 @@ public class SystemRolePermission {
     /**
      * @return permission_id
      */
-    public String getPermissionId() {
+    public Integer getPermissionId() {
         return permissionId;
     }
 
     /**
      * @param permissionId
      */
-    public void setPermissionId(String permissionId) {
+    public void setPermissionId(Integer permissionId) {
         this.permissionId = permissionId;
+    }
+
+    /**
+     * @return business_id
+     */
+    public Integer getBusinessId() {
+        return businessId;
+    }
+
+    /**
+     * @param businessId
+     */
+    public void setBusinessId(Integer businessId) {
+        this.businessId = businessId;
     }
 
     /**
@@ -155,6 +172,7 @@ public class SystemRolePermission {
         sb.append("Hash = ").append(hashCode());
         sb.append(", roleId=").append(roleId);
         sb.append(", permissionId=").append(permissionId);
+        sb.append(", businessId=").append(businessId);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", updateDate=").append(updateDate);

@@ -155,7 +155,8 @@ public class SystemRoleService extends BaseService {
             for(String permissionId : vo.getPermissionList()){
                 SystemRolePermission systemRolePermission = new SystemRolePermission();
                 systemRolePermission.setRoleId(vo.getId());
-                systemRolePermission.setPermissionId(permissionId);
+                systemRolePermission.setPermissionId(IdUtils.getRemovePrefixId(permissionId));
+                systemRolePermission.setBusinessId(BusinessTypeEnume.getPrefixBusinessId(permissionId));
                 systemRolePermission.setCreateDate(new Date());
                 systemRolePermission.setUpdateDate(new Date());
                 systemRolePermission.setCreator(getCurrentUserId());

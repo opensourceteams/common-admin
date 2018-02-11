@@ -4,6 +4,7 @@ import com.opensourceteam.modules.admin.business.system.manager.user.service.Sys
 import com.opensourceteam.modules.constant.SystemConstant;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.AuthorizationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -34,7 +35,7 @@ public class BaseService{
         if(object !=null && object instanceof SystemUser){
             return (SystemUser)object;
         }
-        return null;
+        throw new AuthorizationException();
     }
     /**
      * 得到登录名
