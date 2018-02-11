@@ -4,8 +4,10 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
+import com.opensourceteam.modules.admin.business.system.manager.permission.service.SystemPermissionService;
 import com.opensourceteam.modules.admin.business.system.manager.user.enume.UserStatusEnume;
 import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
+import com.opensourceteam.modules.admin.business.system.manager.userrole.service.SystemUserRoleService;
 import com.opensourceteam.modules.common.core.util.encrypt.md5.MD5Util;
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
@@ -13,16 +15,15 @@ import com.opensourceteam.modules.dao.admin.SystemUserMapper;
 import com.opensourceteam.modules.dao.admin.SystemUserRoleMapper;
 import com.opensourceteam.modules.enume.BusinessTypeEnume;
 import com.opensourceteam.modules.enume.IconTypeEnume;
-import com.opensourceteam.modules.po.admin.SystemRolePermission;
-import com.opensourceteam.modules.po.admin.SystemUser;
-import com.opensourceteam.modules.po.admin.SystemUserRole;
-import com.opensourceteam.modules.po.admin.TSystemOrganization;
+import com.opensourceteam.modules.enume.SuperAdministratorEnume;
+import com.opensourceteam.modules.po.admin.*;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class SystemUserService extends BaseService{
 
     @Autowired
     SystemUserRoleMapper systemUserRoleMapper;
+
+    @Autowired
+    SystemUserRoleService systemUserRoleService;
+    @Autowired
+    SystemPermissionService systemPermissionService;
 
     public JSONArray getAllList(){
         JSONArray jsonArray = new JSONArray();
@@ -218,5 +224,32 @@ public class SystemUserService extends BaseService{
         }
 
         return true;
+    }
+
+
+    /**
+     * 得到当前用户的权限列表
+     * @return
+     */
+    public List<SystemPermission> getCurrentUserPermissionList(){
+        if(SuperAdministratorEnume.Root.getId().intValue() == getCurrentUserId().intValue()){
+            return systemPermissionService.selectAll();
+        }else{
+            List<Integer> roleIdList = systemUserRoleService.getRoleIdList(getCurrentUserId());
+            return systemPermissionService.selectPermissionListByRoleId(roleIdList);
+        }
+    }
+
+    /**
+     * 得到当前用户的权限列表
+     * @return
+     */
+    public List<String> getCurrentUserPermissionStringList(){
+        List<String> list = new ArrayList<>();
+        List<SystemPermission> systemPermissionList = getCurrentUserPermissionList();
+        for(SystemPermission systemPermission :  systemPermissionList){
+            list.add(systemPermission.getPermissionCode());
+        }
+        return list;
     }
 }

@@ -35,14 +35,13 @@ public class CustomerShiroRealm extends AuthorizingRealm {
      */
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principalCollection) {
-        logger.info("[CustomerShiroRealm doGetAuthorizationInfo]");
-        String loginId = principalCollection.getPrimaryPrincipal().toString();
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        Collection<String> permissions = new ArrayList<>();
-        permissions.add("admin:systemmanager:menu:listView1");
+        Collection<String> permissions = systemUserService.getCurrentUserPermissionStringList();
         info.addStringPermissions(permissions);
         return info;
     }
+
+
 
     /**
      * 用户认证

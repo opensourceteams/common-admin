@@ -193,7 +193,7 @@
         $.post( "/common/admin/system_manager/role/jsonListPermissionByRoleId", {roleId:id }, function( data ) {
             if(data && data.success){
 
-                $.fn.zTree.init($("#treePermission"), setting_base, data.object);
+                $.fn.zTree.init($("#treePermission"), setting_base_query, data.object);
                 $('#exampleModal').modal('show');
             }
 

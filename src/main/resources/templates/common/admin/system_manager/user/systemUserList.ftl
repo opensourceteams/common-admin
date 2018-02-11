@@ -172,11 +172,23 @@
                 $("input[name='loginId']")[0].value = data.object.loginId;
                 $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
                 $("#id_remark").text( data.object.remark) ;
-                $('#exampleModal').modal('show');
+
 
             }
 
         }, "json" );
+
+        $.ajax({
+            url: "/common/admin/system_manager/role/jsonList",
+            data:{},
+            dataType:"json",
+            success: function(result){
+                if(result.success){
+                    $.fn.zTree.init($("#treeRole"), setting_base_query, result.object);
+                    $('#exampleModal').modal('show');
+                }
+            }
+        });
     }
 
     /**

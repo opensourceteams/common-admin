@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.menu.service.SystemMenuService;
 import com.opensourceteam.modules.admin.business.system.manager.permission.vo.SystemPermissionVo;
-import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemPermissionMapper;
@@ -15,18 +14,13 @@ import com.opensourceteam.modules.enume.IconTypeEnume;
 import com.opensourceteam.modules.po.admin.SystemPermission;
 import com.opensourceteam.modules.po.admin.SystemRolePermission;
 import com.opensourceteam.modules.po.admin.SystemUser;
-import com.opensourceteam.modules.po.admin.TSystemOrganization;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import tk.mybatis.mapper.entity.Condition;
+import tk.mybatis.mapper.entity.Example;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
 
 /**
  * 开发人:刘文
@@ -53,6 +47,11 @@ public class SystemPermissionService extends BaseService{
         return jsonArray;
     }
 
+    /**
+     * 角色id查找所有权限，JSONArray
+     * @param roleId
+     * @return
+     */
     public JSONArray getListByRoleId(Integer roleId){
         JSONArray jsonArray = new JSONArray();
         jsonArray.addAll( systemMenuService.getList());
@@ -127,6 +126,18 @@ public class SystemPermissionService extends BaseService{
         condition.setOrderByClause("permission_name asc");
         return systemPermissionMapper.selectByExample(condition);
     }
+    public List<SystemPermission> selectPermissionListByIdList(List<Integer> idList){
+        if( idList == null || idList.size() ==0){
+            return new ArrayList<>();
+        }
+
+        Condition condition = new Condition(SystemUser.class);
+        condition.createCriteria().andEqualTo("isDel",false)
+        .andIn("id",idList);
+        condition.setOrderByClause("permission_name asc");
+        return systemPermissionMapper.selectByExample(condition);
+    }
+
     public List<SystemRolePermission> selectRolePermissionByRoleId(Integer roleId){
         Condition condition = new Condition(SystemRolePermission.class);
         condition.createCriteria().andEqualTo("isDel",false)
@@ -134,6 +145,38 @@ public class SystemPermissionService extends BaseService{
         ;
         condition.setOrderByClause("permission_id asc");
         return systemRolePermissionMapper.selectByExample(condition);
+    }
+
+    public List<SystemRolePermission> selectRolePermissionByRoleId(List<Integer> roleIds){
+
+        if(roleIds ==null || roleIds.size()==0 ){
+            return new ArrayList<>();
+        }
+
+        Condition condition = new Condition(SystemRolePermission.class);
+        condition.createCriteria().andEqualTo("isDel",false).andIn("roleId",roleIds);
+        condition.setOrderByClause("permission_id asc");
+        return systemRolePermissionMapper.selectByExample(condition);
+    }
+
+    public List<Integer> selectPermissionIdListByRoleId(List<Integer> roleIds){
+        List<Integer> list = new ArrayList<>();
+        List<SystemRolePermission> systemRolePermissionList = selectRolePermissionByRoleId(roleIds);
+        for(SystemRolePermission systemRolePermission : systemRolePermissionList){
+            list.add(IdUtils.getRemovePrefixId(BusinessTypeEnume.Permission.getPrefix(),systemRolePermission.getPermissionId()));
+        }
+        return list;
+    }
+
+    /**
+     * 通过 角色List 查找 权限List
+     * @param roleIds
+     * @return
+     */
+    public List<SystemPermission> selectPermissionListByRoleId(List<Integer> roleIds){
+        List<Integer> permissionIdList = selectPermissionIdListByRoleId(roleIds);
+        List<SystemPermission> systemPermissionList = selectPermissionListByIdList(permissionIdList);
+        return systemPermissionList;
     }
 
     public ResultBack editViewJSON(SystemPermission vo){

@@ -1,6 +1,7 @@
 package com.opensourceteam.modules.admin.base.controller;
 
 import com.opensourceteam.modules.admin.business.system.manager.user.service.SystemUserService;
+import com.opensourceteam.modules.constant.SystemConstant;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import org.apache.shiro.SecurityUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,18 +23,21 @@ public class BaseController {
     @Autowired
     SystemUserService systemUserService;
 
-    /**
-     * 当前登录的用户
-     */
-    public SystemUser currentLoginUser;
+
 
     public SystemUser getCurrentUser(){
-        if(currentLoginUser == null){
-            String loginId = SecurityUtils.getSubject().getPrincipal().toString();
-            currentLoginUser = systemUserService.getUserByLoginId(loginId);
+        Object object = SecurityUtils.getSubject().getSession().getAttribute(SystemConstant.current_login_user);
+        if(object !=null && object instanceof SystemUser){
+            return (SystemUser)object;
         }
-        return currentLoginUser;
+        return null;
     }
+
+    public SystemUser getCurrentLoginUser(){
+        String loginId = SecurityUtils.getSubject().getPrincipal().toString();
+        return systemUserService.getUserByLoginId(loginId);
+    }
+
 
     /**
      * 得到登录名

@@ -41,4 +41,21 @@ public class IdUtils {
         }
         return  null;
     }
+
+    /**
+     * 得到去掉前缀的Integer id
+     * @param id
+     * @return
+     */
+    public static Integer getRemovePrefixId(String prefix,String id){
+        if(StringUtils.isBlank(id)){
+            return null;
+        }else{
+            if(id.contains("_") && id.contains(prefix)){
+                return Integer.parseInt(id.split("_")[1]);
+            }
+
+        }
+        return  null;
+    }
 }
