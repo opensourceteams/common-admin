@@ -50,7 +50,17 @@ public class SystemRoleController {
     @ResponseBody
     String jsonList() {
         ResultBack resultBack = new ResultBack(true, systemRoleService.getAllList());
-        logger.info("[OrganizationController jsonList]");
+        return JSONArray.toJSONString(resultBack);
+    }
+
+    /**
+     * 列表JSON
+     * @return
+     */
+    @RequestMapping("/jsonListChecked")
+    @ResponseBody
+    String jsonListChecked(Integer userId) {
+        ResultBack resultBack = new ResultBack(true, systemRoleService.getAllListChecked(userId));
         return JSONArray.toJSONString(resultBack);
     }
 

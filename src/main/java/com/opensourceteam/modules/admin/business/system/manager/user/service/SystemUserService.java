@@ -210,7 +210,8 @@ public class SystemUserService extends BaseService{
         if( vo !=null && vo.getId() !=null && vo.getRoleList() !=null && vo.getRoleList().size() >0){
             for(String role : vo.getRoleList()){
                 SystemUserRole systemUserRole = new SystemUserRole();
-                systemUserRole.setRoleId(role);
+                systemUserRole.setRoleId(IdUtils.getRemovePrefixId(role));
+                systemUserRole.setBusinessId(BusinessTypeEnume.getPrefixBusinessId(role));
                 systemUserRole.setUserId(vo.getId());
                 systemUserRole.setCreateDate(new Date());
                 systemUserRole.setUpdateDate(new Date());

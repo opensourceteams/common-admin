@@ -11,7 +11,11 @@ public class SystemUserRole {
 
     @Id
     @Column(name = "role_id")
-    private String roleId;
+    private Integer roleId;
+
+    @Id
+    @Column(name = "business_id")
+    private Integer businessId;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -48,15 +52,29 @@ public class SystemUserRole {
     /**
      * @return role_id
      */
-    public String getRoleId() {
+    public Integer getRoleId() {
         return roleId;
     }
 
     /**
      * @param roleId
      */
-    public void setRoleId(String roleId) {
+    public void setRoleId(Integer roleId) {
         this.roleId = roleId;
+    }
+
+    /**
+     * @return business_id
+     */
+    public Integer getBusinessId() {
+        return businessId;
+    }
+
+    /**
+     * @param businessId
+     */
+    public void setBusinessId(Integer businessId) {
+        this.businessId = businessId;
     }
 
     /**
@@ -155,6 +173,7 @@ public class SystemUserRole {
         sb.append("Hash = ").append(hashCode());
         sb.append(", userId=").append(userId);
         sb.append(", roleId=").append(roleId);
+        sb.append(", businessId=").append(businessId);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", updateDate=").append(updateDate);

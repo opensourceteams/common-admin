@@ -172,15 +172,13 @@
                 $("input[name='loginId']")[0].value = data.object.loginId;
                 $(".selector_parentId").find("option[value='" + data.object.parentId + "']").attr("selected",true);
                 $("#id_remark").text( data.object.remark) ;
-
-
             }
 
         }, "json" );
 
         $.ajax({
-            url: "/common/admin/system_manager/role/jsonList",
-            data:{},
+            url: "/common/admin/system_manager/role/jsonListChecked",
+            data:{userId:id},
             dataType:"json",
             success: function(result){
                 if(result.success){

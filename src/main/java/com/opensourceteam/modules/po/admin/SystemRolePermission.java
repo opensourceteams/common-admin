@@ -13,6 +13,7 @@ public class SystemRolePermission {
     @Column(name = "permission_id")
     private Integer permissionId;
 
+    @Id
     @Column(name = "business_id")
     private Integer businessId;
 

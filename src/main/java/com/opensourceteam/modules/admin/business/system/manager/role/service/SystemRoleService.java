@@ -7,6 +7,7 @@ import com.opensourceteam.modules.admin.business.system.manager.menu.service.Sys
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
 import com.opensourceteam.modules.admin.business.system.manager.role.vo.SystemRoleVo;
 
+import com.opensourceteam.modules.admin.business.system.manager.userrole.service.SystemUserRoleService;
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemRoleMapper;
@@ -45,7 +46,8 @@ public class SystemRoleService extends BaseService {
 
     @Autowired
     SystemRolePermissionMapper systemRolePermissionMapper;
-
+    @Autowired
+    SystemUserRoleService systemUserRoleService;
 
     public JSONArray getAllList(){
         JSONArray jsonArray = new JSONArray();
@@ -54,7 +56,13 @@ public class SystemRoleService extends BaseService {
         jsonArray.addAll(getList());
         return jsonArray;
     }
-
+    public JSONArray getAllListChecked(Integer userId){
+        JSONArray jsonArray = new JSONArray();
+        JSONArray list = organizationService.getList();
+        jsonArray.addAll(list);
+        jsonArray.addAll(getListChecked(userId));
+        return jsonArray;
+    }
 
 
 
@@ -75,7 +83,36 @@ public class SystemRoleService extends BaseService {
                 jsonArray.add(jsonObject);
             }
         }
+        return jsonArray;
+    }
 
+    public JSONArray getListChecked(Integer userId){
+        List<Integer> roleIdList = systemUserRoleService.getRoleIdList(userId);
+        JSONArray jsonArray = new JSONArray();
+        List<SystemRole> list = selectAll();
+        if(list !=null && list.size() >0){
+            for(SystemRole po : list){
+                JSONObject jsonObject = new JSONObject();
+                String sId = IdUtils.getPrefixId(BusinessTypeEnume.Role,po.getId());
+                jsonObject.put("sId",sId);
+                jsonObject.put("id",sId);
+                jsonObject.put("pId",IdUtils.getPrefixId(BusinessTypeEnume.Organization,po.getOrgId()));
+                jsonObject.put("name",po.getRoleName());
+                jsonObject.put("icon", IconTypeEnume.Role.getCloseUrl() );
+                jsonObject.put("iconOpen", IconTypeEnume.Role.getOpenUrl() );
+                jsonObject.put("iconClose", IconTypeEnume.Role.getCloseUrl());
+
+                if(roleIdList.contains(po.getId())){
+                    //有该权限
+                    jsonObject.put("checked",true);
+                }else{
+                    //没有该权限
+                    jsonObject.put("checked",false);
+                }
+
+                jsonArray.add(jsonObject);
+            }
+        }
         return jsonArray;
     }
 
