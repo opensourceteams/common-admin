@@ -75,4 +75,40 @@ function getTreeSelectedIdsRemovePrefix(treeId) {
     return selectedIds;
 }
 
+/**
+ * 基本树，仅做查询展示用
+ * @type {{view: {selectedMulti: boolean}, check: {enable: boolean}, data: {simpleData: {enable: boolean}}, edit: {enable: boolean, showRemoveBtn: boolean, showRenameBtn: boolean, removeTitle: string, renameTitle: string}, callback: {}, simpleData: {enable: boolean, idKey: string, pIdKey: string, rootPid: number}}}
+ */
+var setting_base_query = {
+    view: {
+        //addHoverDom: addHoverDom,
+        //removeHoverDom: removeHoverDom,
+        selectedMulti: false
+    },
+    check: {
+        enable: true
+    },
+    data: {
+        simpleData: {
+            enable: true
+        }
+    },
+    edit: {
+        enable: true,
+        showRemoveBtn:false,
+        showRenameBtn:false,
+        removeTitle:"删除",
+        renameTitle:"修改"
+    },
+    callback: {
+        //onRemove: zTreeOnRemove ,//删除事件
+        //beforeEditName: zTreeBeforeEditName
+    },
+    simpleData:{
+        enable:false,
+        idKey:"id",
+        pIdKey:"pId",
+        rootPid:0
+    }
+};
 

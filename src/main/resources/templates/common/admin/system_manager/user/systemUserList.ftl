@@ -67,7 +67,7 @@
         if (treeNode.editNameFlag || $("#removeBtn_"+ treeNode.tId).length>0) return;
 
         if(treeNode && treeNode.icon) {
-            if (treeNode.icon.indexOf("13_") > 0) {
+            if (treeNode.icon.indexOf("user_") > 0) {
                 //员工
                 var removeStr = "<span class='button remove' id='removeBtn_" + treeNode.tId
                         + "' title='删除' onfocus='this.blur();'   ></span>";
@@ -195,7 +195,7 @@
     function zTreeBeforeEditName(treeId, treeNode) {
 
         if(treeNode && treeNode.icon) {
-            if (treeNode.icon.indexOf("13_") > 0) {
+            if (treeNode.icon.indexOf("user_") > 0) {
                 //人员
                 return true;
             }

@@ -10,7 +10,7 @@ public enum IconTypeEnume {
     Organization('1',"机构","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/10_close.png"),
     Department('2',"部门","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/11_close.png"),
     Group('3',"组","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/12_close.png"),
-    Employee('4',"人员","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_open.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/13_close.png"),
+    Employee('4',"人员", "/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/user_red.png", "/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/user_blue.png"),
     Menu('5',"菜单","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/menu_red.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/menu_blue.png"),
     Role('6',"角色","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/role_red.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/role_blue.png"),
     Permision('7',"权限","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/permission_red.png","/static/modules/ztree/v3.5.32/css/zTreeStyle/img/diy/permission_blue.png"),

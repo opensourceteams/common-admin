@@ -41,38 +41,7 @@
         }
     };
 
-    var setting_base = {
-        view: {
-            //addHoverDom: addHoverDom,
-            //removeHoverDom: removeHoverDom,
-            selectedMulti: false
-        },
-        check: {
-            enable: true
-        },
-        data: {
-            simpleData: {
-                enable: true
-            }
-        },
-        edit: {
-            enable: true,
-            showRemoveBtn:false,
-            showRenameBtn:false,
-            removeTitle:"删除",
-            renameTitle:"修改"
-        },
-        callback: {
-            //onRemove: zTreeOnRemove ,//删除事件
-            //beforeEditName: zTreeBeforeEditName
-        },
-        simpleData:{
-            enable:false,
-            idKey:"id",
-            pIdKey:"pId",
-            rootPid:0
-        }
-    };
+
 
 
     <#-- 初使化事件-->
@@ -149,7 +118,7 @@
                         dataType:"json",
                         success: function(result){
                             if(result.success){
-                                $.fn.zTree.init($("#treePermission"), setting_base, result.object);
+                                $.fn.zTree.init($("#treePermission"), setting_base_query, result.object);
                                 $('#exampleModal').modal('show');
                             }
 
