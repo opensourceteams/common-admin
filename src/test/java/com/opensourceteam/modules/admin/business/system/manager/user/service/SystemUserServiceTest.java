@@ -1,6 +1,7 @@
 package com.opensourceteam.modules.admin.business.system.manager.user.service;
 
 import com.opensourceteam.modules.admin.configuration.spring.CustomMVCConfiguration;
+import com.opensourceteam.modules.common.core.util.encrypt.md5.MD5Util;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import org.apache.shiro.crypto.hash.Sha512Hash;
 import org.apache.shiro.crypto.hash.SimpleHash;
@@ -42,18 +43,7 @@ public class SystemUserServiceTest {
     public void pwd_Md5() throws Exception {
         String username = "root";
         String password = "0";
-        // 将用户名作为盐值
-        ByteSource salt = ByteSource.Util.bytes(username);
-          /*
-        * MD5加密：
-        * 使用SimpleHash类对原始密码进行加密。
-        * 第一个参数代表使用MD5方式加密
-        * 第二个参数为原始密码
-        * 第三个参数为盐值，即用户名
-        * 第四个参数为加密次数
-        * 最后用toHex()方法将加密后的密码转成String
-        * */
-        String newPasspword = new SimpleHash("MD5", password, salt, 1024).toHex();
+        String newPasspword = MD5Util.encryptMd5(username,password);
         logger.debug("newPasspword:{} ,length:{}",newPasspword ,newPasspword.length() );
     }
 

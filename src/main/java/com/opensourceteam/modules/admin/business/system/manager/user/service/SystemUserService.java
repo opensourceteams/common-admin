@@ -4,6 +4,7 @@ import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
 import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
+import com.opensourceteam.modules.common.core.util.encrypt.md5.MD5Util;
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemUserMapper;
@@ -65,6 +66,7 @@ public class SystemUserService {
                 po.setCreator(1);
                 po.setTypeCode("1");
                 po.setStatusCode("1");
+                po.setLoginPwd(MD5Util.encryptMd5(vo.getLoginId(),vo.getLoginPwd()));
 
                 systemUserMapper.insert(po);
 
@@ -85,7 +87,7 @@ public class SystemUserService {
                     po.setRemark(vo.getRemark());
                     po.setLoginId(vo.getLoginId());
                     if(StringUtils.isNotEmpty(vo.getLoginPwd())){
-                        po.setLoginPwd(vo.getLoginPwd());
+                        po.setLoginPwd(MD5Util.encryptMd5(vo.getLoginId(),vo.getLoginPwd()));
                     }
 
                     if(po.getParentId() !=null && vo.getParentId() !=null && vo.getParentId().intValue() != po.getParentId().intValue()){
@@ -141,7 +143,8 @@ public class SystemUserService {
                 JSONObject jsonObject = new JSONObject();
                 String id = IdUtils.getPrefixId(BusinessTypeEnume.User,po.getId());
                 jsonObject.put("id", id);
-                jsonObject.put("pId",po.getOrgId());
+                String pId = IdUtils.getPrefixId(BusinessTypeEnume.Organization,po.getOrgId());
+                jsonObject.put("pId",pId);
                 jsonObject.put("name",po.getName());
                 jsonObject.put("icon", IconTypeEnume.Employee.getCloseUrl() );
                 jsonObject.put("iconOpen", IconTypeEnume.Employee.getOpenUrl() );

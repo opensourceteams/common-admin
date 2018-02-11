@@ -1,5 +1,6 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
+import com.opensourceteam.modules.admin.base.controller.BaseController;
 import org.apache.shiro.SecurityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
  */
 @Controller
 @RequestMapping
-public class IndexController {
+public class IndexController extends BaseController {
 
     Logger logger = LoggerFactory.getLogger(IndexController.class);
 
@@ -23,7 +24,7 @@ public class IndexController {
     public ModelAndView hello(String message) {
         ModelAndView modelAndView = new ModelAndView("main");
         logger.info("[IndexController login]");
-        modelAndView.addObject("user",SecurityUtils.getSubject().getPrincipal().toString());
+        modelAndView.addObject("username",getCurrentLoginName());
         return modelAndView;
     }
 }

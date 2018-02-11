@@ -95,7 +95,8 @@
 
                 if (btn) btn.bind("click", function(){
                     $('#exampleModal').modal('show');
-                    $("input:hidden[name='orgId']")[0].value = treeNode.id;
+                    var orgId = treeNode.id.split('_')[1];
+                    $("input:hidden[name='orgId']")[0].value = orgId;
                     $("input:hidden[name='id']")[0].value = '';
                     $("input:hidden[name='name']")[0].value = '';
                     $("input:hidden[name='loginId']")[0].value = '';
