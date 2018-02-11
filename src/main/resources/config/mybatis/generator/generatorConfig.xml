@@ -56,7 +56,9 @@
         <table tableName="t_system_role_permission" domainObjectName="SystemRolePermission"  >
             <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
         </table>
-
+        <table tableName="t_system_user_role" domainObjectName="SystemUserRole"  >
+            <generatedKey column="id" sqlStatement="Mysql" identity="true"/>
+        </table>
 
     <!--    <table tableName="t_test_uuid" >
             &lt;!&ndash; uuid&ndash;&gt;

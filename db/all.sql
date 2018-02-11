@@ -117,3 +117,21 @@ CREATE TABLE t_system_role_permission (
 	remark varchar(100) NULL COMMENT '备注',
 	 primary key (role_id,permission_id)
 );
+
+
+
+/**
+ * 用户角色关联表
+ */
+drop table if EXISTS t_system_user_role;
+CREATE TABLE t_system_user_role (
+  user_id int(10)  not null,
+	role_id varchar(50) not null  ,
+	create_date DATETIME NOT NULL,
+	creator int(10) NOT NULL,
+	update_date DATETIME NOT NULL,
+	updator int(10) NOT NULL,
+	is_del bit(1) NOT NULL default 0 ,
+	remark varchar(100) NULL COMMENT '备注',
+	 primary key (user_id,role_id)
+);

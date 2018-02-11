@@ -94,7 +94,7 @@
                 var btn = $("#addBtn_"+treeNode.tId);
 
                 if (btn) btn.bind("click", function(){
-                    $('#exampleModal').modal('show');
+
                     var orgId = treeNode.id.split('_')[1];
                     $("input:hidden[name='orgId']")[0].value = orgId;
                     $("input:hidden[name='id']")[0].value = '';
@@ -103,6 +103,19 @@
                     $("#id_remark").text( '') ;
                     $("#id_remark").val( '') ;
                     $("#parentId option[value='1']").attr("selected", true) ;
+
+
+                    $.ajax({
+                        url: "/common/admin/system_manager/role/jsonList",
+                        data:{},
+                        dataType:"json",
+                        success: function(result){
+                            if(result.success){
+                                $.fn.zTree.init($("#treeRole"), setting_base_query, result.object);
+                                $('#exampleModal').modal('show');
+                            }
+                        }
+                    });
 
                     return false;
                 });
@@ -123,6 +136,8 @@
      */
     function submitForm() {
 
+        var selectTreeNodeIds = getTreeSelectedIds('treeRole');
+        $("input:hidden[name='roleList']")[0].value = selectTreeNodeIds;
         var basicFormData = $('.submit-form').serialize();
         $.post( "/common/admin/system_manager/user/editJSON", basicFormData, function( data ) {
             if(data && data.success){
@@ -130,7 +145,7 @@
 
                 if( $("input:hidden[name='id']")[0].value == ''){
                     //增加
-                    zTree.addNodes(treeNodeGlobal, {id:data.object.id, pId:data.object.parentId, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
+                    zTree.addNodes(treeNodeGlobal, {id:data.object.sId, pId:data.object.sPid, name:data.object.name,iconOpen:data.object.iconOpen,iconClose:data.object.iconClose,icon:data.object.icon});
                 }else{
                     //修改
                     treeNodeGlobal.name = data.object.name ;
@@ -224,6 +239,7 @@
             <div class="modal-body">
                 <form method="post"  class="submit-form">
                     <input type="hidden" name="orgId" />
+                    <input type="hidden" name="roleList" />
                     <input type="hidden" name="id" />
                     <div class="form-group">
                         <label for="loginId" class="col-form-label">登录名:</label>
@@ -248,6 +264,12 @@
                             </#if>
 
                         </select>
+                    </div>
+
+                    <div class="form-group">
+
+                        <label for="treeRole" class="col-form-label">角色:</label>
+                        <ul id="treeRole" class="ztree"></ul>
                     </div>
                     <div class="form-group">
                         <label for="message-text" class="col-form-label">备注:</label>

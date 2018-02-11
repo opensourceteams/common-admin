@@ -2,6 +2,7 @@ package com.opensourceteam.modules.admin.business.system.manager.user.controller
 
 import com.alibaba.fastjson.JSONArray;
 import com.opensourceteam.modules.admin.business.system.manager.user.service.SystemUserService;
+import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.po.admin.SystemUser;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
@@ -80,7 +81,7 @@ public class SystemUserController {
      */
     @RequestMapping("/editJSON")
     @ResponseBody
-    Object editJSON(SystemUser vo) {
+    Object editJSON(SystemUserVo vo) {
         ResultBack resultBack = systemUserService.editJSONDealIcon(vo);
         return resultBack;
     }
@@ -94,8 +95,8 @@ public class SystemUserController {
      */
     @RequestMapping("/deleteJSON")
     @ResponseBody
-    Object deleteJSON(TSystemOrganization vo) {
-        ResultBack resultBack = systemUserService.deleteJSON(vo);
+    Object deleteJSON(Integer id) {
+        ResultBack resultBack = systemUserService.deleteJSON(id);
         return resultBack;
     }
 }

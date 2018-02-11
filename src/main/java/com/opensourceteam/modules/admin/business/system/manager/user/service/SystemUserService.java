@@ -2,15 +2,20 @@ package com.opensourceteam.modules.admin.business.system.manager.user.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.organization.service.SystemOrganizationService;
+import com.opensourceteam.modules.admin.business.system.manager.user.enume.UserStatusEnume;
 import com.opensourceteam.modules.admin.business.system.manager.user.vo.SystemUserVo;
 import com.opensourceteam.modules.common.core.util.encrypt.md5.MD5Util;
 import com.opensourceteam.modules.common.core.util.id.IdUtils;
 import com.opensourceteam.modules.common.core.vo.message.ResultBack;
 import com.opensourceteam.modules.dao.admin.SystemUserMapper;
+import com.opensourceteam.modules.dao.admin.SystemUserRoleMapper;
 import com.opensourceteam.modules.enume.BusinessTypeEnume;
 import com.opensourceteam.modules.enume.IconTypeEnume;
+import com.opensourceteam.modules.po.admin.SystemRolePermission;
 import com.opensourceteam.modules.po.admin.SystemUser;
+import com.opensourceteam.modules.po.admin.SystemUserRole;
 import com.opensourceteam.modules.po.admin.TSystemOrganization;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
@@ -28,12 +33,15 @@ import java.util.List;
  * 功能描述:
  */
 @Service
-public class SystemUserService {
+public class SystemUserService extends BaseService{
 
     @Autowired
     SystemOrganizationService organizationService;
     @Autowired
     SystemUserMapper systemUserMapper;
+
+    @Autowired
+    SystemUserRoleMapper systemUserRoleMapper;
 
     public JSONArray getAllList(){
         JSONArray jsonArray = new JSONArray();
@@ -54,7 +62,7 @@ public class SystemUserService {
 
 
 
-    public ResultBack editJSON(SystemUser vo){
+    public ResultBack editJSON(SystemUserVo vo){
 
         SystemUser po = new SystemUser();
         if(vo !=null ){
@@ -65,10 +73,11 @@ public class SystemUserService {
                 po.setIsDel(false);
                 po.setCreator(1);
                 po.setTypeCode("1");
-                po.setStatusCode("1");
+                po.setStatusCode(String.valueOf(UserStatusEnume.OK.getValue()));
                 po.setLoginPwd(MD5Util.encryptMd5(vo.getLoginId(),vo.getLoginPwd()));
 
                 systemUserMapper.insert(po);
+                vo.setId(po.getId());
 
                 SystemUser parentPo = systemUserMapper.selectByPrimaryKey(vo.getParentId());
                 if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
@@ -104,13 +113,16 @@ public class SystemUserService {
 
             }
 
+            deleteUserRoles(po.getId());
+            insertUserRoleRelation(vo);
+
         }
 
 
         return new ResultBack(true,po);
     }
 
-    public ResultBack editJSONDealIcon(SystemUser vo){
+    public ResultBack editJSONDealIcon(SystemUserVo vo){
         ResultBack resultBack = editJSON(vo);
         if(resultBack.getSuccess() && resultBack.getObject() !=null){
             if(resultBack.getObject() instanceof SystemUser ){
@@ -120,6 +132,10 @@ public class SystemUserService {
                 resultVo.setIcon(IconTypeEnume.Employee.getCloseUrl() );
                 resultVo.setIconOpen(IconTypeEnume.Employee.getOpenUrl() );
                 resultVo.setIconClose(IconTypeEnume.Employee.getCloseUrl());
+                String prefixId = IdUtils.getPrefixId(BusinessTypeEnume.User,vo.getId());
+                resultVo.setsId(prefixId);
+                String prefixOrgId = IdUtils.getPrefixId(BusinessTypeEnume.User,vo.getOrgId());
+                resultVo.setsPid(prefixOrgId);
                 return new ResultBack(true,resultVo);
             }
         }
@@ -127,9 +143,10 @@ public class SystemUserService {
     }
 
 
-    public ResultBack deleteJSON(TSystemOrganization vo){
-        if( vo !=null && vo.getId() !=null){
-            systemUserMapper.deleteByPrimaryKey(vo);
+    public ResultBack deleteJSON(Integer id){
+        if( id !=null ){
+            deleteUserRoles(id);
+            systemUserMapper.deleteByPrimaryKey(id);
             return new ResultBack(true,"");
         }
         return new ResultBack(false,"");
@@ -171,5 +188,35 @@ public class SystemUserService {
         SystemUser systemUser = new SystemUser();
         systemUser.setLoginId(loginId);
         return  systemUserMapper.selectOne(systemUser);
+    }
+
+
+
+
+    public Boolean deleteUserRoles(Integer userId){
+        Condition condition = new Condition(SystemUserRole.class);
+        condition.createCriteria().andEqualTo("userId",userId);
+        systemUserRoleMapper.deleteByExample(condition);
+        return true;
+    }
+
+    public Boolean insertUserRoleRelation(SystemUserVo vo){
+        if( vo !=null && vo.getId() !=null && vo.getRoleList() !=null && vo.getRoleList().size() >0){
+            for(String role : vo.getRoleList()){
+                SystemUserRole systemUserRole = new SystemUserRole();
+                systemUserRole.setRoleId(role);
+                systemUserRole.setUserId(vo.getId());
+                systemUserRole.setCreateDate(new Date());
+                systemUserRole.setUpdateDate(new Date());
+                systemUserRole.setCreator(getCurrentUserId());
+                systemUserRole.setUpdator(getCurrentUserId());
+                systemUserRole.setIsDel(false);
+
+                systemUserRoleMapper.insert(systemUserRole);
+            }
+
+        }
+
+        return true;
     }
 }

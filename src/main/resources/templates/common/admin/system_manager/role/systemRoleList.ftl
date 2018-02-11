@@ -146,7 +146,7 @@
 
         var treePermission = getTreeSelectedIds('treePermission');
         $("input:hidden[name='permissionList']")[0].value = treePermission;
-        console.log('treePermission:' + treePermission);
+
 
         var basicFormData = $('.submit-form').serialize();
 
