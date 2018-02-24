@@ -60,7 +60,7 @@ insert into t_system_user(id,login_id,login_pwd,name,parent_id,
 parent_ids,level_num,org_id,type_code,status_code,
 create_date,creator,is_del)
 values
-(1,'root','root','超级管理员',0,
+(1,'root','aea11564be1f672dcade343f7f886980','超级管理员',0,
 '/0/1/',1,0,'1','1',
 now(),1,0);
 
@@ -139,6 +139,29 @@ CREATE TABLE t_system_permission (
 	is_del bit(1) NOT NULL default 0 ,
 	remark varchar(100) NULL COMMENT '备注'
 );
+
+
+
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(11, '增加', 'system.setting.permission.manager.add', 17, '2018-02-08 15:47:25.000', 2, '2018-02-08 15:52:21.000', 2, 0, 'a');
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(12, '查询', 'system.setting.permission.manager.list', 17, '2018-02-08 15:52:45.000', 2, '2018-02-08 15:52:45.000', 2, 0, 'list');
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(13, '删除', 'system.setting.permission.manager.delete', 17, '2018-02-08 15:53:07.000', 2, '2018-02-08 15:53:07.000', 2, 0, 'delete');
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(14, '编辑', 'system.setting.permission.manager.edite', 17, '2018-02-08 15:53:34.000', 2, '2018-02-08 15:53:34.000', 2, 0, 'edite');
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(15, '菜单视图', 'admin:systemmanager:menu:listView', 15, '2018-02-11 14:34:16.000', 1, '2018-02-11 14:34:16.000', 1, 0, '菜单视图');
+INSERT INTO t_system_permission
+(id, permission_name, permission_code, menu_id, create_date, creator, update_date, updator, is_del, remark)
+VALUES(16, '菜单展示', 'admin:systemmanager:menu:jsonList', 15, '2018-02-11 14:35:04.000', 1, '2018-02-11 14:35:04.000', 1, 0, '');
+
+
 
 /**
  * 角色
