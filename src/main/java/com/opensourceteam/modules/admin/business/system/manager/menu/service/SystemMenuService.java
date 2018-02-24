@@ -70,6 +70,7 @@ public class SystemMenuService extends BaseService{
     public void dealMenuChildList(List<SystemMenuVo> list,SystemMenuVo systemMenuVo){
         if(systemMenuVo.getLevelNum().intValue() == RootNodeEnume.RootNodeParent.getValue().intValue() + 1){
            if( ! existeMenu(list,systemMenuVo)){
+               systemMenuVo.setNavigationId(systemMenuVo.getId());
                //增加根节点
                list.add(systemMenuVo);
            }
@@ -77,6 +78,7 @@ public class SystemMenuService extends BaseService{
             for(SystemMenuVo vo : list){
                 if(vo.getId().intValue() == systemMenuVo.getParentId()){
                     if( ! existeMenu(vo.getChildList(),systemMenuVo)){
+                        systemMenuVo.setNavigationId(systemMenuVo.getParentId());
                         //增加子节点
                         vo.getChildList().add(systemMenuVo);
                     }

@@ -18,6 +18,10 @@ function menu_binding_event() {
 
 function ajax_request(v) {
     var data_url = v.attr("data_url") ;
+    var data_id = v.attr("data_id") ;
+    $(".nav-item").removeClass("active");
+    $("#id_li_" +data_id).addClass("active");
+
     if(data_url == '' || data_url == undefined  || data_url == '#'){
         return ;
     }
@@ -27,9 +31,7 @@ function ajax_request(v) {
         url: data_url,
         data: {},
         success: function(html){
-
             $(".frame_main_container").html(html);
-
         }
     });
 }

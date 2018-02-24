@@ -33,17 +33,17 @@
                 <#list systemMenuList as vo>
 
                     <#if vo.childList?size  gt  0>
-                        <li class="nav-item dropdown">
+                        <li class="nav-item dropdown" id="id_li_${vo.id}">
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown_${vo.id}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${vo.menuName} </a>
                             <div class="dropdown-menu" aria-labelledby="dropdown_${vo.id}">
                                 <#list vo.childList as voChild>
-                                    <a class="dropdown-item class_menu_url" href="#" data_url="${voChild.menuUrl}" >${voChild.menuName}</a>
+                                    <a class="dropdown-item class_menu_url"  href="#" data_url="${voChild.menuUrl}" data_id="${voChild.navigationId}" >${voChild.menuName}</a>
                                 </#list>
                             </div>
                         </li>
                     <#else>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">${vo.menuName}  <span class="sr-only">(current)</span></a>
+                        <li class="nav-item " id="id_li_${vo.id}">
+                            <a class="nav-link class_menu_url" href="#" data_url="${vo.menuUrl}"  data_id="${vo.navigationId}"  >${vo.menuName}  <span class="sr-only">(current)</span></a>
                         </li>
                     </#if>
                 </#list>

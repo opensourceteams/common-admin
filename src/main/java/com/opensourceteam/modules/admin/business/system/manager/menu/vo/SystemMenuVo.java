@@ -17,6 +17,7 @@ public class SystemMenuVo extends SystemMenu {
     private String iconOpen;
     private String iconClose;
     private String icon;
+    private Integer navigationId;
     private List<SystemMenuVo> childList = new ArrayList<>();
 
     public String getIconOpen() {
@@ -49,5 +50,13 @@ public class SystemMenuVo extends SystemMenu {
 
     public void setChildList(List<SystemMenuVo> childList) {
         this.childList = childList;
+    }
+
+    public Integer getNavigationId() {
+        return navigationId;
+    }
+
+    public void setNavigationId(Integer navigationId) {
+        this.navigationId = navigationId;
     }
 }
