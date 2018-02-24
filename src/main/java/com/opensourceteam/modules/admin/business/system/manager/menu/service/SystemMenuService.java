@@ -56,6 +56,96 @@ public class SystemMenuService extends BaseService{
         return jsonArray;
     }
 
+    public List<SystemMenuVo> getListSystemMenuRelationAll(){
+        List<SystemMenuVo> resultList = new ArrayList<>();
+        List<SystemMenu> list = getAll();
+        for(SystemMenu systemMenu : list){
+            SystemMenuVo systemMenuVo = new SystemMenuVo();
+            BeanUtils.copyProperties(systemMenu,systemMenuVo);
+            dealMenuChildList(resultList,systemMenuVo);
+        }
+        return resultList;
+    }
+
+    public void dealMenuChildList(List<SystemMenuVo> list,SystemMenuVo systemMenuVo){
+        if(systemMenuVo.getLevelNum().intValue() == RootNodeEnume.RootNodeParent.getValue().intValue() + 1){
+           if( ! existeMenu(list,systemMenuVo)){
+               //增加根节点
+               list.add(systemMenuVo);
+           }
+        }else{
+            for(SystemMenuVo vo : list){
+                if(vo.getId().intValue() == systemMenuVo.getParentId()){
+                    if( ! existeMenu(vo.getChildList(),systemMenuVo)){
+                        //增加子节点
+                        vo.getChildList().add(systemMenuVo);
+                    }
+                }else{
+                    addMenuChild(vo.getChildList(),systemMenuVo);
+                }
+
+            }
+
+
+        }
+    }
+
+
+    public Boolean existeMenu(List<SystemMenuVo> list,SystemMenuVo systemMenuVo){
+        Boolean result = false;
+        for(SystemMenuVo vo : list){
+            if(vo.getId().intValue() == systemMenuVo.getId().intValue()){
+                return true;
+            }else{
+
+                if(vo !=null && vo.getChildList() !=null && vo.getChildList().size() >0){
+                    //有儿子
+                    return result | existeMenu(vo.getChildList(),systemMenuVo);
+                }
+            }
+        }
+        return result;
+    }
+
+    public void addMenuChild(List<SystemMenuVo> list,SystemMenuVo systemMenuVo){
+        for(SystemMenuVo vo : list){
+            if(vo.getId().intValue() == systemMenuVo.getParentId().intValue()){
+                if(!existeMenu(list,systemMenuVo)){
+                    vo.getChildList().add(systemMenuVo);
+                }
+            }else{
+                if(vo !=null && vo.getChildList() !=null && vo.getChildList().size() >0){
+                    //有儿子
+                    addMenuChild(vo.getChildList(),systemMenuVo);
+                }
+            }
+        }
+    }
+
+
+
+
+    public JSONArray getListAll(){
+        JSONArray jsonArray = new JSONArray();
+        List<SystemMenu> list = getAll();
+        if(list !=null && list.size() >0){
+            for(SystemMenu po : list){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",po.getId());
+                jsonObject.put("pId",po.getParentId());
+                jsonObject.put("name",po.getMenuName());
+                jsonObject.put("icon", IconTypeEnume.Menu.getCloseUrl() );
+                jsonObject.put("iconOpen", IconTypeEnume.Menu.getOpenUrl() );
+                jsonObject.put("iconClose", IconTypeEnume.Menu.getCloseUrl());
+                jsonObject.put("open",true);
+                jsonArray.add(jsonObject);
+            }
+        }
+
+
+        return jsonArray;
+    }
+
     public ResultBack editJSON(SystemMenu vo){
 
         SystemMenu po = new SystemMenu();
@@ -72,7 +162,7 @@ public class SystemMenuService extends BaseService{
                 //po.setId(0);
                 if(vo.getParentId() == null){
                     po.setParentId(RootNodeEnume.RootNodeParent.getValue());
-                    po.setLevleNum(1);
+                    po.setLevelNum(1);
                 }
 
                 logger.debug("[insert systemMenuMapper po]:{}",po);
@@ -88,7 +178,7 @@ public class SystemMenuService extends BaseService{
                     if(parentPo !=null && org.apache.commons.lang3.StringUtils.isNotEmpty(parentPo.getParentIds())){
                         String parentIds = parentPo.getParentIds()  + po.getId()  +"/";
                         po.setParentIds(parentIds);
-                        po.setLevleNum(parentPo.getLevleNum() +1);
+                        po.setLevelNum(parentPo.getLevelNum() +1);
                         systemMenuMapper.updateByPrimaryKey(po);
                     }
                 }
@@ -99,8 +189,8 @@ public class SystemMenuService extends BaseService{
                 po = systemMenuMapper.selectByPrimaryKey(vo.getId());
                 if(po != null){
                     po.setMenuName(vo.getMenuName());
-
                     po.setRemark(vo.getRemark());
+                    po.setMenuUrl(vo.getMenuUrl());
                     systemMenuMapper.updateByPrimaryKey(po);
                 }
 
@@ -140,7 +230,7 @@ public class SystemMenuService extends BaseService{
         Condition condition = new Condition(SystemMenu.class);
         condition.createCriteria().andEqualTo("isDel",false)
         ;
-        condition.setOrderByClause("menu_name asc");
+        condition.setOrderByClause("level_num asc,menu_name asc");
         List<SystemMenu> list = systemMenuMapper.selectByExample(condition);
         return list;
     }

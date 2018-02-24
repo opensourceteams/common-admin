@@ -77,7 +77,7 @@ CREATE TABLE t_system_menu (
 	menu_url varchar(200)  not null COMMENT '菜单url',
     parent_ids varchar(1000)  null,
 	type_code char(1) NOT NULL COMMENT '菜单类型(1:菜单2:权限节点)',
-	levle_num int(4)  null COMMENT '菜单是第几级',
+	level_num int(4)  null COMMENT '菜单是第几级',
 	create_date DATETIME NOT NULL,
 	creator int(10) NOT NULL,
 	update_date DATETIME NOT NULL,
@@ -85,6 +85,44 @@ CREATE TABLE t_system_menu (
 	is_del bit(1) NOT NULL default 0 ,
 	remark varchar(100) NULL COMMENT '备注'
 );
+
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(6, '业务一', 0, '业务一', '/0/6/', '1', 1, '2018-02-08 14:42:10.000', 2, '2018-02-08 14:42:10.000', 2, 0, '业务二');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(7, '业务二', 0, '业务二', '/0/7/', '1', 1, '2018-02-08 14:42:22.000', 2, '2018-02-08 14:42:22.000', 2, 0, '业务二');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(8, '业务三', 0, '#', '/0/8/', '1', 1, '2018-02-08 14:42:35.000', 2, '2018-02-08 14:42:35.000', 2, 0, '业务二');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(9, '财务', 0, '#', '/0/9/', '1', 1, '2018-02-08 14:44:03.000', 2, '2018-02-08 14:44:03.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(12, '系统设置', 0, '#', '/0/12/', '1', 1, '2018-02-08 14:46:19.000', 2, '2018-02-08 14:46:19.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(10, '考勤', 9, '/finance/check/index', '/0/9/10/', '1', 2, '2018-02-08 14:45:48.000', 2, '2018-02-08 14:45:48.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(11, '工资', 9, '/common/admin/system_manager/user/index', '/0/9/11/', '1', 2, '2018-02-08 14:46:10.000', 2, '2018-02-08 14:46:10.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(13, '机构管理', 12, '/common/admin/system_manager/organization/listView', '/0/12/13/', '1', 2, '2018-02-08 14:47:36.000', 2, '2018-02-08 14:47:36.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(14, '用户管理', 12, '/common/admin/system_manager/user/listView', '/0/12/14/', '1', 2, '2018-02-08 14:47:47.000', 2, '2018-02-08 14:47:47.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(15, '菜单管理', 12, '/common/admin/system_manager/menu/listView', '/0/12/15/', '1', 2, '2018-02-08 14:47:56.000', 2, '2018-02-08 14:47:56.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(16, '角色管理', 12, '/common/admin/system_manager/role/listView', '/0/12/16/', '1', 2, '2018-02-08 14:48:03.000', 2, '2018-02-08 14:48:03.000', 2, 0, '');
+INSERT INTO t_system_menu
+(id, menu_name, parent_id, menu_url, parent_ids, type_code, level_num, create_date, creator, update_date, updator, is_del, remark)
+VALUES(17, '权限管理', 12, '/common/admin/system_manager/permission/listView', '/0/12/17/', '1', 2, '2018-02-08 14:48:29.000', 2, '2018-02-08 14:48:29.000', 2, 0, '');
+
 /**
  * 权限
  */

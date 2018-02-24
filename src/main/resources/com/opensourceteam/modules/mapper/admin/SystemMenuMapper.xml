@@ -11,7 +11,7 @@
     <result column="menu_url" jdbcType="VARCHAR" property="menuUrl" />
     <result column="parent_ids" jdbcType="VARCHAR" property="parentIds" />
     <result column="type_code" jdbcType="CHAR" property="typeCode" />
-    <result column="levle_num" jdbcType="INTEGER" property="levleNum" />
+    <result column="level_num" jdbcType="INTEGER" property="levelNum" />
     <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
     <result column="creator" jdbcType="INTEGER" property="creator" />
     <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />

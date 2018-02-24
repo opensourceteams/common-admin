@@ -153,6 +153,7 @@
                 $("input:hidden[name='id']")[0].value = id;
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
                 $("input[name='menuName']")[0].value = data.object.menuName;
+                $("input[name='menuUrl']")[0].value = data.object.menuUrl;
                 $("#id_org_type option[value=" + data.object.typeCode + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');

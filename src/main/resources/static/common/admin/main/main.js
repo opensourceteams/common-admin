@@ -9,7 +9,6 @@ function menu_binding_event() {
              * 绑定具体事件
              */
             $(menuArray[i]).click(function(){
-                console.log( " click -> "+ $(this).attr("data_url") );
                 ajax_request($(this));
             });
         }
@@ -19,6 +18,9 @@ function menu_binding_event() {
 
 function ajax_request(v) {
     var data_url = v.attr("data_url") ;
+    if(data_url == '' || data_url == undefined  || data_url == '#'){
+        return ;
+    }
     $(".frame_main_container").html("");
     $.ajax({
         type: "POST",

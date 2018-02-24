@@ -27,28 +27,34 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-
         <ul class="navbar-nav mr-auto">
-            <#if (systemMenuList?? && systemMenuList?size gt  0) >
-                <#list systemMenuList as vo>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">业务一 <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">业务二</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">业务三</a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown02"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">财务</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown02">
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/finance/check/index">考勤</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/index" >工资</a>
+                </div>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">系统设置</a>
+                <div class="dropdown-menu" aria-labelledby="dropdown01">
 
-                    <#if vo.childList?size  gt  0>
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="dropdown_${vo.id}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${vo.menuName} </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdown_${vo.id}">
-                                <#list vo.childList as voChild>
-                                    <a class="dropdown-item class_menu_url" href="#" data_url="${voChild.menuUrl}" >${voChild.menuName}</a>
-                                </#list>
-                            </div>
-                        </li>
-                    <#else>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">${vo.menuName}  <span class="sr-only">(current)</span></a>
-                        </li>
-                    </#if>
-                </#list>
-            </#if>
-
+                    <a class="dropdown-item class_menu_url" href="#"  data_url="/common/admin/system_manager/organization/listView" >机构管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/user/listView" >用户管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/menu/listView">菜单管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/role/listView">角色管理</a>
+                    <a class="dropdown-item class_menu_url" href="#" data_url="/common/admin/system_manager/permission/listView">权限管理</a>
+                </div>
+            </li>
         </ul>
         <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">

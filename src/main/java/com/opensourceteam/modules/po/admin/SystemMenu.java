@@ -36,8 +36,8 @@ public class SystemMenu {
     /**
      * 菜单是第几级
      */
-    @Column(name = "levle_num")
-    private Integer levleNum;
+    @Column(name = "level_num")
+    private Integer levelNum;
 
     @Column(name = "create_date")
     private Date createDate;
@@ -156,19 +156,19 @@ public class SystemMenu {
     /**
      * 获取菜单是第几级
      *
-     * @return levle_num - 菜单是第几级
+     * @return level_num - 菜单是第几级
      */
-    public Integer getLevleNum() {
-        return levleNum;
+    public Integer getLevelNum() {
+        return levelNum;
     }
 
     /**
      * 设置菜单是第几级
      *
-     * @param levleNum 菜单是第几级
+     * @param levelNum 菜单是第几级
      */
-    public void setLevleNum(Integer levleNum) {
-        this.levleNum = levleNum;
+    public void setLevelNum(Integer levelNum) {
+        this.levelNum = levelNum;
     }
 
     /**
@@ -271,7 +271,7 @@ public class SystemMenu {
         sb.append(", menuUrl=").append(menuUrl);
         sb.append(", parentIds=").append(parentIds);
         sb.append(", typeCode=").append(typeCode);
-        sb.append(", levleNum=").append(levleNum);
+        sb.append(", levelNum=").append(levelNum);
         sb.append(", createDate=").append(createDate);
         sb.append(", creator=").append(creator);
         sb.append(", updateDate=").append(updateDate);
