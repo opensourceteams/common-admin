@@ -35,6 +35,7 @@ public class IndexController extends BaseController {
         logger.info("[IndexController login]");
         modelAndView.addObject("username",getCurrentLoginName());
         modelAndView.addObject("systemMenuList",mainService.getListSystemMenuRelationAll());
+        modelAndView.addObject("systemMenuListSimple",mainService.getListSimple());
 
         return modelAndView;
     }

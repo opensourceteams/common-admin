@@ -1,5 +1,6 @@
 package com.opensourceteam.modules.admin.business.index.service.main;
 
+import com.alibaba.fastjson.JSONArray;
 import com.opensourceteam.modules.admin.base.service.BaseService;
 import com.opensourceteam.modules.admin.business.system.manager.menu.service.SystemMenuService;
 import com.opensourceteam.modules.admin.business.system.manager.menu.vo.SystemMenuVo;
@@ -23,5 +24,9 @@ public class MainService extends BaseService{
     public List<SystemMenuVo> getListSystemMenuRelationAll(){
         return systemMenuService.getListSystemMenuRelationAll();
     };
+    public JSONArray getListSimple(){
+        return systemMenuService.getListSimple();
+    };
+
 
 }

@@ -52,10 +52,22 @@ public class SystemMenuService extends BaseService{
             }
         }
 
+        return jsonArray;
+    }
+    public JSONArray getListSimple(){
+        JSONArray jsonArray = new JSONArray();
+        List<SystemMenu> list = getAll();
+        if(list !=null && list.size() >0){
+            for(SystemMenu po : list){
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("id",po.getId());
+                jsonObject.put("name",po.getMenuName());
+                jsonArray.add(jsonObject);
+            }
+        }
 
         return jsonArray;
     }
-
     public List<SystemMenuVo> getListSystemMenuRelationAll(){
         List<SystemMenuVo> resultList = new ArrayList<>();
         List<SystemMenu> list = getAll();

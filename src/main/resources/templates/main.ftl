@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="/static/modules/bootstrap/bootstrap-4.0.0/examples/starter-template.css" rel="stylesheet">
 
+
 </head>
 
 <body>
@@ -37,13 +38,13 @@
                             <a class="nav-link dropdown-toggle" href="#" id="dropdown_${vo.id}"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">${vo.menuName} </a>
                             <div class="dropdown-menu" aria-labelledby="dropdown_${vo.id}">
                                 <#list vo.childList as voChild>
-                                    <a class="dropdown-item class_menu_url"  href="#" data_url="${voChild.menuUrl}" data_id="${voChild.navigationId}" >${voChild.menuName}</a>
+                                    <a class="dropdown-item class_menu_url"  href="#" data_url="${voChild.menuUrl}" data_id="${voChild.id}" data_navigationId="${voChild.navigationId}" >${voChild.menuName}</a>
                                 </#list>
                             </div>
                         </li>
                     <#else>
                         <li class="nav-item " id="id_li_${vo.id}">
-                            <a class="nav-link class_menu_url" href="#" data_url="${vo.menuUrl}"  data_id="${vo.navigationId}"  >${vo.menuName}  <span class="sr-only">(current)</span></a>
+                            <a class="nav-link class_menu_url" href="#" data_url="${vo.menuUrl}"  data_id="${vo.id}"  data_navigationId="${vo.navigationId}"  >${vo.menuName}  <span class="sr-only">(current)</span></a>
                         </li>
                     </#if>
                 </#list>
@@ -61,8 +62,9 @@
 
     </div>
 </nav>
+
 <nav class="navbar navbar-expand-sm bg-light">
-    <ul class="navbar-nav">
+    <ul class="navbar-nav address-navbar">
         <li class="nav-item">
             <a class="nav-link" href="#">主页&nbsp;&nbsp;></a>
         </li>
@@ -100,6 +102,7 @@
 
     $(document).ready(function(){
          menu_binding_event();
+        ajax_request_menu();
     });
 
 

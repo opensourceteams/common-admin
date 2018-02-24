@@ -101,4 +101,16 @@ public class SystemMenuController {
         ResultBack resultBack = systemMenuService.deleteIdsJSON(ids);
         return resultBack;
     }
+
+    /**
+     * 编辑页面
+     * @param vo
+     * @return
+     */
+    @RequestMapping("/getListSimple")
+    @ResponseBody
+    Object getListSimple() {
+        ResultBack resultBack = new ResultBack(true,systemMenuService.getListSimple());
+        return resultBack;
+    }
 }
