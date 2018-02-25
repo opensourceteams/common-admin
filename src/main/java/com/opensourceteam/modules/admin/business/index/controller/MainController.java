@@ -1,6 +1,5 @@
 package com.opensourceteam.modules.admin.business.index.controller;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
