@@ -91,13 +91,13 @@
 
         if (btn) btn.bind("click", function(){
             $('#exampleModal').modal('show');
-            $("input:hidden[name='parentId']")[0].value = treeNode.id;
+            $("input:hidden[name='parentId']")[0].value =  getIdRemovePrefix(treeNode.id);
             $("input:hidden[name='operationType']")[0].value = 'add-operation';
             $("input:hidden[name='id']")[0].value = '';
             $("input:hidden[name='name']")[0].value = '';
             $("#id_remark").text( '') ;
             $("#id_remark").val( '') ;
-            $("#id_org_type option[value='1']").attr("selected", true) ;
+            $("#orgType option[value='1']").attr("selected", "selected") ;
 
             return false;
         });
@@ -148,7 +148,7 @@
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
                 $("input:hidden[name='operationType']")[0].value = 'edit-operation';
                 $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("#orgType option[value=" + data.object.orgType + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
@@ -167,7 +167,7 @@
                 $("input:hidden[name='id']")[0].value = id;
                 $("input:hidden[name='parentId']")[0].value = data.object.parentId;
                 $("input[name='name']")[0].value = data.object.name;
-                $("#id_org_type option[value=" + data.object.orgType + "]").attr("selected", true) ;
+                $("#orgType option[value=" + data.object.orgType + "]").attr("selected", true) ;
                 $("#id_remark").text( data.object.remark) ;
                 $('#exampleModal').modal('show');
 
@@ -260,9 +260,9 @@
                         <input type="text" class="form-control" id="recipient-name" name="name">
                     </div>
                     <div class="form-group">
-                        <label for="exampleSelect2">类型</label>
-                        <select  class="form-control" id="exampleSelect2" name="orgType">
-                            <option value="1">机构</option>
+                        <label for="orgType">类型</label>
+                        <select  class="form-control" id="orgType" name="orgType">
+                            <option value="1" >机构</option>
                             <option value="2">部门</option>
                             <option value="3">组</option>
 

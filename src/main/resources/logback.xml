@@ -10,9 +10,32 @@
 
 	<!-- 				控制台 				-->
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder>
+<!--		<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss} %mdc [%thread] %level %logger{35} - %msg%n</pattern>
-			<charset>UTF-8</charset><!-- 此处设置字符集 -->
+			<charset>UTF-8</charset>&lt;!&ndash; 此处设置字符集 &ndash;&gt;
+		</encoder>-->
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+           <jsonFactoryDecorator class="com.opensourceteam.modules.common.core.util.json.CustomerJsonFactoryDecorator" />
+			<providers>
+				<pattern>
+					<pattern>
+						{
+						"logLevel": "%level",
+						"method": "%method",
+						"lineNum": "%line",
+						"message": "%message",
+						"className": "%class",
+						"tags": "applog",
+						"project": "vcn_trader",
+						"timestamp": "%date{\"yyyy-MM-dd' 'HH:mm:ss,SSSZ\"}",
+						"thread": "%thread",
+						"stackTrace": "%exception",
+						"reqId": "%X{reqId}",
+						"costTime": "#asLong{%X{elapsedTime}}"
+						}
+					</pattern>
+				</pattern>
+			</providers>
 		</encoder>
 	</appender>
 
@@ -32,8 +55,31 @@
 			<!-- 日志最大的历史 60天 -->
 			<maxHistory>${maxHistory}</maxHistory>
 		</rollingPolicy>
-		<encoder>
+	<!--	<encoder>
 			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+		</encoder>-->
+		<encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+
+			<providers>
+				<pattern>
+					<pattern>
+						{
+						"className": "%class",
+						"method": "%method",
+						"message": "%message",
+						"tags": "applog",
+						"project": "vcn_trader",
+						"@timestamp": "%date{\"yyyy-MM-dd'T'HH:mm:ss,SSSZ\"}",
+						"logLevel": "%level",
+						"thread": "%thread",
+						"lineNum": "%line",
+						"stackTrace": "%exception",
+						"reqId": "%X{reqId}",
+						"costTime": "#asLong{%X{elapsedTime}}"
+						}
+					</pattern>
+				</pattern>
+			</providers>
 		</encoder>
 	</appender>
 

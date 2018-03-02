@@ -14,6 +14,10 @@
 
     <!-- Custom styles for this template -->
     <link href="static/modules/bootstrap/bootstrap-4.0.0/examples/signin.css" rel="stylesheet">
+    <style>
+        body{background-image:url(/static/project/login/img-bg-login.jpg);
+            background-repeat:no-repeat;background-position:center}
+    </style>
 </head>
 
 <body class="text-center">
@@ -28,7 +32,7 @@
     </div>
 
     <div class="form-group <#if message?? && code == "2" > has-warning </#if> ">
-        <input type="text" name="password" class="form-control form-control-warning" placeholder="密码" required>
+        <input type="password" name="password" class="form-control form-control-warning" placeholder="密码" required>
     </div>
 
     <div class="form-group <#if message??> has-warning </#if> ">

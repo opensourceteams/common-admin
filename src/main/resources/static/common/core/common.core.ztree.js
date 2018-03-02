@@ -112,3 +112,15 @@ var setting_base_query = {
     }
 };
 
+/**
+ * 得到去掉前缀的id
+ * @param id
+ * @returns {*}
+ */
+function getIdRemovePrefix(id) {
+    if(id.indexOf("_") == -1){
+        return id;
+    }else{
+        return id.split('_')[1];
+    }
+}

@@ -386,3 +386,11 @@ public class MessageController {
 ## common_admin_v1.0.2
 ### 机构树
 - 机构树（增、删、改、查）
+
+## 杀掉window spring-boot 启动进程 
+- jps 查看 Application 进程id
+- taskkill 杀掉进程 
+
+```
+ taskkill /pid 18248 -t -f
+ ```

@@ -31,6 +31,12 @@ public class TSystemOrganizationMapperTest {
     TSystemOrganizationMapper mapper;
 
     @Test
+    public void test(){
+        logger.info("this is test");
+        logger.info("[this is test]");
+        logger.info("【中文问题】");
+    }
+    @Test
     public void insert(){
 
         TSystemOrganization po = new TSystemOrganization();
@@ -50,9 +56,26 @@ public class TSystemOrganizationMapperTest {
 
     @Test
     public void selectAll(){
+        logger.info("this is test");
+        logger.info("[this is test]");
         List<TSystemOrganization> list = mapper.selectAll();
         for(TSystemOrganization po : list){
             logger.debug("po:{}",po);
+            logger.info("this is test");
+            logger.info("[this is test]");
+        }
+    }
+    @Test
+    public void selectAll2(){
+        logger.info("this is test");
+        logger.info("[this is test]");
+        logger.info("【中文问题】");
+        List<TSystemOrganization> list = mapper.selectAll();
+        for(TSystemOrganization po : list){
+            logger.debug("po:{}",po);
+            logger.info("this is test");
+            logger.info("[this is test]");
+            logger.info("【中文问题】");
         }
     }
 }
